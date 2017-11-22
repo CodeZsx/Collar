@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_nav_user_nor" android:state_selected="false"/>
+    <item android:drawable="@drawable/ic_nav_user_sel" android:state_selected="true"/>
+    <item android:drawable="@drawable/ic_nav_user_sel" android:state_pressed="true"/>
+</selector>

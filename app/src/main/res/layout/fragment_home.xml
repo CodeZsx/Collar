@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/colorToolbarBg"
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="26dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/fab_margin"
+                        android:src="@drawable/pic_head_test" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <com.codez.collar.ui.HomeTitleTextView
+                            android:id="@+id/tv_left"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="全部"
+                            android:textSize="18sp" />
+                        <com.codez.collar.ui.HomeTitleTextView
+                            android:id="@+id/tv_right"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="left"
+                            android:text="热门"
+                            android:textSize="18sp" />
+                        <!--<TextView-->
+                            <!--android:id="@+id/tv_left"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center_horizontal"-->
+                            <!--android:drawableRight="@drawable/ic_arrow_fill"-->
+                            <!--android:text="全部"-->
+                            <!--android:textColor="@drawable/sel_home_title"-->
+                            <!--android:textSize="18sp" />-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/tv_right"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:gravity="center_horizontal"-->
+                            <!--android:layout_marginLeft="@dimen/fab_margin"-->
+                            <!--android:drawableRight="@drawable/ic_arrow_fill"-->
+                            <!--android:text="热门"-->
+                            <!--android:textColor="@drawable/sel_home_title"-->
+                            <!--android:textSize="18sp" />-->
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_scan"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:src="@drawable/ic_scan"/>
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorBgNormal">
+
+            </FrameLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <com.codez.collar.ui.ExpendButton
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_white"
+            app:backgroundTint="@color/colorHighlight"
+            app:fabSize="normal">
+
+        </com.codez.collar.ui.ExpendButton>
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/btn_like"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:src="@drawable/ic_add_white"-->
+        <!--app:backgroundTint="@color/colorPrimary"-->
+        <!--app:fabSize="normal" />-->
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
