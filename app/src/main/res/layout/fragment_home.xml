@@ -21,10 +21,12 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <RelativeLayout
+                    android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_user"
                         android:layout_width="@dimen/toolbar_icon_size"
                         android:layout_height="26dp"
                         android:layout_alignParentLeft="true"

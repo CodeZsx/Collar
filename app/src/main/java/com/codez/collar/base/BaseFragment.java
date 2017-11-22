@@ -2,14 +2,12 @@ package com.codez.collar.base;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.codez.collar.R;
@@ -22,14 +20,6 @@ import com.codez.collar.R;
 public abstract class BaseFragment<VD extends ViewDataBinding> extends Fragment{
     //布局view
     protected VD mBinding;
-    //fragment是否显示
-    protected boolean mIsVisible = false;
-    //加载中
-    private LinearLayout mLlProgressBar;
-    //加载失败
-    private LinearLayout mRefresh;
-    //动画
-    private AnimationDrawable mAnimationDrawable;
 
     @Nullable
     @Override

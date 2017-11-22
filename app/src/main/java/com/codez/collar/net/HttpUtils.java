@@ -38,8 +38,13 @@ public class HttpUtils {
         return instance;
     }
 
+
     public WeiboService getWeiboService(Context context){
         return getRetrofit(context, WeiboService.BASE_URL).create(WeiboService.class);
+    }
+
+    public UserService getUserService(Context context) {
+        return getRetrofit(context, UserService.BASE_URL).create(UserService.class);
     }
 
 

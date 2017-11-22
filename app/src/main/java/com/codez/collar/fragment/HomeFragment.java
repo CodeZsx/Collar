@@ -1,25 +1,26 @@
 package com.codez.collar.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.UserActivity;
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.bean.WeiboBean;
 import com.codez.collar.databinding.FragmentHomeBinding;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.net.Response;
 import com.codez.collar.ui.HomeTitleTextView;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -69,7 +70,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.tvLeft.setOnClickListener(this);
         mBinding.tvRight.setOnClickListener(this);
         mBinding.ivScan.setOnClickListener(this);
-
+        mBinding.ivUser.setOnClickListener(this);
         initData();
     }
 
@@ -80,40 +81,25 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 .getWeibo("5538639136",1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Response<List<WeiboBean>>,List<WeiboBean>>(){
+                .subscribe(new Observer<WeiboBean>() {
                     @Override
-                    public List<WeiboBean> call(Response<List<WeiboBean>> listResponse) {
-                        return listResponse.getSubjects();
+                    public void onCompleted() {
+                        L.e("onCompleted");
                     }
-                })
-                .flatMap(new Func1<List<WeiboBean>, Observable<WeiboBean>>() {
+
                     @Override
-                    public Observable<WeiboBean> call(List<WeiboBean> weiboBeen) {
-                        return Observable.from(weiboBeen);
+                    public void onError(Throwable e) {
+                        L.e("onError:"+e.toString());
                     }
-                })
-                .subscribe(new Subscriber<WeiboBean>() {
-                               @Override
-                               public void onCompleted() {
-                                   L.e("onCompleted");
-                               }
 
-                               @Override
-                               public void onError(Throwable e) {
-                                    L.e("onError:"+e.toString());
-                               }
-
-                               @Override
-                               public void onNext(WeiboBean weiboBean) {
-                                    L.e("bean:"+weiboBean.toString());
-                               }
-                           });
-//        new CompositeSubscription().add(get);
-
-
-    }
-    private void refreshNews() {
-
+                    @Override
+                    public void onNext(WeiboBean weiboBean) {
+                        L.e("onNext:"+weiboBean.getMax_id());
+                        List<StatusBean> list = weiboBean.getStatuses();
+                        L.e("size:" + list.size());
+                        L.e("no.1:"+list.get(0).toString());
+                    }
+                });
     }
     @Override
     public void onClick(View v) {
@@ -151,6 +137,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                         T.s(getContext(),"right close");
                     }
                 }
+                break;
+            case R.id.iv_user:
+                startActivity(new Intent(getActivity(), UserActivity.class)
+                        .putExtra("uid", AccessTokenKeeper.getUid(getContext())));
                 break;
             case R.id.iv_scan:
                 break;

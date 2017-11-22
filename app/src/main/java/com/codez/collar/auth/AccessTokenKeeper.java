@@ -52,6 +52,13 @@ public class AccessTokenKeeper {
                 .getString(KEY_ACCESS_TOKEN, "");
     }
 
+    public static String getUid(Context context) {
+        if (context == null) {
+            return null;
+        }
+        return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+                .getString(KEY_UID, "");
+    }
     //清除SharedPreferences中的token信息
     public static void clear(Context context) {
         if (context == null) {

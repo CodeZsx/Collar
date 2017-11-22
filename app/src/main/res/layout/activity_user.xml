@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.codez.collar.bean.UserBean" />
+    </data>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:expandedTitleTextAppearance="?android:attr/textAppearanceLarge"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/iv_top_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:background="@drawable/pic_person_bg"
+                    app:layout_collapseMode="parallax" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/pic_head_test"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:layout_gravity="bottom"
+                    app:layout_collapseMode="parallax"/>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:title="@{user.screen_name}"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin" >
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBgNormal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorItemNormal"
+                    android:padding="@dimen/fab_margin">
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="18sp"
+                        android:text="@{user.screen_name}"/>
+                    <TextView
+                        android:id="@+id/tv_identity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tv_name"
+                        android:layout_alignBottom="@id/tv_name"
+                        android:layout_marginLeft="@dimen/fab_margin"
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="14sp"
+                        android:text="@{user.vertified_reason}"/>
+                    <TextView
+                        android:id="@+id/tv_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp"
+                        android:text="@{`个人简介：`+user.description}"/>
+                    <ImageView
+                        android:id="@+id/iv_location"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/tv_info"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:src="@drawable/ic_person_location_gray"/>
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/iv_location"
+                        android:layout_alignBottom="@id/iv_location"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="13sp"
+                        android:text="@{user.location}"/>
+                    <TextView
+                        android:id="@+id/tv_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_location"
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginLeft="4dp"
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="13sp"
+                        android:text="@{user.friends_count+` 关注`}"/>
+                    <TextView
+                        android:id="@+id/tv_fans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tv_follow"
+                        android:layout_alignBottom="@id/tv_follow"
+                        android:layout_marginLeft="@dimen/fab_margin"
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="13sp"
+                        android:text="@{user.followers_count+` 粉丝`}"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/fab_margin"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorTextLevel1"
+                            android:textSize="13sp"
+                            android:text="@{`全部微博 - `+user.statuses_count}"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_head_test"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:visibility="gone"
+            app:layout_anchor="@id/appbar"
+            app:layout_anchorGravity="bottom|left"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_user_follow"
+            android:id="@+id/btn_modify"
+            android:layout_gravity="bottom|right"
+            app:backgroundTint="@color/colorHighlight"
+            app:fabSize="normal" />
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
