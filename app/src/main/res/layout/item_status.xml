@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="status"
+            type="com.codez.collar.bean.StatusBean" />
+    </data>
+<LinearLayout
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorItemNormal"
+    android:orientation="vertical"
+    android:padding="@dimen/fab_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/block_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:imageUrl="@{status.user.profile_image_url}"
+                android:src="@drawable/pic_head_test" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom|right"
+                android:src="#fff" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="bottom|right"
+                android:src="@drawable/ic_vip_blue" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_toRightOf="@id/block_head"
+            android:text="@{status.user.screen_name}"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/block_head"
+            android:layout_alignLeft="@id/tv_name"
+            android:text="@{status.created_at}"
+            android:textColor="@color/colorTextLevel3"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_date"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_toRightOf="@id/tv_date"
+            android:text="@{status.source}"
+            android:textColor="@color/colorTextLevel3"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_weibo_arrow_gray_bottom" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:autoLink="web|phone|email"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@{status.text}"
+        android:textColor="@color/colorTextLevel1"
+        android:textSize="16sp" />
+
+    <com.jaeger.ninegridimageview.NineGridImageView
+        android:id="@+id/nineImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:visibility="gone"
+        app:imgGap="4dp"
+        app:showStyle="fill"
+        app:singleImgSize="120dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:layout_marginLeft="-16dp"
+        android:layout_marginRight="-16dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_weibo_like" />
+
+            <TextView
+                android:id="@+id/tv_likeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{``+status.attitudes_count}"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_weibo_comment" />
+
+            <TextView
+                android:id="@+id/tv_commentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{``+status.comments_count}"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_weibo_repost" />
+
+            <TextView
+                android:id="@+id/tv_repostCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@{``+status.reposts_count}"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_weibo_share" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+</layout>

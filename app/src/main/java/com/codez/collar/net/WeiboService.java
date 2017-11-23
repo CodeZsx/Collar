@@ -14,5 +14,8 @@ import rx.Observable;
 public interface WeiboService{
     String BASE_URL = Constants.BASE_URL + "statuses/";
     @GET("home_timeline.json")
-    Observable<WeiboBean> getWeibo(@Query("uid") String uid, @Query("page") int page);
+    Observable<WeiboBean> getHomeStatus(@Query("uid") String uid, @Query("page") int page);
+    @GET("user_timeline.json")
+    Observable<WeiboBean> getUserStatus(@Query("uid") String uid, @Query("page") int page);
+
 }

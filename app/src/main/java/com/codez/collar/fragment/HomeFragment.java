@@ -9,19 +9,9 @@ import com.codez.collar.R;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
-import com.codez.collar.bean.StatusBean;
-import com.codez.collar.bean.WeiboBean;
 import com.codez.collar.databinding.FragmentHomeBinding;
-import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.HomeTitleTextView;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
-
-import java.util.List;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements View.OnClickListener {
@@ -65,6 +55,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.btnAdd.setmScale(0.8f);
         mBinding.btnAdd.setLength(250);
 
+
+        UserWeiboFragment fragment = new UserWeiboFragment().newInstance("5538639136");
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_statuses,fragment)
+                .show(fragment).commit();
+
         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
         mBinding.tvRight.changeState(HomeTitleTextView.STATE_UNSELECTED);
         mBinding.tvLeft.setOnClickListener(this);
@@ -76,30 +71,29 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
 
     private void initData(){
 
-//        Subscription get =
-                HttpUtils.getInstance().getWeiboService(getContext())
-                .getWeibo("5538639136",1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<WeiboBean>() {
-                    @Override
-                    public void onCompleted() {
-                        L.e("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
-                    }
-
-                    @Override
-                    public void onNext(WeiboBean weiboBean) {
-                        L.e("onNext:"+weiboBean.getMax_id());
-                        List<StatusBean> list = weiboBean.getStatuses();
-                        L.e("size:" + list.size());
-                        L.e("no.1:"+list.get(0).toString());
-                    }
-                });
+//                HttpUtils.getInstance().getWeiboService(getContext())
+//                .getHomeStatus("5538639136",1)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<WeiboBean>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        L.e("onCompleted");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        L.e("onError:"+e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(WeiboBean weiboBean) {
+//                        L.e("onNext:"+weiboBean.getMax_id());
+//                        List<StatusBean> list = weiboBean.getStatuses();
+//                        L.e("size:" + list.size());
+//                        L.e("no.1:"+list.get(0).toString());
+//                    }
+//                });
     }
     @Override
     public void onClick(View v) {

@@ -1,6 +1,10 @@
 package com.codez.collar.bean;
 
 import android.databinding.BaseObservable;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 /**
  * Created by codez on 2017/11/21.
@@ -462,6 +466,13 @@ public class UserBean extends BaseObservable {
 
     public void setBlock_word(String block_word) {
         this.block_word = block_word;
+    }
+
+    @BindingAdapter(value = {"android:imageUrl"},requireAll = false)
+    public static void imageLoader(ImageView iv, String coverUrl){
+        Glide.with(iv.getContext())
+                .load(coverUrl)
+                .into(iv);
     }
 
     @Override
