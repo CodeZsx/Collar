@@ -12,7 +12,8 @@ import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityUserBinding;
-import com.codez.collar.fragment.UserWeiboFragment;
+import com.codez.collar.fragment.UserAlbumFragment;
+import com.codez.collar.fragment.StatusListFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 
@@ -64,6 +65,8 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
         uid = getIntent().getStringExtra(INTENT_KEY_UID);
         screen_name = getIntent().getStringExtra(INTENT_KEY_SCREEN_NAME);
         L.e("uid:"+uid+" screen_name:"+screen_name);
+
+
         HttpUtils.getInstance().getUserService(this)
                 .getUserInfo(uid, screen_name)
                 .subscribeOn(Schedulers.io())
@@ -90,14 +93,11 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (verticalOffset == 0) {//展开状态
-                    L.e("展开状态");
 
                 } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {//折叠状态
-                    L.e("折叠状态");
                     mBinding.collapsingToolbar.setTitleEnabled(true);
                     mBinding.toolbar.setBackgroundResource(R.color.colorToolbarBg);
                 } else {//中间状态
-                    L.e("中间状态");
                     mBinding.collapsingToolbar.setTitleEnabled(false);
                     mBinding.toolbar.setBackgroundColor(0x00000000);
                 }
@@ -108,7 +108,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return new UserWeiboFragment().newInstance(uid);
+                if (position == 0) {
+
+                    return new StatusListFragment().newInstance(uid, screen_name, StatusListFragment.VALUE_USER);
+                }else{
+                    return new UserAlbumFragment().newInstance(uid, screen_name);
+                }
             }
 
             @Override

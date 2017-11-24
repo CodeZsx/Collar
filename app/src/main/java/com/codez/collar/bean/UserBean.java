@@ -475,6 +475,18 @@ public class UserBean extends BaseObservable {
                 .into(iv);
     }
 
+    private static final String DPI_THUMB = "thumbnail";
+    private static final String DPI_MID = "bmiddle";
+    private static final String DPI_LARGE = "large";
+
+    @BindingAdapter(value = {"android:albumUrl"},requireAll = false)
+    public static void albumLoader(ImageView iv, String albumUrl){
+        Glide.with(iv.getContext())
+                .load(albumUrl.replace(DPI_THUMB, DPI_MID))
+                .into(iv);
+    }
+
+
     @Override
     public String toString() {
         return "UserBean{" +

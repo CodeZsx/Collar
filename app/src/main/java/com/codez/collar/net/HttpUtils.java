@@ -55,9 +55,7 @@ public class HttpUtils {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request r = addParam(chain.request());
-                        L.e("request:"+r.headers());
-                        L.e(r.method());
-                        L.e(r.url().toString());
+                        L.e(r.method()+" "+r.url().toString());
                         return chain.proceed(r);
                     }
                     private Request addParam(Request oldRequest){

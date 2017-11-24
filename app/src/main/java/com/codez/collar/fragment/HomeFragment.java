@@ -56,7 +56,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.btnAdd.setLength(250);
 
 
-        UserWeiboFragment fragment = new UserWeiboFragment().newInstance("5538639136");
+        StatusListFragment fragment = new StatusListFragment().newInstance(
+                AccessTokenKeeper.getUid(getContext()),null, StatusListFragment.VALUE_HOMME);
+
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_statuses,fragment)
                 .show(fragment).commit();
 

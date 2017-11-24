@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="bean"
+            type="com.codez.collar.bean.StatusBean.PicUrlsBean"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#fff"
+            android:albumUrl="@{bean.thumbnail_pic}"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
+
+</layout>

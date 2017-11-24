@@ -30,7 +30,7 @@
                 android:id="@+id/iv_head"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:imageUrl="@{status.user.profile_image_url}"
+                android:imageUrl="@{status.user.avatar_large}"
                 android:src="@drawable/pic_head_test" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -91,8 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fab_margin"
-        android:autoLink="web|phone|email"
-        android:lineSpacingMultiplier="1.4"
+        android:lineSpacingExtra="3dp"
         android:textColor="@color/colorTextLevel1"
         android:textSize="16sp" />
     <!--<com.codez.collar.ui.emojitextview.EmojiTextView-->

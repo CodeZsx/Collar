@@ -2,6 +2,7 @@ package com.codez.collar.ui.emojitextview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.codez.collar.R;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import java.util.regex.Matcher;
@@ -127,7 +129,13 @@ public class StatusContentTextUtil {
                 String imgName = Emoticons.getImgName(emoji);
                 if (!TextUtils.isEmpty(imgName)) {
                     int resId = context.getResources().getIdentifier(imgName, "drawable", context.getPackageName());
-                    Drawable emojiDrawable = context.getResources().getDrawable(resId);
+                    Drawable emojiDrawable = null;
+                    try {
+                        emojiDrawable = context.getResources().getDrawable(resId);
+                    } catch (Resources.NotFoundException e) {
+                        L.e("not found:" + resId + " name:" + imgName);
+                        e.printStackTrace();
+                    }
                     if (emojiDrawable != null) {
                         emojiDrawable.setBounds(0, 0, DensityUtil.sp2px(context, 17), DensityUtil.sp2px(context, 17));
                         ImageSpan imageSpan = new ImageSpan(emojiDrawable, ImageSpan.ALIGN_BOTTOM) {

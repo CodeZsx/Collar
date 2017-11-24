@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBgNormal"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/colorBgNormal"-->
+        <!--android:orientation="vertical">-->
         <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
@@ -22,15 +22,18 @@
                 <!--android:textColor="@color/colorTextLevel1"-->
                 <!--android:textSize="13sp" />-->
         <!--</LinearLayout>-->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <!---->
+        <!--<android.support.v4.widget.SwipeRefreshLayout-->
+            <!--android:id="@+id/swipeRefreshLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-    </LinearLayout>
+        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <!--</LinearLayout>-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 </layout>

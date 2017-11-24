@@ -16,6 +16,6 @@ public interface WeiboService{
     @GET("home_timeline.json")
     Observable<WeiboBean> getHomeStatus(@Query("uid") String uid, @Query("page") int page);
     @GET("user_timeline.json")
-    Observable<WeiboBean> getUserStatus(@Query("uid") String uid, @Query("page") int page);
+    Observable<WeiboBean> getUserStatus(@Query("uid") String uid, @Query("screen_name") String screen_name, @Query("page") int page);
 
 }
