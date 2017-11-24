@@ -1,7 +1,10 @@
 package com.codez.collar.fragment;
 
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -11,6 +14,7 @@ import com.codez.collar.bean.StatusBean;
 import com.codez.collar.bean.WeiboBean;
 import com.codez.collar.databinding.FragmentUserWeiboBinding;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
 
 import java.util.List;
@@ -25,6 +29,7 @@ public class UserWeiboFragment extends BaseFragment<FragmentUserWeiboBinding> im
     private static final String UID = "uid";
     private String mUid;
     private int curPage;
+    private int itemPadding;
     private StatusAdapter mStatusAdapter;
     @Override
     public int setContent() {
@@ -44,11 +49,27 @@ public class UserWeiboFragment extends BaseFragment<FragmentUserWeiboBinding> im
             mUid = getArguments().getString(UID);
         }
         curPage = 1;
+        itemPadding = DensityUtil.dp2px(getContext(), 8);
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mBinding.recyclerView.setNestedScrollingEnabled(false);
         mStatusAdapter = new StatusAdapter(getContext());
         mBinding.recyclerView.setAdapter(mStatusAdapter);
+        mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                super.onDraw(c, parent, state);
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.bottom = itemPadding;
+                if (parent.getChildAdapterPosition(view) == 0) {
+                    outRect.top=itemPadding;
+                }
+//                super.getItemOffsets(outRect, view, parent, state);
+            }
+        });
         loadData();
 
     }

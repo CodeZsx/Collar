@@ -9,17 +9,17 @@ import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.activity.SetupActivity;
 import com.codez.collar.base.BaseFragment;
-import com.codez.collar.databinding.FragmentUserBinding;
+import com.codez.collar.databinding.FragmentMineBinding;
 
 import skin.support.SkinCompatManager;
 
 
-public class UserFragment extends BaseFragment<FragmentUserBinding> implements View.OnClickListener {
+public class MineFragment extends BaseFragment<FragmentMineBinding> implements View.OnClickListener {
 
 
     @Override
     public int setContent() {
-        return R.layout.fragment_user;
+        return R.layout.fragment_mine;
     }
 
     @Override

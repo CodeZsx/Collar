@@ -93,9 +93,18 @@
         android:layout_marginTop="@dimen/fab_margin"
         android:autoLink="web|phone|email"
         android:lineSpacingMultiplier="1.4"
-        android:text="@{status.text}"
         android:textColor="@color/colorTextLevel1"
         android:textSize="16sp" />
+    <!--<com.codez.collar.ui.emojitextview.EmojiTextView-->
+        <!--android:id="@+id/tv_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/fab_margin"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:lineSpacingMultiplier="1.4"-->
+        <!--android:text="@{status.text}"-->
+        <!--android:textColor="@color/colorTextLevel1"-->
+        <!--android:textSize="15sp" />-->
 
     <com.jaeger.ninegridimageview.NineGridImageView
         android:id="@+id/nineImageView"

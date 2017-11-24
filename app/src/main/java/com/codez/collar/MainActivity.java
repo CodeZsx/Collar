@@ -16,7 +16,7 @@ import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityMainBinding;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MsgFragment;
-import com.codez.collar.fragment.UserFragment;
+import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.utils.L;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{
@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
         }
 
-        fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new UserFragment()};
+        fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new MineFragment()};
         getSupportFragmentManager().beginTransaction().add(R.id.container,fragments[0])
                 .show(fragments[0]).commit();
         mBinding.navBtnHome.setSelected(true);

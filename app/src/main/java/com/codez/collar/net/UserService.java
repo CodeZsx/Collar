@@ -15,6 +15,7 @@ import rx.Observable;
 public interface UserService{
     public static final String BASE_URL = Constants.BASE_URL + "users/";
     @GET("show.json")
-    Observable<UserBean> getUserInfo(@Query("uid") String uid);
+    Observable<UserBean> getUserInfo(@Query("uid") String uid,
+                                     @Query("screen_name") String screen_name);
 
 }

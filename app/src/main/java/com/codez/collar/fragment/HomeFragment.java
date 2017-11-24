@@ -134,7 +134,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 break;
             case R.id.iv_user:
                 startActivity(new Intent(getActivity(), UserActivity.class)
-                        .putExtra("uid", AccessTokenKeeper.getUid(getContext())));
+                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
                 break;
             case R.id.iv_scan:
                 break;

@@ -26,8 +26,16 @@ import rx.schedulers.Schedulers;
  */
 
 public class UserActivity extends BaseActivity<ActivityUserBinding>{
+    public static final String INTENT_KEY_UID = "uid";
+    public static final String INTENT_KEY_SCREEN_NAME = "screen_name";
+    public static final String INTENT_KEY_TYPE = "type";
+    public static final int INTENT_VALUE_UID = 1;
+    public static final int INTENT_VALUE_SCREEN_NAME = 2;
+
+
     private UserBean mUserBean;
     private String uid;
+    private String screen_name;
     @Override
     public int setContent() {
         return R.layout.activity_user;
@@ -52,9 +60,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
 
         }
 
-        uid = getIntent().getStringExtra("uid");
+
+        uid = getIntent().getStringExtra(INTENT_KEY_UID);
+        screen_name = getIntent().getStringExtra(INTENT_KEY_SCREEN_NAME);
+        L.e("uid:"+uid+" screen_name:"+screen_name);
         HttpUtils.getInstance().getUserService(this)
-                .getUserInfo(uid)
+                .getUserInfo(uid, screen_name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserBean>() {

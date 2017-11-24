@@ -20,6 +20,8 @@
     <color name="colorTextLevel2_night">#6b6c74</color>
     <color name="colorTextLevel3">#cccccc</color>
     <color name="colorTextLevel3_night">#303134</color>
+
+    <color name="colorTextStatusLink">#507daf</color>
     
     <color name="colorPatingLine">#cccccc</color>
     <color name="colorPatingLine_night">#303134</color>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.codez.collar.R;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemStatusBinding;
+import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
         }
         private void bindItem(StatusBean bean){
             mBinding.setStatus(bean);
+            mBinding.tvContent.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
+                    mContext, mBinding.tvContent));
             mBinding.executePendingBindings();
         }
     }

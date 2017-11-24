@@ -13,7 +13,7 @@ import com.codez.collar.databinding.FragmentBaseBinding;
  * Description:
  */
 
-public class AllWeiboFragment extends BaseFragment<FragmentBaseBinding> {
+public class HotStatusFragment extends BaseFragment<FragmentBaseBinding> {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

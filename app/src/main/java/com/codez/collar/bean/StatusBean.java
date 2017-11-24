@@ -192,9 +192,8 @@ public class StatusBean extends BaseObservable {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
-
     public void setText(String text) {
         this.text = text;
     }
