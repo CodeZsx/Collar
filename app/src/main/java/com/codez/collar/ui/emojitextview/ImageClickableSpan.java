@@ -4,8 +4,8 @@ import android.graphics.drawable.Drawable;
 import android.text.style.ImageSpan;
 import android.view.View;
 
-public abstract class ClickableImageSpan extends ImageSpan {
-    public ClickableImageSpan(Drawable b, int verticalAlignment) {
+public abstract class ImageClickableSpan extends ImageSpan {
+    public ImageClickableSpan(Drawable b, int verticalAlignment) {
         super(b, verticalAlignment);
     }
 

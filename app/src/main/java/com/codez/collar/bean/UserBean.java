@@ -479,10 +479,19 @@ public class UserBean extends BaseObservable {
     private static final String DPI_MID = "bmiddle";
     private static final String DPI_LARGE = "large";
 
-    @BindingAdapter(value = {"android:albumUrl"},requireAll = false)
-    public static void albumLoader(ImageView iv, String albumUrl){
+
+    @BindingAdapter(value = {"android:albumUrl", "android:definition"}, requireAll = true)
+    public static void albumLoader(ImageView iv, String albumUrl, String definition) {
+        String url = null;
+        if (definition.equals(DPI_THUMB)) {
+            url = albumUrl;
+        } else if (definition.equals(DPI_LARGE)) {
+            url = albumUrl.replace(DPI_THUMB, DPI_LARGE);
+        }else{
+            url = albumUrl.replace(DPI_THUMB, DPI_MID);
+        }
         Glide.with(iv.getContext())
-                .load(albumUrl.replace(DPI_THUMB, DPI_MID))
+                .load(url)
                 .into(iv);
     }
 

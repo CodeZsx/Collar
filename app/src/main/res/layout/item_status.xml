@@ -15,11 +15,14 @@
     android:layout_height="wrap_content"
     android:background="@color/colorItemNormal"
     android:orientation="vertical"
-    android:padding="@dimen/fab_margin">
+    android:paddingTop="@dimen/fab_margin"
+    android:paddingBottom="@dimen/fab_margin">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin">
 
         <FrameLayout
             android:id="@+id/block_head"
@@ -91,9 +94,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
         android:lineSpacingExtra="3dp"
         android:textColor="@color/colorTextLevel1"
-        android:textSize="16sp" />
+        android:textSize="15sp" />
     <!--<com.codez.collar.ui.emojitextview.EmojiTextView-->
         <!--android:id="@+id/tv_content"-->
         <!--android:layout_width="wrap_content"-->
@@ -105,15 +110,44 @@
         <!--android:textColor="@color/colorTextLevel1"-->
         <!--android:textSize="15sp" />-->
 
-    <com.jaeger.ninegridimageview.NineGridImageView
-        android:id="@+id/nineImageView"
+    <!--<com.jaeger.ninegridimageview.NineGridImageView-->
+        <!--android:id="@+id/nineImageView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/fab_margin"-->
+        <!--android:visibility="gone"-->
+        <!--app:imgGap="4dp"-->
+        <!--app:showStyle="fill"-->
+        <!--app:singleImgSize="120dp" />-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/ll_retweeted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:visibility="gone"
-        app:imgGap="4dp"
-        app:showStyle="fill"
-        app:singleImgSize="120dp" />
+        android:background="@color/colorBgNormal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+        <TextView
+            android:id="@+id/retweeted_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="15sp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/retweeted_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

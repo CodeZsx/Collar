@@ -28,6 +28,9 @@
     
     <color name="colorHighlight">#3F51B5</color>
 
+
+    <color name="background">#33000000</color>
+
     <!--<color name="colorPrimary_night">#ce3d3a</color>-->
     <!--<color name="colorPrimaryDark_night">#ce3d4b</color>-->
     <!--<color name="colorAccent_night">#FF4081</color>-->

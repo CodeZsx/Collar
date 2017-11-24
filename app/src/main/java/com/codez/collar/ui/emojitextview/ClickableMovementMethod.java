@@ -39,7 +39,7 @@ public class ClickableMovementMethod extends LinkMovementMethod {
             int off = layout.getOffsetForHorizontal(line, x);
 
             ClickableSpan[] link = buffer.getSpans(off, off, ClickableSpan.class);
-            ClickableImageSpan[] imageSpans = buffer.getSpans(off, off, ClickableImageSpan.class);
+            ImageClickableSpan[] imageSpans = buffer.getSpans(off, off, ImageClickableSpan.class);
 
             if (link.length != 0) {
                 if (action == MotionEvent.ACTION_UP) {

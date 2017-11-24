@@ -101,11 +101,10 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
                                 }
                             }
                         }
-                        mAdapter.notifyDataSetChanged();
-                        L.e("page:" + curPage + " " + mAdapter.getList().size());
                         if (mAdapter.getList().size() < 16) {
                             loadData();
                         }
+                        mAdapter.notifyDataSetChanged();
                     }
                 });
     }
