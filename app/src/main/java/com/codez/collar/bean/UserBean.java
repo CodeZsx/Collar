@@ -6,12 +6,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
+
 /**
  * Created by codez on 2017/11/21.
  * Description: user bean
  */
 
-public class UserBean extends BaseObservable {
+public class UserBean extends BaseObservable implements Serializable{
     /**
      * 用户UID（int64）
      */

@@ -15,7 +15,7 @@
             android:id="@+id/iv_pic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff"
+            android:background="#eee"
             android:albumUrl="@{bean.thumbnail_pic}"
             android:definition="@{`bmiddle`}"
             android:adjustViewBounds="true"

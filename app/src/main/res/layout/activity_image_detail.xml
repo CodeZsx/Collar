@@ -9,17 +9,28 @@
             name="url"
             type="String"/>
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000">
 
-        <uk.co.senab.photoview.PhotoView
-            android:id="@+id/photoView"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:albumUrl="@{url}"
-            android:definition="@{`large`}"/>
-    </LinearLayout>
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorHighlight"
+            app:tabTextColor="@color/colorTextLevel2" />
+    </RelativeLayout>
 </layout>

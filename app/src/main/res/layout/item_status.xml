@@ -131,10 +131,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBgNormal"
+        android:layout_marginTop="@dimen/fab_margin"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin">
+        android:paddingRight="@dimen/fab_margin"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/retweeted_content"
             android:layout_width="wrap_content"
@@ -152,17 +154,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="22dp"
-        android:layout_marginLeft="-16dp"
-        android:layout_marginRight="-16dp"
         android:layout_marginTop="10dp"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3">
-
-        </LinearLayout>
+            android:layout_weight="3"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -172,9 +172,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_weibo_like" />
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_like" />
 
             <TextView
                 android:id="@+id/tv_likeCount"
@@ -194,9 +194,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_weibo_comment" />
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_status_comment" />
 
             <TextView
                 android:id="@+id/tv_commentCount"
@@ -216,9 +216,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_weibo_repost" />
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_status_repost" />
 
             <TextView
                 android:id="@+id/tv_repostCount"
@@ -237,13 +237,11 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="gone">
-
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_weibo_share" />
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
 </layout>

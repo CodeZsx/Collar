@@ -4,11 +4,11 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.codez.collar.BR;
+import com.codez.collar.utils.HandleUtil;
 import com.codez.collar.utils.TimeUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -16,7 +16,9 @@ import java.util.regex.Pattern;
  * Description: weibo bean
  */
 
-public class StatusBean extends BaseObservable {
+public class StatusBean extends BaseObservable implements Serializable{
+    public static final String INTENT_SERIALIZABLE = "serializable";
+
     /**
      * 微博创建时间
      */
@@ -215,12 +217,7 @@ public class StatusBean extends BaseObservable {
     }
 
     public String getSource() {
-        Pattern p = Pattern.compile("<a[^>]*>([^<]*)</a>");
-        Matcher m = p.matcher(source);
-        while(m.find()) {
-            return m.group(1);
-        }
-        return null;
+        return HandleUtil.handleSource(source);
     }
 
     public void setSource(String source) {
@@ -406,7 +403,7 @@ public class StatusBean extends BaseObservable {
     /**
      * 微博的可见性及指定可见分组信息
      */
-    public class VisibleBean extends BaseObservable {
+    public class VisibleBean extends BaseObservable implements Serializable {
         public static final int VISIBLE_NORMAL = 0;
         public static final int VISIBLE_PRIVACY = 1;
         public static final int VISIBLE_GROUPED = 2;
@@ -445,7 +442,7 @@ public class StatusBean extends BaseObservable {
     /**
      * 微博图片
      */
-    public class PicUrlsBean extends BaseObservable {
+    public class PicUrlsBean extends BaseObservable implements Serializable{
         private String thumbnail_pic;
 
         public PicUrlsBean(String thumbnail_pic) {

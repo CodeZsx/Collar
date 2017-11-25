@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,12 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemStatusBinding;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,8 +93,10 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                 mBinding.llRetweeted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO:跳转status详情页
-                        T.s(mContext, "跳转详情页");
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
+                        mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                                .putExtras(mBundle));
                     }
                 });
             }
@@ -103,8 +106,10 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             mBinding.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO:跳转status详情页
-                    T.s(mContext, "跳转详情页");
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
+                    mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                            .putExtras(mBundle));
                 }
             });
             mBinding.ivHead.setOnClickListener(new View.OnClickListener() {

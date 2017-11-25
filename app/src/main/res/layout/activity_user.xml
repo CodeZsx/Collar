@@ -32,7 +32,7 @@
                 app:title="@{user.screen_name}"
                 app:titleEnabled="false"
                 app:collapsedTitleTextAppearance="@style/Toolbar.TitleText"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll|snap"
                 app:contentScrim="@android:color/transparent">
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -237,12 +237,12 @@
             android:layout_height="match_parent"
             android:background="@color/colorBgNormal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <com.codez.collar.ui.CustomViewPager
                 android:id="@+id/viewPager"
                 android:background="@color/colorItemNormal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>

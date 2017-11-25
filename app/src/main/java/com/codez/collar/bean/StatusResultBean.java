@@ -9,7 +9,7 @@ import java.util.List;
  * Description:
  */
 
-public class WeiboBean extends BaseObservable{
+public class StatusResultBean extends BaseObservable{
     private String next_cursor;
     private String since_id;
     private String max_id;

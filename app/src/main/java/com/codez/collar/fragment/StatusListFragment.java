@@ -10,7 +10,7 @@ import android.view.View;
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseFragment;
-import com.codez.collar.bean.WeiboBean;
+import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
@@ -92,7 +92,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         .getHomeStatus(mUid, 1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<WeiboBean>() {
+                        .subscribe(new Observer<StatusResultBean>() {
                             @Override
                             public void onCompleted() {
                                 L.e("onCompleted");
@@ -104,8 +104,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             }
 
                             @Override
-                            public void onNext(WeiboBean weiboBean) {
-                                handleData(weiboBean);
+                            public void onNext(StatusResultBean statusResultBean) {
+                                handleData(statusResultBean);
                             }
                         });
                 break;
@@ -115,7 +115,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         .getUserStatus(mUid, mScreenName, 1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<WeiboBean>() {
+                        .subscribe(new Observer<StatusResultBean>() {
                             @Override
                             public void onCompleted() {
                                 L.e("onCompleted");
@@ -127,8 +127,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             }
 
                             @Override
-                            public void onNext(WeiboBean weiboBean) {
-                                handleData(weiboBean);
+                            public void onNext(StatusResultBean statusResultBean) {
+                                handleData(statusResultBean);
                             }
                         });
                 break;
@@ -137,18 +137,18 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
     }
 
-    private void handleData(WeiboBean weiboBean) {
+    private void handleData(StatusResultBean statusResultBean) {
         if (curPage == 1) {
-            if (weiboBean != null && weiboBean.getStatuses() != null && weiboBean.getStatuses().size() > 0) {
+            if (statusResultBean != null && statusResultBean.getStatuses() != null && statusResultBean.getStatuses().size() > 0) {
                 if (mStatusAdapter == null) {
                     mStatusAdapter = new StatusAdapter(getContext());
                 }
-                mStatusAdapter.setList(weiboBean.getStatuses());
+                mStatusAdapter.setList(statusResultBean.getStatuses());
                 mStatusAdapter.notifyDataSetChanged();
                 mBinding.recyclerView.setAdapter(mStatusAdapter);
             }
         }else {
-            mStatusAdapter.addAll(weiboBean.getStatuses());
+            mStatusAdapter.addAll(statusResultBean.getStatuses());
             mStatusAdapter.notifyDataSetChanged();
         }
     }

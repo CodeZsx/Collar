@@ -18,8 +18,12 @@
     <color name="colorTextLevel1_night">#ffffff</color>
     <color name="colorTextLevel2">#737373</color>
     <color name="colorTextLevel2_night">#6b6c74</color>
-    <color name="colorTextLevel3">#cccccc</color>
+
+    <color name="colorTextLevel3">#a0a0a0</color>
     <color name="colorTextLevel3_night">#303134</color>
+
+    <color name="colorTextLevel4">#CCCCCC</color>
+    <color name="colorTextLevel4_night">#303134</color>
 
     <color name="colorTextStatusLink">#507daf</color>
     

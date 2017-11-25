@@ -11,7 +11,7 @@ import com.codez.collar.R;
 import com.codez.collar.adapter.AlbumAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.StatusBean;
-import com.codez.collar.bean.WeiboBean;
+import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentUserAlbumBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
@@ -79,7 +79,7 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
                 .getUserStatus(mUid, mScreenName, curPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<WeiboBean>() {
+                .subscribe(new Observer<StatusResultBean>() {
                     @Override
                     public void onCompleted() {
                         L.e("onCompleted");
@@ -91,8 +91,8 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
                     }
 
                     @Override
-                    public void onNext(WeiboBean weiboBean) {
-                        for (StatusBean status : weiboBean.getStatuses()) {
+                    public void onNext(StatusResultBean statusResultBean) {
+                        for (StatusBean status : statusResultBean.getStatuses()) {
                             if (status.getPic_urls().size() > 0) {
                                 mAdapter.addAll(status.getPic_urls());
                             }else{

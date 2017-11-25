@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
 //                .getHomeStatus("5538639136",1)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<WeiboBean>() {
+//                .subscribe(new Observer<StatusResultBean>() {
 //                    @Override
 //                    public void onCompleted() {
 //                        L.e("onCompleted");
@@ -89,7 +89,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
 //                    }
 //
 //                    @Override
-//                    public void onNext(WeiboBean weiboBean) {
+//                    public void onNext(StatusResultBean weiboBean) {
 //                        L.e("onNext:"+weiboBean.getMax_id());
 //                        List<StatusBean> list = weiboBean.getStatuses();
 //                        L.e("size:" + list.size());

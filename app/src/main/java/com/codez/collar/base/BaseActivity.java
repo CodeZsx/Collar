@@ -24,7 +24,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
-        setStatusBarTranslucent();
+//        setStatusBarTranslucent();message (1).png
         if (!Config.getCachedNight(this)&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
         }

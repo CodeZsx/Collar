@@ -3,6 +3,7 @@ package com.codez.collar.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.ImageDetailActivity;
+import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemAlbumBinding;
 import com.codez.collar.utils.ScreenUtil;
@@ -48,7 +50,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
 
     @Override
     public void onBindViewHolder(BindingViewHolder holder, int position) {
-        holder.bindItem(list.get(position));
+        holder.bindItem(list.get(position), position);
     }
 
     @Override
@@ -65,12 +67,19 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
             super(itemStatusBinding.llRoot);
             this.mBinding = itemStatusBinding;
         }
-        private void bindItem(final StatusBean.PicUrlsBean bean){
+        private void bindItem(final StatusBean.PicUrlsBean bean, final int postition){
             mBinding.ivPic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+
+                    AlbumsBean bean = new AlbumsBean();
+                    bean.setPic_urls(list);
+                    bean.setCurPosition(postition);
+
+                    bundle.putSerializable(AlbumsBean.INTENT_SERIALIZABLE, bean);
                     mContext.startActivity(new Intent(mContext, ImageDetailActivity.class)
-                    .putExtra(ImageDetailActivity.INTENT_KEY_URL, bean.getThumbnail_pic()));
+                    .putExtras(bundle));
                 }
             });
 

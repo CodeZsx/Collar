@@ -94,7 +94,6 @@ public class StatusContentTextUtil {
                 int start = matcher.start(3)-offset;
                 int end = start + url.length();
                 L.e("3 start:" + start + " length:" + url.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" url:"+url);
-                L.e(spannableStringBuilder.charAt(start) + "..." + spannableStringBuilder.charAt(end));
                 WeiBoContentClickableSpan urlClickableSpan = new WeiBoContentClickableSpan(context){
                     @Override
                     public void onClick(View widget) {
@@ -129,7 +128,7 @@ public class StatusContentTextUtil {
             }
             //emoji
             if (emoji != null) {
-                int start = matcher.start(4);
+                int start = matcher.start(4)-offset;
                 int end = start + emoji.length();
                 String imgName = Emoticons.getImgName(emoji);
                 if (!TextUtils.isEmpty(imgName)) {

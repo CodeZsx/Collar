@@ -1,12 +1,13 @@
 package com.codez.collar.activity;
 
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.databinding.ActivityImageDetailBinding;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
+import com.codez.collar.fragment.ImageDetailFragment;
 
 public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding> {
 
@@ -22,14 +23,29 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
 
         setStatusBarTranslucent();
 
-        String url = getIntent().getStringExtra(INTENT_KEY_URL);
-        mBinding.setUrl(url);
-        mBinding.photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+        final AlbumsBean bean = (AlbumsBean) getIntent().getSerializableExtra(AlbumsBean.INTENT_SERIALIZABLE);
+
+        final int size = bean.getPic_urls().size();
+
+        mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+
             @Override
-            public void onPhotoTap(View view, float x, float y) {
-                ImageDetailActivity.this.finish();
+            public Fragment getItem(int position) {
+                return new ImageDetailFragment().newInstance(bean.getPic_urls().get(position).getThumbnail_pic());
+            }
+
+            @Override
+            public int getCount() {
+                return size;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return "#";
             }
         });
+        mBinding.viewPager.setCurrentItem(bean.getCurPosition());
+        mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
 
     }
 }

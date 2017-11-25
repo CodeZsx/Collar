@@ -2,12 +2,14 @@ package com.codez.collar.bean;
 
 import android.databinding.BaseObservable;
 
+import java.io.Serializable;
+
 /**
  * Created by codez on 2017/11/21.
  * Description:
  */
 
-public class GeoBean extends BaseObservable{
+public class GeoBean extends BaseObservable implements Serializable{
     /** 经度坐标 */
     public String longitude;
     /** 维度坐标 */

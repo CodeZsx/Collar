@@ -103,9 +103,9 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
                 }
             }
         });
-        final String[] titles={"微博","相册"};
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            String[] titles = {"微博","相册"};
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
