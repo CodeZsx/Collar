@@ -73,6 +73,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             mBinding.tvContent.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
                     mContext, mBinding.tvContent));
 
+            if (bean.getUser().isVerified()) {
+                mBinding.ivVip.setVisibility(View.VISIBLE);
+            }
             //微博图片，根据无图片、多张图片进行不同的显示方式
             setStatusImage(mBinding.recyclerView, bean.getPic_urls());
 

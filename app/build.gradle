@@ -58,5 +58,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.orhanobut:logger:1.15'
 }

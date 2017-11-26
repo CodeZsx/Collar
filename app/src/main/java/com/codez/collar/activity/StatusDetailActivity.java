@@ -16,6 +16,7 @@ import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityStatusDetailBinding;
 import com.codez.collar.fragment.CommentListFragment;
+import com.codez.collar.fragment.RepostListFragment;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
 
@@ -76,7 +77,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
 
                     return new CommentListFragment().newInstance(bean.getId());
                 }else{
-                    return new CommentListFragment().newInstance(bean.getId());
+                    return new RepostListFragment().newInstance(bean.getId());
                 }
             }
 

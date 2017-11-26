@@ -8,9 +8,17 @@ import android.widget.CompoundButton;
 import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.activity.SetupActivity;
+import com.codez.collar.activity.UserActivity;
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentMineBinding;
+import com.codez.collar.net.HttpUtils;
+import com.codez.collar.utils.L;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import skin.support.SkinCompatManager;
 
 
@@ -44,10 +52,32 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             }
         });
         mBinding.ivSetup.setOnClickListener(this);
+        mBinding.rlHeader.setOnClickListener(this);
         initData();
     }
 
     private void initData(){
+        HttpUtils.getInstance().getUserService(getContext())
+                .getUserInfo(AccessTokenKeeper.getUid(getContext()), null)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<UserBean>() {
+                    @Override
+                    public void onCompleted() {
+                        L.e("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.e("onError");
+                    }
+
+                    @Override
+                    public void onNext(UserBean userBean) {
+                        L.e("onNext");
+                        mBinding.setUser(userBean);
+                    }
+                });
 
     }
     private void refreshNews() {
@@ -58,6 +88,10 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         switch (v.getId()) {
             case R.id.iv_setup:
                 startActivity(new Intent(getActivity(), SetupActivity.class));
+                break;
+            case R.id.rl_header:
+                startActivity(new Intent(getActivity(), UserActivity.class)
+                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
                 break;
         }
 

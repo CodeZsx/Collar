@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.UserActivity;
-import com.codez.collar.bean.CommentBean;
-import com.codez.collar.databinding.ItemCommentBinding;
+import com.codez.collar.bean.StatusBean;
+import com.codez.collar.databinding.ItemRepostBinding;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ import java.util.List;
  * Description:
  */
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingViewHolder> {
+public class RepostAdapter extends RecyclerView.Adapter<RepostAdapter.BindingViewHolder> {
 
     private Context mContext;
-    private List<CommentBean> list;
+    private List<StatusBean> list;
 
-    public CommentAdapter(Context mContext) {
+    public RepostAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
     }
@@ -37,8 +37,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
         if (mContext == null) {
             mContext = parent.getContext();
         }
-        ItemCommentBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_comment, parent, false);
+        ItemRepostBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_repost, parent, false);
         return new BindingViewHolder(mBinding);
     }
 
@@ -54,14 +54,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
 
     class BindingViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemCommentBinding mBinding;
+        private ItemRepostBinding mBinding;
 
-        public BindingViewHolder(ItemCommentBinding itemCommentBinding) {
-            super(itemCommentBinding.llRoot);
-            this.mBinding = itemCommentBinding;
+        public BindingViewHolder(ItemRepostBinding binding) {
+            super(binding.llRoot);
+            this.mBinding = binding;
         }
-        private void bindItem(final CommentBean bean){
-            mBinding.setComment(bean);
+        private void bindItem(final StatusBean bean){
+            mBinding.setStatus(bean);
 
             //正文
             mBinding.tvContent.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
@@ -70,6 +70,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
             if (bean.getUser().isVerified()) {
                 mBinding.ivVip.setVisibility(View.VISIBLE);
             }
+
 
             //点击事件
             mBinding.llRoot.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +98,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
     }
 
 
-    public void setList(List<CommentBean> list) {
+    public void setList(List<StatusBean> list) {
         this.list.clear();
         this.list = list;
     }
-    public void addAll(List<CommentBean> list){
+    public void addAll(List<StatusBean> list){
         this.list.addAll(list);
     }
 }

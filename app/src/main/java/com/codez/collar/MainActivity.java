@@ -15,8 +15,8 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityMainBinding;
 import com.codez.collar.fragment.HomeFragment;
-import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.fragment.MineFragment;
+import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.utils.L;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{

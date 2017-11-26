@@ -24,13 +24,13 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
-            android:layout_width="140dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorHighlight"
+            app:tabSelectedTextColor="#fff"
             app:tabTextColor="@color/colorTextLevel2" />
     </RelativeLayout>
 </layout>

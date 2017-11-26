@@ -33,6 +33,10 @@
     <color name="colorHighlight">#3F51B5</color>
 
 
+    <color name="layout_item_sel">#E4E4E4</color>
+    <color name="layout_item_nol">#ffffff</color>
+
+
     <color name="background">#33000000</color>
 
     <!--<color name="colorPrimary_night">#ce3d3a</color>-->

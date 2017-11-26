@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="comment"
-            type="com.codez.collar.bean.CommentBean" />
+            name="status"
+            type="com.codez.collar.bean.StatusBean" />
     </data>
 <LinearLayout
     android:id="@+id/ll_root"
@@ -32,7 +32,7 @@
                 android:id="@+id/iv_head"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:imageUrl="@{comment.user.avatar_large}"
+                android:imageUrl="@{status.user.avatar_large}"
                 android:src="@drawable/pic_head_test" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_toRightOf="@id/block_head"
-            android:text="@{comment.user.screen_name}"
+            android:text="@{status.user.screen_name}"
             android:textColor="@color/colorTextLevel1"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/block_head"
             android:layout_alignLeft="@id/tv_name"
-            android:text="@{comment.created_at}"
+            android:text="@{status.created_at}"
             android:textColor="@color/colorTextLevel3"
             android:textSize="12sp" />
 
@@ -72,7 +72,7 @@
             android:layout_alignBottom="@id/tv_date"
             android:layout_marginLeft="@dimen/fab_margin"
             android:layout_toRightOf="@id/tv_date"
-            android:text="@{comment.source}"
+            android:text="@{status.source}"
             android:textColor="@color/colorTextLevel3"
             android:textSize="12sp" />
 

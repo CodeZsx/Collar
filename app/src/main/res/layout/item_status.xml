@@ -35,18 +35,31 @@
                 android:layout_height="40dp"
                 android:imageUrl="@{status.user.avatar_large}"
                 android:src="@drawable/pic_head_test" />
-
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_vip"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:layout_gravity="bottom|right"
-                android:src="#fff" />
+                android:visibility="gone"
+                android:src="@drawable/ic_vip"/>
+            <!--<ImageView-->
+                <!--android:layout_width="14dp"-->
+                <!--android:layout_height="14dp"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:visibility="@{status.user.verified?View.VISIBLE:View.GONE}"-->
+                <!--android:src="@drawable/ic_vip"/>-->
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:layout_gravity="bottom|right"
-                android:src="@drawable/ic_vip_blue" />
+            <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:layout_width="14dp"-->
+                <!--android:layout_height="14dp"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:src="#fff" />-->
+
+            <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                <!--android:layout_width="14dp"-->
+                <!--android:layout_height="14dp"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:src="@drawable/ic_vip_blue" />-->
         </FrameLayout>
 
         <TextView

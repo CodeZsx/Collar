@@ -25,6 +25,20 @@
         <item name="android:textColor">@color/colorTextLevel1</item>
     </style>
 
+    <style name="SelectPicStyle" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_selectpic_enter</item>//进入时的动画
+        <item name="@android:windowExitAnimation">@anim/dialog_selectpic_exit</item>//退出时的动画
+    </style>
+    <style name="Dialog"/>
+    <style name="DialogStatement">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
     <style name="SwitchButtonStyleMD" parent="SwitchButtonMD">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>

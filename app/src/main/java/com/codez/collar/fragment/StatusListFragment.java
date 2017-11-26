@@ -27,7 +27,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private static final String KEY_SCREEN_NAME = "screen_name";
     private static final String KEY_SOURCE = "source";
     public static final int VALUE_USER = 1;
-    public static final int VALUE_HOMME = 2;
+    public static final int VALUE_HOME = 2;
+    public static final int VALUE_PUBLIC = 3;
 
 
     private String mUid;
@@ -87,7 +88,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private void loadData() {
 
         switch (mSource) {
-            case VALUE_HOMME:
+            case VALUE_HOME:
                 HttpUtils.getInstance().getWeiboService(getContext())
                         .getHomeStatus(mUid, 1)
                         .subscribeOn(Schedulers.io())
@@ -109,6 +110,29 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             }
                         });
                 break;
+            case VALUE_PUBLIC:
+                HttpUtils.getInstance().getWeiboService(getContext())
+                        .getPublicStatus(1)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<StatusResultBean>() {
+                            @Override
+                            public void onCompleted() {
+                                L.e("onCompleted");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                L.e("onError:"+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(StatusResultBean statusResultBean) {
+                                handleData(statusResultBean);
+                            }
+                        });
+                break;
+
             case VALUE_USER:
             default:
                 HttpUtils.getInstance().getWeiboService(getContext())

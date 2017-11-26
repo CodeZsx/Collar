@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="user"
+            type="com.codez.collar.bean.CommentBean" />
+    </data>
+<RelativeLayout
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/colorItemNormal"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_head"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:imageUrl="@{user.avatar_large}"
+        android:layout_centerVertical="true"
+        android:src="@drawable/pic_head_test" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_toRightOf="@id/iv_head"
+        android:layout_centerVertical="true"
+        android:text="@{user.screen_name}"
+        android:textColor="@color/colorTextLevel1"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_account_check"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:background="@color/colorPatingLine"/>
+</RelativeLayout>
+</layout>
