@@ -121,6 +121,7 @@ public class SDCardUtil {
             //Toast.makeText(context, fileName + "文件读取成功", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
+            L.e(e.toString());
             //Toast.makeText(context, fileName + "文件读取失败", Toast.LENGTH_SHORT).show();
         }
         return null;

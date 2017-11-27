@@ -64,9 +64,11 @@ public class AccessTokenKeeper {
         if (context == null) {
             return;
         }
+
         SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME,
                 Context.MODE_PRIVATE).edit();
         editor.clear();
         editor.commit();
+
     }
 }

@@ -1,6 +1,5 @@
 package com.codez.collar;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.codez.collar.auth.AccessTokenKeeper;
@@ -35,12 +33,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     public void initView() {
 
         L.e("MainActivity:"+ AccessTokenKeeper.readAccessToken(this).toString());
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        if (!Config.getCachedNight(this)&&Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
-        }
 
         fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new MineFragment()};
         getSupportFragmentManager().beginTransaction().add(R.id.container,fragments[0])

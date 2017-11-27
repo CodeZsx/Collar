@@ -10,4 +10,6 @@
     <dimen name="statusbar_height">20dp</dimen>
     <dimen name="toolbar_icon_size">26dp</dimen>
 
+    <dimen name="account_item_height">70dp</dimen>
+
 </resources>

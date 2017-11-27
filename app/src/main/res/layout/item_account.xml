@@ -1,54 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
             name="user"
             type="com.codez.collar.bean.UserBean" />
     </data>
-<RelativeLayout
-    android:id="@+id/ll_root"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="@color/colorItemNormal"
-    android:paddingLeft="@dimen/fab_margin"
-    android:paddingRight="@dimen/fab_margin">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_head"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:imageUrl="@{user.avatar_large}"
-        android:layout_centerVertical="true"
-        android:src="@drawable/pic_head_test" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/fab_margin"
-        android:layout_toRightOf="@id/iv_head"
-        android:layout_centerVertical="true"
-        android:text="@{user.screen_name}"
-        android:textColor="@color/colorTextLevel1"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_account_check"/>
-    <View
+    <LinearLayout
+        android:id="@+id/ll_root"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:background="@color/colorPatingLine"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/account_item_height"
+            android:background="@color/colorItemNormal"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:imageUrl="@{user.avatar_large}"
+                android:src="@drawable/pic_head_test" />
+
+            <TextView
+                android:id="@+id/tv_screen_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_toRightOf="@id/iv_head"
+                android:text="@{user.screen_name}"
+                android:textColor="@color/colorTextLevel1"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/iv_account_checked"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_account_check" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="72dp"
+                android:background="@color/colorPatingLine" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/account_item_height"
+            android:visibility="gone"
+            android:background="@color/colorItemNormal">
+            <ImageView
+                android:id="@+id/iv_add_account"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:background="#eeee"
+                android:src="@drawable/ic_account_add" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_toRightOf="@id/iv_add_account"
+                android:text="添加账号"
+                android:textColor="@color/colorTextLevel1"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </layout>

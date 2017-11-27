@@ -56,9 +56,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
 
         private ItemCommentBinding mBinding;
 
-        public BindingViewHolder(ItemCommentBinding itemCommentBinding) {
-            super(itemCommentBinding.llRoot);
-            this.mBinding = itemCommentBinding;
+        public BindingViewHolder(ItemCommentBinding binding) {
+            super(binding.llRoot);
+            this.mBinding = binding;
         }
         private void bindItem(final CommentBean bean){
             mBinding.setComment(bean);

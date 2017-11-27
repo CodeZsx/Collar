@@ -34,7 +34,7 @@
 
 
     <color name="layout_item_sel">#E4E4E4</color>
-    <color name="layout_item_nol">#ffffff</color>
+    <color name="layout_item_nol">@color/colorItemNormal</color>
 
 
     <color name="background">#33000000</color>

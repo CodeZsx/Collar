@@ -37,6 +37,11 @@ public class AccessTokenManager {
         updateAccessToken(context, accessToken, expiresIn, refreshToken, uid);
     }
 
+    public TokenList getTokenList(Context context) {
+        return TokenList.parse(SDCardUtil.get(context,
+                SDCardUtil.getSDCardPath() + TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
+    }
+
     public void deleteToken(Context context, String uid) {
         Gson gson = new Gson();
         TokenList tokenList = TokenList.parse(SDCardUtil.get(context,

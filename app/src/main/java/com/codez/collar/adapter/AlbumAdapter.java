@@ -63,9 +63,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
 
         private ItemAlbumBinding mBinding;
 
-        public BindingViewHolder(ItemAlbumBinding itemStatusBinding) {
-            super(itemStatusBinding.llRoot);
-            this.mBinding = itemStatusBinding;
+        public BindingViewHolder(ItemAlbumBinding binding) {
+            super(binding.llRoot);
+            this.mBinding = binding;
         }
         private void bindItem(final StatusBean.PicUrlsBean bean, final int postition){
             mBinding.ivPic.setOnClickListener(new View.OnClickListener() {

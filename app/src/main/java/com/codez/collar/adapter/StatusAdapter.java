@@ -62,9 +62,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
 
         private ItemStatusBinding mBinding;
 
-        public BindingViewHolder(ItemStatusBinding itemStatusBinding) {
-            super(itemStatusBinding.llRoot);
-            this.mBinding = itemStatusBinding;
+        public BindingViewHolder(ItemStatusBinding binding) {
+            super(binding.llRoot);
+            this.mBinding = binding;
         }
         private void bindItem(final StatusBean bean){
             mBinding.setStatus(bean);

@@ -87,7 +87,8 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_setup:
-                startActivity(new Intent(getActivity(), SetupActivity.class));
+                startActivity(new Intent(getActivity(), SetupActivity.class)
+                .putExtra(SetupActivity.INTENT_SCREENN_NAME, mBinding.tvSreenName.getText().toString()));
                 break;
             case R.id.rl_header:
                 startActivity(new Intent(getActivity(), UserActivity.class)

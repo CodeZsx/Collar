@@ -44,4 +44,12 @@ public class TokenList {
     public void setCurrUid(String currUid) {
         this.currUid = currUid;
     }
+
+    @Override
+    public String toString() {
+        return "TokenList{" +
+                "tokenList=" + tokenList +
+                ", currUid='" + currUid + '\'' +
+                '}';
+    }
 }

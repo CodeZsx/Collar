@@ -29,7 +29,9 @@
         <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.UserActivity" />
         <activity android:name=".activity.ImageDetailActivity" />
-        <activity android:name=".activity.StatusDetailActivity"></activity>
+        <activity android:name=".activity.StatusDetailActivity"/>
+        <activity android:name=".activity.AccountActivity"/>
+
     </application>
 
 </manifest>
