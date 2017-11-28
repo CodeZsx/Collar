@@ -1,11 +1,8 @@
 package com.codez.collar;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,32 +35,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         getSupportFragmentManager().beginTransaction().add(R.id.container,fragments[0])
                 .show(fragments[0]).commit();
         mBinding.navBtnHome.setSelected(true);
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        changeFragment(0);
-                        return true;
-                    case R.id.navigation_dashboard:
-                        changeFragment(1);
-                        return true;
-
-                }
-                return false;
-            }
-        });
-//        BottomNavigationBar bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.navigation);
-//        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
-//        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-//        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_nav_home).setActiveColor(R.color.colorPrimary))
-//                .addItem(new BottomNavigationItem(R.drawable.ic_nav_msg).setActiveColor(R.color.colorPrimary))
-//                .addItem(new BottomNavigationItem(R.drawable.ic_nav_find).setActiveColor(R.color.colorPrimary))
-//                .setFirstSelectedPosition(0)
-//                .initialise();
 
         mBinding.navBtnHome.setOnClickListener(this);
         mBinding.navBtnMsg.setOnClickListener(this);

@@ -1,81 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/statusbar_height"
-            android:background="@color/colorPrimaryDark"/>
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#ddd">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:background="@color/colorPrimary"
-                android:layout_marginTop="100dp"
-                android:gravity="center"
-                android:text="day/night"
-                android:textColor="#fff"
-                android:onClick="change"
-                android:clickable="true"/>
-        </FrameLayout>
+            android:background="#ddd"></FrameLayout>
 
-        <!--<com.ashokvarma.bottomnavigation.BottomNavigationBar-->
-        <!--android:id="@+id/navigation"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"/>-->
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:visibility="gone"
-            android:background="@color/colorToolbarBg"
-            app:menu="@menu/navigation" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@color/colorToolbarBg"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/nav_btn_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_nav_home"/>
-            <ImageView
-                android:id="@+id/nav_btn_msg"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_nav_msg"/>
-            <ImageView
-                android:id="@+id/nav_btn_user"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="12dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_nav_user"/>
-        </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/colorToolbarBg"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/nav_btn_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_nav_home" />
+
+                <ImageView
+                    android:id="@+id/nav_btn_msg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_nav_msg" />
+
+                <ImageView
+                    android:id="@+id/nav_btn_user"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_nav_user" />
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
     </LinearLayout>
 </layout>

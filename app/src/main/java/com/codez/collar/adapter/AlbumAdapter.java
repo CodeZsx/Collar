@@ -92,7 +92,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
     private void setImgSize(ItemAlbumBinding mBinding, StatusBean.PicUrlsBean bean) {
 
         if (list.size() == 1) {
-            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) mBinding.llRoot.getLayoutParams();
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) mBinding.llRoot.getLayoutParams();
             params.width = (int) (ScreenUtil.getScreenWidth(mContext) * 0.5);
             params.height = (int) (ScreenUtil.getScreenWidth(mContext) * 0.5);
             mBinding.llRoot.setLayoutParams(params);

@@ -46,8 +46,12 @@ public class HttpUtils {
     public UserService getUserService(Context context) {
         return getRetrofit(context, UserService.BASE_URL).create(UserService.class);
     }
+
     public CommentService getCommentService(Context context) {
         return getRetrofit(context, CommentService.BASE_URL).create(CommentService.class);
+    }
+    public SearchService getSearchService(Context context) {
+        return getRetrofit(context, SearchService.BASE_URL).create(SearchService.class);
     }
 
 

@@ -31,6 +31,7 @@
         <activity android:name=".activity.ImageDetailActivity" />
         <activity android:name=".activity.StatusDetailActivity"/>
         <activity android:name=".activity.AccountActivity"/>
+        <activity android:name=".activity.TopicActivity"/>
 
     </application>
 

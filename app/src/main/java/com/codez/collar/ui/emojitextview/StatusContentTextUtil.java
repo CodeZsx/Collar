@@ -15,8 +15,8 @@ import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.codez.collar.activity.TopicActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
@@ -83,7 +83,8 @@ public class StatusContentTextUtil {
                 WeiBoContentClickableSpan clickableSpan = new WeiBoContentClickableSpan(context) {
                     @Override
                     public void onClick(View widget) {
-                        Toast.makeText(context, "点击了话题：" + topic, Toast.LENGTH_LONG).show();
+                        context.startActivity(new Intent(context, TopicActivity.class)
+                                .putExtra(TopicActivity.INTENT_TOPIC, topic));
                     }
                 };
                 spannableStringBuilder.setSpan(clickableSpan, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);

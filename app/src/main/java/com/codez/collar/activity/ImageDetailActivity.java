@@ -2,6 +2,7 @@ package com.codez.collar.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
@@ -26,6 +27,10 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
         final AlbumsBean bean = (AlbumsBean) getIntent().getSerializableExtra(AlbumsBean.INTENT_SERIALIZABLE);
 
         final int size = bean.getPic_urls().size();
+
+        if (size == 1) {
+            mBinding.tabLayout.setVisibility(View.GONE);
+        }
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 

@@ -14,6 +14,8 @@
     <color name="colorItemNormal">@color/colorToolbarBg</color>
     <color name="colorItemNormal_night">@color/colorToolbarBg_night</color>
 
+    <color name="colorRetweetedBg">#F5F5F5</color>
+
     <color name="colorTextLevel1">#333333</color>
     <color name="colorTextLevel1_night">#ffffff</color>
     <color name="colorTextLevel2">#737373</color>

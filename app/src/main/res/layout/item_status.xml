@@ -42,24 +42,6 @@
                 android:layout_gravity="bottom|right"
                 android:visibility="gone"
                 android:src="@drawable/ic_vip"/>
-            <!--<ImageView-->
-                <!--android:layout_width="14dp"-->
-                <!--android:layout_height="14dp"-->
-                <!--android:layout_gravity="bottom|right"-->
-                <!--android:visibility="@{status.user.verified?View.VISIBLE:View.GONE}"-->
-                <!--android:src="@drawable/ic_vip"/>-->
-
-            <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:layout_width="14dp"-->
-                <!--android:layout_height="14dp"-->
-                <!--android:layout_gravity="bottom|right"-->
-                <!--android:src="#fff" />-->
-
-            <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:layout_width="14dp"-->
-                <!--android:layout_height="14dp"-->
-                <!--android:layout_gravity="bottom|right"-->
-                <!--android:src="@drawable/ic_vip_blue" />-->
         </FrameLayout>
 
         <TextView
@@ -112,26 +94,6 @@
         android:lineSpacingExtra="3dp"
         android:textColor="@color/colorTextLevel1"
         android:textSize="15sp" />
-    <!--<com.codez.collar.ui.emojitextview.EmojiTextView-->
-        <!--android:id="@+id/tv_content"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="@dimen/fab_margin"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:lineSpacingMultiplier="1.4"-->
-        <!--android:text="@{status.text}"-->
-        <!--android:textColor="@color/colorTextLevel1"-->
-        <!--android:textSize="15sp" />-->
-
-    <!--<com.jaeger.ninegridimageview.NineGridImageView-->
-        <!--android:id="@+id/nineImageView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="@dimen/fab_margin"-->
-        <!--android:visibility="gone"-->
-        <!--app:imgGap="4dp"-->
-        <!--app:showStyle="fill"-->
-        <!--app:singleImgSize="120dp" />-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_marginLeft="@dimen/fab_margin"
@@ -143,7 +105,7 @@
         android:id="@+id/ll_retweeted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBgNormal"
+        android:background="@color/colorRetweetedBg"
         android:layout_marginTop="@dimen/fab_margin"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"

@@ -131,6 +131,12 @@ public class StatusBean extends BaseObservable implements Serializable{
      */
     private ArrayList<PicUrlsBean> pic_urls;
     /**
+     * 微博图片id，微博接口中，话题搜索返回结果没有pic_urls，只有pic_ids
+     * 在gson赋值完成后，需要手动转换为pic_urls
+     */
+    private ArrayList<String> pic_ids;
+
+    /**
      * 缩略图的url，本地私有的字段，服务器不会返回此字段，在gson赋值完成后，需要手动为此字段赋值
      */
 
@@ -361,11 +367,29 @@ public class StatusBean extends BaseObservable implements Serializable{
     }
 
     public ArrayList<PicUrlsBean> getPic_urls() {
+        if (pic_urls == null) {
+            ArrayList<StatusBean.PicUrlsBean> urls = new ArrayList<>();
+            if (this.getPic_ids().size() > 0) {
+                StatusBean statusBean = new StatusBean();
+                for (String url : this.getPic_ids()) {
+                    urls.add(statusBean.new PicUrlsBean("http://wx4.sinaimg.cn/thumbnail/"+url+".jpg"));
+                }
+            }
+            return urls;
+        }
         return pic_urls;
     }
 
     public void setPic_urls(ArrayList<PicUrlsBean> pic_urls) {
         this.pic_urls = pic_urls;
+    }
+
+    public ArrayList<String> getPic_ids() {
+        return pic_ids;
+    }
+
+    public void setPic_ids(ArrayList<String> pic_ids) {
+        this.pic_ids = pic_ids;
     }
 
     public ArrayList<String> getThumbnail_pic_urls() {
