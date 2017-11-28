@@ -64,7 +64,7 @@
                 android:id="@+id/rl_header"
                 android:layout_width="match_parent"
                 android:layout_height="86dp"
-                android:background="@color/colorItemNormal">
+                android:background="@drawable/layout_item">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_head"
                     android:layout_width="54dp"
@@ -115,9 +115,11 @@
                 android:background="@color/colorItemNormal"
                 android:orientation="horizontal">
                 <LinearLayout
+                    android:id="@+id/block_status"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView
@@ -134,9 +136,11 @@
                         android:textColor="@color/colorTextLevel2"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/block_friend"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView
@@ -153,9 +157,11 @@
                         android:textColor="@color/colorTextLevel2"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/block_follower"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
                     <TextView

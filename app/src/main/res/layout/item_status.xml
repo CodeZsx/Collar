@@ -140,6 +140,7 @@
             android:layout_weight="3"/>
 
         <LinearLayout
+            android:id="@+id/block_like"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -162,6 +163,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/block_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -184,6 +186,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/block_repost"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

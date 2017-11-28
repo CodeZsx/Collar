@@ -53,6 +53,9 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         });
         mBinding.ivSetup.setOnClickListener(this);
         mBinding.rlHeader.setOnClickListener(this);
+        mBinding.blockStatus.setOnClickListener(this);
+        mBinding.blockFriend.setOnClickListener(this);
+        mBinding.blockFollower.setOnClickListener(this);
         initData();
     }
 
@@ -91,6 +94,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 .putExtra(SetupActivity.INTENT_SCREENN_NAME, mBinding.tvSreenName.getText().toString()));
                 break;
             case R.id.rl_header:
+            case R.id.block_status:
                 startActivity(new Intent(getActivity(), UserActivity.class)
                         .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
                 break;

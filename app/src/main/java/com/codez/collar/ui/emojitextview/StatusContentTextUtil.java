@@ -42,7 +42,7 @@ public class StatusContentTextUtil {
         Pattern pattern = Pattern.compile(ALL);
         Matcher matcher = pattern.matcher(spannableStringBuilder);
 
-        L.e(spannableStringBuilder.toString());
+//        L.e(spannableStringBuilder.toString());
         if (matcher.find()) {
             if (!(textView instanceof EditText)) {
                 textView.setMovementMethod(ClickableMovementMethod.getInstance());
@@ -60,12 +60,12 @@ public class StatusContentTextUtil {
             final String url = matcher.group(3);
             final String emoji = matcher.group(4);
 
-            L.e("offset:"+offset);
+//            L.e("offset:"+offset);
             //处理@用户
             if (at != null) {
                 int start = matcher.start(1)-offset;
                 int end = start + at.length();
-                L.e("1 start:" + start + " length:" + at.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" at:"+at);
+//                L.e("1 start:" + start + " length:" + at.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" at:"+at);
                 WeiBoContentClickableSpan myClickableSpan = new WeiBoContentClickableSpan(context) {
                     @Override
                     public void onClick(View widget) {
@@ -79,7 +79,7 @@ public class StatusContentTextUtil {
             if (topic != null) {
                 int start = matcher.start(2)-offset;
                 int end = start + topic.length();
-                L.e("2 start:" + start + " length:" + topic.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" topic:"+topic);
+//                L.e("2 start:" + start + " length:" + topic.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" topic:"+topic);
                 WeiBoContentClickableSpan clickableSpan = new WeiBoContentClickableSpan(context) {
                     @Override
                     public void onClick(View widget) {
@@ -94,7 +94,7 @@ public class StatusContentTextUtil {
             if (url != null) {
                 int start = matcher.start(3)-offset;
                 int end = start + url.length();
-                L.e("3 start:" + start + " length:" + url.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" url:"+url);
+//                L.e("3 start:" + start + " length:" + url.length() + " end:" + end+" size:"+spannableStringBuilder.length()+" url:"+url);
                 WeiBoContentClickableSpan urlClickableSpan = new WeiBoContentClickableSpan(context){
                     @Override
                     public void onClick(View widget) {
@@ -105,27 +105,6 @@ public class StatusContentTextUtil {
                 offset += url.length() - 4;
                 spannableStringBuilder.replace(start, end > 226 ? 226 : end, "点击链接");
                 spannableStringBuilder.setSpan(urlClickableSpan, start, start+4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-
-//                Drawable websiteDrawable = context.getResources().getDrawable(R.drawable.ic_content_link);
-//                websiteDrawable.setBounds(0, 0, websiteDrawable.getIntrinsicWidth(), websiteDrawable.getIntrinsicHeight());
-//                ImageClickableSpan imageSpan = new ImageClickableSpan(websiteDrawable, ImageSpan.ALIGN_BOTTOM) {
-//                    @Override
-//                    public void onClick(View widget) {
-//                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//                        context.startActivity(browserIntent);
-//                    }
-//
-//                    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
-//                        Drawable b = getDrawable();
-//                        canvas.save();
-//                        int transY = bottom - b.getBounds().bottom;
-//                        transY -= paint.getFontMetricsInt().descent / 2;
-//                        canvas.translate(x, transY);
-//                        b.draw(canvas);
-//                        canvas.restore();
-//                    }
-//                };
-//                spannableStringBuilder.setSpan(imageSpan, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
             //emoji
             if (emoji != null) {

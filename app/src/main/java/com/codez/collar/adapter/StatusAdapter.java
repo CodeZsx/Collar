@@ -130,6 +130,16 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()));
                 }
             });
+            mBinding.blockComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
+                    mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                            .putExtras(mBundle)
+                            .putExtra(StatusDetailActivity.INTENT_FROM_COMMENT, true));
+                }
+            });
             mBinding.executePendingBindings();
         }
 

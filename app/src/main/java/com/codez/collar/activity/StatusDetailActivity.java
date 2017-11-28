@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBinding> {
 
+    public static String INTENT_FROM_COMMENT = "from_comment";
+    private boolean isFromComment;
 
 
     @Override
@@ -37,6 +39,12 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
 
         //获取intent传递过来的bean
         final StatusBean bean = (StatusBean) getIntent().getSerializableExtra(StatusBean.INTENT_SERIALIZABLE);
+        isFromComment = getIntent().getBooleanExtra(INTENT_FROM_COMMENT, false);
+
+        if (isFromComment) {
+            mBinding.appbar.setExpanded(false);
+        }
+
         mBinding.setStatus(bean);
         //微博正文
         mBinding.tvContent.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
