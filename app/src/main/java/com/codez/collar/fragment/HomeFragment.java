@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
@@ -42,7 +43,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.btnAdd.addElement(R.drawable.ic_add_text, R.color.colorHighlight, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                T.s(getContext(), "add text");
+                startActivity(new Intent(getActivity(), PostActivity.class));
             }
         });
         mBinding.btnAdd.addElement(R.drawable.ic_add_album, R.color.colorHighlight, new View.OnClickListener() {
@@ -57,7 +58,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 T.s(getContext(), "add camera");
             }
         });
-        mBinding.btnAdd.setAngle(90);
+        mBinding.btnAdd.setAngle(80);
         mBinding.btnAdd.setmScale(0.8f);
         mBinding.btnAdd.setLength(250);
 
