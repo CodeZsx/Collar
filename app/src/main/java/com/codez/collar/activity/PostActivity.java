@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -26,6 +27,11 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
             setToolbarTitle(mBinding.toolbar, "发布微博");
         }
 
+        mBinding.ivAlbum.setOnClickListener(this);
+        mBinding.ivEmoj.setOnClickListener(this);
+        mBinding.ivAt.setOnClickListener(this);
+        mBinding.ivTopic.setOnClickListener(this);
+
     }
 
 
@@ -33,7 +39,9 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.iv_album:
+                startActivity(new Intent(this, AlbumActivity.class));
+                break;
         }
     }
 }

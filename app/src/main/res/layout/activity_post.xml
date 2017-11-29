@@ -37,15 +37,23 @@
             <EditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="120dp"
+
                 android:gravity="left|top"
+                android:imeOptions="actionDone"
+                android:background="@null"
                 android:hint="分享新鲜事"
                 android:padding="@dimen/fab_margin"
                 android:textColor="@color/colorTextLevel1"
                 android:textColorHint="@color/colorTextLevel3"
                 android:textSize="16sp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
+            </android.support.v7.widget.RecyclerView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -89,9 +97,17 @@
                     android:paddingRight="@dimen/fab_margin">
 
                     <ImageView
+                        android:id="@+id/iv_album"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_post_album" />
+                    <ImageView
                         android:id="@+id/iv_emoj"
                         android:layout_width="@dimen/toolbar_icon_size"
                         android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_toRightOf="@id/iv_album"
+                        android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_post_emoj" />
                     <ImageView
@@ -116,7 +132,7 @@
                         android:layout_height="@dimen/toolbar_icon_size"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_send_sel" />
+                        android:src="@drawable/ic_post_send" />
                 </RelativeLayout>
             </android.support.design.widget.AppBarLayout>
         </LinearLayout>
