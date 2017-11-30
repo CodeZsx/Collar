@@ -153,7 +153,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                 recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
             }
             recyclerView.setNestedScrollingEnabled(false);
-            AlbumAdapter mAdapter = new AlbumAdapter(mContext);
+            UserAlbumAdapter mAdapter = new UserAlbumAdapter(mContext);
             recyclerView.setAdapter(mAdapter);
             recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
                 int itemPadding = DensityUtil.dp2px(mContext, 4);

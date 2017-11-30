@@ -497,6 +497,13 @@ public class UserBean extends BaseObservable implements Serializable{
                 .into(iv);
     }
 
+    @BindingAdapter(value = {"android:localUri"},requireAll = false)
+    public static void localLoader(ImageView iv, String uri){
+        Glide.with(iv.getContext())
+                .load("file://" + uri)
+                .into(iv);
+    }
+
 
     @Override
     public String toString() {

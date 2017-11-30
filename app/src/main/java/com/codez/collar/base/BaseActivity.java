@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.codez.collar.Config;
-import com.codez.collar.utils.PermissionUtil;
+import com.codez.collar.tools.PermissionUtil;
 
 /**
  * Created by codez on 2017/11/17.

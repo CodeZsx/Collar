@@ -14,7 +14,7 @@ import com.codez.collar.R;
 import com.codez.collar.activity.ImageDetailActivity;
 import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.bean.StatusBean;
-import com.codez.collar.databinding.ItemAlbumBinding;
+import com.codez.collar.databinding.ItemUserAlbumBinding;
 import com.codez.collar.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -25,13 +25,13 @@ import java.util.List;
  * Description:
  */
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewHolder> {
+public class UserAlbumAdapter extends RecyclerView.Adapter<UserAlbumAdapter.BindingViewHolder> {
 
     private Context mContext;
     private List<StatusBean.PicUrlsBean> list;
-    private ItemAlbumBinding imgSize;
+    private ItemUserAlbumBinding imgSize;
 
-    public AlbumAdapter(Context mContext) {
+    public UserAlbumAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
     }
@@ -41,8 +41,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
         if (mContext == null) {
             mContext = parent.getContext();
         }
-        ItemAlbumBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
-                R.layout.item_album, parent, false);
+        ItemUserAlbumBinding mBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.item_user_album, parent, false);
 
         return new BindingViewHolder(mBinding);
     }
@@ -61,9 +61,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
 
     class BindingViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemAlbumBinding mBinding;
+        private ItemUserAlbumBinding mBinding;
 
-        public BindingViewHolder(ItemAlbumBinding binding) {
+        public BindingViewHolder(ItemUserAlbumBinding binding) {
             super(binding.llRoot);
             this.mBinding = binding;
         }
@@ -89,7 +89,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.BindingViewH
         }
     }
 
-    private void setImgSize(ItemAlbumBinding mBinding, StatusBean.PicUrlsBean bean) {
+    private void setImgSize(ItemUserAlbumBinding mBinding, StatusBean.PicUrlsBean bean) {
 
         if (list.size() == 1) {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) mBinding.llRoot.getLayoutParams();

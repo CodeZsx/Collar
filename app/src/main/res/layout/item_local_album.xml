@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="uri"
+            type="String"/>
+    </data>
+    <RelativeLayout
+        android:id="@+id/ll_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eee"
+            android:localUri="@{uri}"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_account_check"/>
+    </RelativeLayout>
+
+</layout>

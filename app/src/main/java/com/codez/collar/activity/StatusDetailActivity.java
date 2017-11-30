@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.codez.collar.R;
-import com.codez.collar.adapter.AlbumAdapter;
+import com.codez.collar.adapter.UserAlbumAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityStatusDetailBinding;
@@ -110,7 +110,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         }
         recyclerView.setNestedScrollingEnabled(false);
-        AlbumAdapter mAdapter = new AlbumAdapter(this);
+        UserAlbumAdapter mAdapter = new UserAlbumAdapter(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             int itemPadding = DensityUtil.dp2px(StatusDetailActivity.this, 4);

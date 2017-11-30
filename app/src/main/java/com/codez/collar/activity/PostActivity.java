@@ -40,7 +40,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_album:
-                startActivity(new Intent(this, AlbumActivity.class));
+                startActivity(new Intent(this, LocalAlbumActivity.class));
                 break;
         }
     }

@@ -36,7 +36,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize">
 
         </activity>
-        <activity android:name=".activity.AlbumActivity"/>
+        <activity android:name=".activity.LocalAlbumActivity"/>
 
     </application>
 

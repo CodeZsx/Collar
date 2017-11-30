@@ -1,5 +1,6 @@
 package com.codez.collar.bean;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -13,13 +14,35 @@ public class AlbumFolder {
      */
     private String folderName;
     /**
-     * 所有图片路径
+     * 所有图片
      */
-    private List<String> imageList;
+    private List<File> imageList;
     /**
-     * 第一张图片路径
+     * 第一张图片
      */
-    private String coverPath;
+    private File cover;
 
+    public String getFolderName() {
+        return folderName;
+    }
 
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
+    }
+
+    public List<File> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<File> imageList) {
+        this.imageList = imageList;
+    }
+
+    public File getCover() {
+        return cover;
+    }
+
+    public void setCover(File cover) {
+        this.cover = cover;
+    }
 }

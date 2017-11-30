@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.codez.collar.R;
-import com.codez.collar.adapter.AlbumAdapter;
+import com.codez.collar.adapter.UserAlbumAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.bean.StatusResultBean;
@@ -29,7 +29,7 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
     private String mUid;
     private String mScreenName;
     private int curPage;
-    private AlbumAdapter mAdapter;
+    private UserAlbumAdapter mAdapter;
     @Override
     public int setContent() {
         return R.layout.fragment_user_album;
@@ -53,7 +53,7 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
 
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         mBinding.recyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new AlbumAdapter(getContext());
+        mAdapter = new UserAlbumAdapter(getContext());
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             int itemPadding = DensityUtil.dp2px(getContext(), 4);
