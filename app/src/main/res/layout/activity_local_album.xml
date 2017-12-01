@@ -4,6 +4,11 @@
 
     <data>
 
+        <variable
+            name="count"
+            type="Integer">
+
+        </variable>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,19 +29,12 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:titleTextAppearance="@style/Toolbar.TitleText" >
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:foregroundGravity="right"
                     android:layout_marginLeft="150dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/fab_margin"
-                        android:layout_centerVertical="true"
-                        android:text="完成(0/9)"
-                        android:textSize="16sp"
-                        android:textColor="@drawable/tv_album_commit"/>
+
                 </RelativeLayout>
                 </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
@@ -64,14 +62,24 @@
                 android:layout_alignParentBottom="true"
                 android:background="#66000000">
                 <TextView
+                    android:id="@+id/tv_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginLeft="@dimen/fab_margin"
                     android:text="预览"
                     android:textColor="#fff"
                     android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/tv_commit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_centerVertical="true"
+                    android:text="@{`完成(`+count+`/9)`}"
+                    android:textSize="16sp"
+                    android:textColor="@drawable/tv_album_commit"/>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

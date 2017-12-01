@@ -10,27 +10,37 @@ import com.codez.collar.R;
 import com.codez.collar.adapter.LocalAlbumAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumFolder;
-import com.codez.collar.databinding.ActivityLocaAlbumBinding;
+import com.codez.collar.databinding.ActivityLocalAlbumBinding;
 import com.codez.collar.tools.ImageScan;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.T;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class LocalAlbumActivity extends BaseActivity<ActivityLocaAlbumBinding> implements View.OnClickListener{
+public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> implements View.OnClickListener{
 
     private ArrayList<AlbumFolder> mList = new ArrayList<>();
     private LocalAlbumAdapter mAdapter;
     @Override
     public int setContent() {
-        return R.layout.activity_loca_album;
+        return R.layout.activity_local_album;
     }
 
     @Override
     public void initView() {
         setToolbarTitle(mBinding.toolbar, "所有");
 
+        mBinding.setCount(0);
+
         mAdapter = new LocalAlbumAdapter(this);
+        mAdapter.addSelectedCountChangedListener(new LocalAlbumAdapter.OnSelectedCountChangedListener() {
+            @Override
+            public void onChanged(int count) {
+                mBinding.tvCommit.setSelected(count>0);
+                mBinding.setCount(count);
+            }
+        });
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mBinding.swipeRefreshLayout.setRefreshing(true);
@@ -64,6 +74,8 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocaAlbumBinding> i
                 mAdapter.notifyDataSetChanged();
             }
         };
+
+        mBinding.tvCommit.setOnClickListener(this);
     }
 
 
@@ -71,7 +83,10 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocaAlbumBinding> i
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.tv_commit:
+                //TODO
+                T.s(this, "完成");
+                break;
         }
     }
 }

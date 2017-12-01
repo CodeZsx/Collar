@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.codez.collar.R;
 import com.codez.collar.databinding.ItemLocalAlbumBinding;
 import com.codez.collar.utils.ScreenUtil;
@@ -25,10 +26,13 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
 
     private Context mContext;
     private List<String> list;
+    private int mSelectedCount;
+    private static final int SELECTED_COUNT = 9;
 
     public LocalAlbumAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
+        this.mSelectedCount = 0;
     }
 
     @Override
@@ -45,12 +49,12 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
 
     @Override
     public void onBindViewHolder(BindingViewHolder holder, int position) {
-        holder.bindItem(list.get(position), position);
+        holder.bindItem(position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.size()+1;
     }
 
 
@@ -59,21 +63,48 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
         private ItemLocalAlbumBinding mBinding;
 
         public BindingViewHolder(ItemLocalAlbumBinding binding) {
-            super(binding.llRoot);
+            super(binding.getRoot());
             this.mBinding = binding;
         }
-        private void bindItem(final String uri, final int postition){
-            mBinding.ivPic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    T.s(mContext, "click:"+uri);
-                }
-            });
-            mBinding.setUri(uri);
-            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) mBinding.llRoot.getLayoutParams();
+        private void bindItem(final int postition){
+            if (postition == 0) {
+                //此处为拍照项，可点击跳转拍照界面
+                mBinding.ivTakePhoto.setVisibility(View.VISIBLE);
+                mBinding.rlPic.setVisibility(View.GONE);
+                Glide.with(mContext)
+                        .load(R.drawable.pic_album_take_photo)
+                        .into(mBinding.ivTakePhoto);
+                mBinding.ivTakePhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Todo:跳转拍照界面
+                        T.s(mContext, "TODO跳转拍照");
+                    }
+                });
+            }else{
+                mBinding.ivPic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mBinding.ivSelect.isSelected()) {
+                            mBinding.ivSelect.setSelected(false);
+                            mSelectedCount--;
+                            onSelectedCountChangedListener.onChanged(mSelectedCount);
+                        } else if (mSelectedCount == SELECTED_COUNT) {
+                            T.s(mContext, "最多只能选择9张图片");
+                        } else {
+                            mBinding.ivSelect.setSelected(true);
+                            mSelectedCount++;
+                            onSelectedCountChangedListener.onChanged(mSelectedCount);
+                        }
+                    }
+                });
+                mBinding.setUri(list.get(postition-1));
+            }
+
+            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) mBinding.getRoot().getLayoutParams();
             params.width = (int) (ScreenUtil.getScreenWidth(mContext)*0.31);
             params.height = (int) (ScreenUtil.getScreenWidth(mContext)*0.31);
-            mBinding.llRoot.setLayoutParams(params);
+            mBinding.getRoot().setLayoutParams(params);
 
             mBinding.executePendingBindings();
         }
@@ -89,5 +120,13 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
 
     public List<String> getList() {
         return list;
+    }
+
+    private OnSelectedCountChangedListener onSelectedCountChangedListener;
+    public void addSelectedCountChangedListener(OnSelectedCountChangedListener listener) {
+        this.onSelectedCountChangedListener = listener;
+    }
+    public interface OnSelectedCountChangedListener {
+        void onChanged(int count);
     }
 }
