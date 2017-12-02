@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -46,6 +47,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
     @Override
     protected void onResume() {
         super.onResume();
+        requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         loadData();
     }
 

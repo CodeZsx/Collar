@@ -1,6 +1,5 @@
 package com.codez.collar.base;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -17,6 +16,9 @@ import android.view.WindowManager;
 import com.codez.collar.Config;
 import com.codez.collar.tools.PermissionUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by codez on 2017/11/17.
  * Description:
@@ -24,13 +26,14 @@ import com.codez.collar.tools.PermissionUtil;
 
 public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompatActivity {
     protected VD mBinding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
 //        setStatusBarTranslucent();
-        if (!Config.getCachedNight(this)&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (!Config.getCachedNight(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
         }
 
@@ -39,6 +42,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
 
 
     public abstract int setContent();
+
     public abstract void initView();
 
     protected void setToolbar(String title) {
@@ -67,13 +71,21 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     @Override
     protected void onResume() {
         super.onResume();
-        requestPermission();
     }
 
-    protected void requestPermission(){
-        //请求权限的相关操作
-        if (!PermissionUtil.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+    protected void requestPermission(String... permissons) {
+        ActivityCompat.requestPermissions(this, permissons, PERPERMISSION_REQUEST_CODE);
+
+        List<String> list = new ArrayList<>();
+        for (String permission : permissons) {
+            if (!(this.getPackageManager().checkPermission(permission, this.getPackageName()) == PackageManager.PERMISSION_GRANTED)) {
+                list.add(permission);
+            }
+        }
+
+        if (list.size()>0) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, list.get(0))) {
                 //用户曾经拒绝过授予权限，弹出dialog告知用户开启相关权限
                 PermissionUtil.requestPermission(this, new PermissionUtil.PermissionListener() {
                     @Override
@@ -84,21 +96,24 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
                     public void permissionDenied(@NonNull String[] permission) {
 
                     }
-                }, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+                }, permissons);
 
-            }else{
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERPERMISSION_STORAGE);            }
+            } else {
+                ActivityCompat.requestPermissions(this, permissons, PERPERMISSION_REQUEST_CODE);
+            }
         }
+
     }
 
-    private int PERPERMISSION_STORAGE = 1;
+    private static final int PERPERMISSION_REQUEST_CODE = 1;
+
     @Override
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERPERMISSION_STORAGE) {
+        if (requestCode == PERPERMISSION_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            }else{
+            } else {
                 requestPermission();
             }
             return;

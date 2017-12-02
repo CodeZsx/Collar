@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.KeyEvent;
@@ -119,24 +120,10 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
         }
     }
 
-//    private void requestSDCard() {
-//        PermissionsUtil.TipInfo info = new PermissionsUtil.TipInfo("注意:", "Collar需要获取存储权限", "拒绝", "打开权限");
-//
-//        L.e("has:"+PermissionsUtil.hasPermission(this, Manifest.permission_group.STORAGE,Manifest.permission_group.STORAGE));
-//        if (!PermissionsUtil.hasPermission(this, Manifest.permission_group.STORAGE)) {
-//            L.e("has in");
-//            PermissionsUtil.requestPermission(this, new PermissionListener() {
-//                @Override
-//                public void permissionGranted(@NonNull String[] permission) {
-//                    T.s(WebviewActivity.this, "用户授予了存储权限");
-//                }
-//
-//                @Override
-//                public void permissionDenied(@NonNull String[] permission) {
-//                    T.s(WebviewActivity.this, "用户拒绝了存储权限");
-//                    requestSDCard();
-//                }
-//            }, new String[]{Manifest.permission_group.STORAGE}, true, info);
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //账户信息需保存到本地，需获取本地sd卡读取权限
+        requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
 }

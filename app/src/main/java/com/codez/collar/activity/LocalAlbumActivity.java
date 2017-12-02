@@ -18,10 +18,11 @@ import com.codez.collar.utils.T;
 import java.io.File;
 import java.util.ArrayList;
 
-public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> implements View.OnClickListener{
+public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> implements View.OnClickListener {
 
     private ArrayList<AlbumFolder> mList = new ArrayList<>();
     private LocalAlbumAdapter mAdapter;
+
     @Override
     public int setContent() {
         return R.layout.activity_local_album;
@@ -37,7 +38,7 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> 
         mAdapter.addSelectedCountChangedListener(new LocalAlbumAdapter.OnSelectedCountChangedListener() {
             @Override
             public void onChanged(int count) {
-                mBinding.tvCommit.setSelected(count>0);
+                mBinding.tvCommit.setSelected(count > 0);
                 mBinding.setCount(count);
             }
         });
@@ -46,6 +47,7 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> 
         mBinding.swipeRefreshLayout.setRefreshing(true);
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             int itemPadding = DensityUtil.dp2px(LocalAlbumActivity.this, 4);
+
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 super.onDraw(c, parent, state);
@@ -60,7 +62,7 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> 
             }
         });
 
-        new ImageScan(this, getLoaderManager()){
+        new ImageScan(this, getLoaderManager()) {
 
             @Override
             public void onScanFinish(ArrayList<AlbumFolder> folders) {
@@ -77,8 +79,6 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> 
 
         mBinding.tvCommit.setOnClickListener(this);
     }
-
-
 
     @Override
     public void onClick(View v) {

@@ -38,7 +38,6 @@
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-
                 android:gravity="left|top"
                 android:imeOptions="actionDone"
                 android:background="@null"
@@ -67,11 +66,14 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_person_location_gray" />
                 <TextView
+                    android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_location"
+                    android:layout_marginRight="40dp"
                     android:layout_marginLeft="4dp"
+                    android:maxLines="1"
                     android:text="你在哪里？"
                     android:textColor="@color/colorTextLevel3"
                     android:textSize="12sp" />
@@ -128,6 +130,7 @@
                         android:src="@drawable/ic_post_topic"/>
 
                     <ImageView
+                        android:id="@+id/iv_commit"
                         android:layout_width="@dimen/toolbar_icon_size"
                         android:layout_height="@dimen/toolbar_icon_size"
                         android:layout_alignParentRight="true"
