@@ -66,6 +66,10 @@ public class HttpUtils {
                         return chain.proceed(r);
                     }
                     private Request addParam(Request oldRequest){
+                        L.e("header:"+oldRequest.headers().toString());
+                        if (oldRequest.method().equals("POST")){
+                            return oldRequest;
+                        }
                         HttpUrl.Builder builder = oldRequest.url()
                                 .newBuilder()
                                 .setEncodedQueryParameter("access_token", AccessTokenKeeper.getAccessToken(context));

@@ -14,12 +14,16 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.codez.collar.R;
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityPostBinding;
+import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -27,6 +31,7 @@ import rx.schedulers.Schedulers;
 public class PostActivity extends BaseActivity<ActivityPostBinding> implements View.OnClickListener{
 
     public static final String INTENT_REPOST = "repost";
+    private static final int STATUS_MAX_LENGTH = 140;
 
     private boolean isRepost;
 
@@ -36,7 +41,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
     }
 
     @Override
-    public void initView() {
+    public void initView(){
         isRepost = getIntent().getBooleanExtra(INTENT_REPOST, false);
         if (isRepost) {
             setToolbarTitle(mBinding.toolbar, "转发微博");
@@ -57,6 +62,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 }else{
                     mBinding.ivCommit.setSelected(true);
                 }
+                mBinding.tvStatusLength.setText((STATUS_MAX_LENGTH - s.length())+"");
             }
 
             @Override
@@ -71,6 +77,36 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         mBinding.ivCommit.setOnClickListener(this);
         mBinding.tvAddress.setOnClickListener(this);
 
+    }
+
+    private void postStatus() {
+        //对微博内容长度进行判断，超过STATUS_MAX_LENGTH（140）则不予发送
+        if (mBinding.etContent.length() > STATUS_MAX_LENGTH) {
+            T.s(this,"微博无法发送，内容长度超过140个字符！");
+            return;
+        }
+        //发送文字微博
+        HttpUtils.getInstance().getWeiboService(this)
+                .postTextStatus(AccessTokenKeeper.getAccessToken(this), mBinding.etContent.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<StatusBean>() {
+                    @Override
+                    public void onCompleted() {
+                        L.e("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.e("onError:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(StatusBean bean) {
+                        T.s(PostActivity.this, "微博发送成功");
+                        PostActivity.this.finish();
+                    }
+                });
     }
 
     private void getLocation() {
@@ -163,8 +199,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 break;
             case R.id.iv_commit:
                 if (mBinding.ivCommit.isSelected()) {
-                    //TODO:可发送状态
-                    T.s(this,"TODO发送微博");
+                    postStatus();
                 }
                 break;
             case R.id.tv_address:

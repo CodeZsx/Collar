@@ -1,9 +1,13 @@
 package com.codez.collar.net;
 
 import com.codez.collar.bean.RepostResultBean;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.bean.StatusResultBean;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -25,5 +29,11 @@ public interface WeiboService{
 
     @GET("repost_timeline.json")
     Observable<RepostResultBean> getRepostStatus(@Query("id") String id, @Query("page") int page);
+
+//    @Headers({"Content-Type:application/json;charset=UTF-8"})
+    @FormUrlEncoded
+    @POST("update.json")
+    Observable<StatusBean> postTextStatus(@Field("access_token") String access_token, @Field(value = "status", encoded = true) String status);
+
 
 }
