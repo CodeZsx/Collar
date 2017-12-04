@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.codez.collar.R;
@@ -39,4 +40,10 @@ public abstract class BaseFragment<VD extends ViewDataBinding> extends Fragment{
     public abstract int setContent();
 
     public abstract void initView(View root);
+
+    protected void setBgAlpha(float bgAlpha){
+        WindowManager.LayoutParams params = getActivity().getWindow().getAttributes();
+        params.alpha = bgAlpha;
+        getActivity().getWindow().setAttributes(params);
+    }
 }

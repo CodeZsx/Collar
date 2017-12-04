@@ -10,21 +10,23 @@ import android.view.View;
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseActivity;
-import com.codez.collar.bean.TopicResultBean;
+import com.codez.collar.bean.FavoriteBean;
+import com.codez.collar.bean.FavoriteResultBean;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityTopicBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements View.OnClickListener{
+public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> implements View.OnClickListener{
 
-    public static final String INTENT_TOPIC = "topic";
-    private String mTopic;
     private int curPage = 1;
     private StatusAdapter mAdapter;
 
@@ -35,10 +37,7 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
 
     @Override
     public void initView() {
-        mTopic = getIntent().getStringExtra(INTENT_TOPIC);
-        setToolbarTitle(mBinding.toolbar, mTopic);
-        mTopic = mTopic.substring(1, mTopic.length()-1);
-        L.e(mTopic);
+        setToolbarTitle(mBinding.toolbar, "我的收藏");
 
         mAdapter = new StatusAdapter(this, new StatusAdapter.OnChangeAlphaListener() {
             @Override
@@ -46,11 +45,12 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
                 setBgAlpha(alpha);
             }
         });
+        mAdapter.setType(StatusAdapter.TYPE_FAVORITE);
         mBinding.recyclerView.setAdapter(mAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            int itemPadding = DensityUtil.dp2px(TopicActivity.this, 8);
+            int itemPadding = DensityUtil.dp2px(FavoriteActivity.this, 8);
             @Override
             public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
                 super.onDraw(c, parent, state);
@@ -70,7 +70,7 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    T.s(TopicActivity.this, "加载更多");
+                    T.s(FavoriteActivity.this, "加载更多");
                     loadData();
                 }
             }
@@ -94,11 +94,11 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getSearchService(this)
-                .getSearchTopics(mTopic, curPage++)
+        HttpUtils.getInstance().getFavoriteService(this)
+                .getFavorite(curPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<TopicResultBean>() {
+                .subscribe(new Observer<FavoriteResultBean>() {
                     @Override
                     public void onCompleted() {
                         mBinding.swipeRefreshLayout.setRefreshing(false);
@@ -110,8 +110,12 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
                     }
 
                     @Override
-                    public void onNext(TopicResultBean topicResultBean) {
-                        mAdapter.addAll(topicResultBean.getStatuses());
+                    public void onNext(FavoriteResultBean resultBean) {
+                        List<StatusBean> list = new ArrayList<>();
+                        for (FavoriteBean favorite : resultBean.getFavorites()) {
+                            list.add(favorite.getStatus());
+                        }
+                        mAdapter.addAll(list);
                         mAdapter.notifyDataSetChanged();
                     }
                 });

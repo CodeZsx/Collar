@@ -124,6 +124,7 @@
                                 android:textSize="12sp" />
 
                             <ImageView
+                                android:id="@+id/iv_more_option"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_alignParentRight="true"
@@ -207,7 +208,7 @@
                                     android:layout_marginLeft="4dp"
                                     android:text="@{``+status.attitudes_count}"
                                     android:textColor="@color/colorTextLevel3"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -229,7 +230,7 @@
                                     android:layout_marginLeft="4dp"
                                     android:text="@{``+status.comments_count}"
                                     android:textColor="@color/colorTextLevel3"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -251,7 +252,7 @@
                                     android:layout_marginLeft="4dp"
                                     android:text="@{``+status.reposts_count}"
                                     android:textColor="@color/colorTextLevel3"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                         </LinearLayout>

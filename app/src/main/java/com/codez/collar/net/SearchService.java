@@ -12,8 +12,8 @@ import rx.Observable;
  */
 
 public interface SearchService {
-    String BASE_URL = Constants.BASE_URL + "search/";
-    @GET("topics.json")
+
+    @GET("search/topics.json")
     Observable<TopicResultBean> getSearchTopics(@Query("q") String q, @Query("page") int page);
 
 }

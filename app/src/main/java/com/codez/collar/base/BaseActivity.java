@@ -67,6 +67,11 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
             actionBar.setTitle(title);
         }
     }
+    protected void setBgAlpha(float bgAlpha){
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = bgAlpha;
+        getWindow().setAttributes(params);
+    }
 
     @Override
     protected void onResume() {

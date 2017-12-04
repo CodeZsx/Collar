@@ -7,6 +7,7 @@ import android.widget.CompoundButton;
 
 import com.codez.collar.Config;
 import com.codez.collar.R;
+import com.codez.collar.activity.FavoriteActivity;
 import com.codez.collar.activity.SetupActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
@@ -56,6 +57,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.blockStatus.setOnClickListener(this);
         mBinding.blockFriend.setOnClickListener(this);
         mBinding.blockFollower.setOnClickListener(this);
+        mBinding.itemFavorite.setOnClickListener(this);
         initData();
     }
 
@@ -97,6 +99,9 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             case R.id.block_status:
                 startActivity(new Intent(getActivity(), UserActivity.class)
                         .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
+                break;
+            case R.id.item_favorite:
+                startActivity(new Intent(getActivity(), FavoriteActivity.class));
                 break;
         }
 

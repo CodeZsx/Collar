@@ -12,8 +12,8 @@ import rx.Observable;
  */
 
 public interface CommentService {
-    String BASE_URL = Constants.BASE_URL + "comments/";
-    @GET("show.json")
+
+    @GET("comments/show.json")
     Observable<CommentResultBean> getStatusComment(@Query("id") String id, @Query("page") int page);
 
 }

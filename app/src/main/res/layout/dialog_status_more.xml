@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lin_round_bg_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_item"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:text="收藏"
+        android:textColor="@color/colorTextLevel1"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:background="@color/colorPatingLine"/>
+
+    <TextView
+        android:id="@+id/tv_follow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_item"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:text="关注"
+        android:textColor="@color/colorTextLevel1"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_destroy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_item"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:padding="20dp"
+        android:text="删除"
+        android:textColor="@color/colorTextLevel1"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:background="@color/colorPatingLine"/>
+
+
+</LinearLayout>
+</layout>

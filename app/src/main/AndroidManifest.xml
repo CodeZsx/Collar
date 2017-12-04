@@ -63,6 +63,7 @@
 
         </activity>
         <activity android:name=".activity.LocalAlbumActivity"/>
+        <activity android:name=".activity.FavoriteActivity"/>
 
     </application>
 

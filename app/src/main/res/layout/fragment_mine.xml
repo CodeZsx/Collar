@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="user"
-            type="com.codez.collar.bean.UserBean"/>
+            type="com.codez.collar.bean.UserBean" />
     </data>
+
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -17,24 +18,28 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@color/colorToolbarBg"
                 app:contentInsetStart="0dp"
-                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:text="我"
                         android:textColor="@color/colorTextLevel1"
-                        android:textSize="18sp"
-                        android:text="我"/>
+                        android:textSize="18sp" />
+
                     <ImageView
                         android:id="@+id/iv_setup"
                         android:layout_width="26dp"
@@ -42,7 +47,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/fab_margin"
-                        android:src="@drawable/ic_setup_gray"/>
+                        android:src="@drawable/ic_setup_gray" />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
@@ -60,44 +65,50 @@
             android:layout_height="match_parent"
             android:background="@color/colorBgNormal"
             android:orientation="vertical">
+
             <RelativeLayout
                 android:id="@+id/rl_header"
                 android:layout_width="match_parent"
                 android:layout_height="86dp"
                 android:background="@drawable/layout_item">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_head"
                     android:layout_width="54dp"
                     android:layout_height="54dp"
                     android:layout_marginLeft="@dimen/fab_margin"
                     android:layout_marginTop="@dimen/fab_margin"
-                    android:src="@drawable/pic_head_test"/>
+                    android:src="@drawable/pic_head_test" />
+
                 <LinearLayout
                     android:id="@+id/ll_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/iv_head"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="@dimen/fab_margin"
-                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_head"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/tv_sreen_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{user.screen_name}"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorTextLevel1" />
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:maxLines="1"
                         android:text="@{`简介：`+user.description}"
-                        android:textSize="12sp"
-                        android:textColor="@color/colorTextLevel2" />
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -106,14 +117,17 @@
                     android:layout_marginRight="@dimen/fab_margin"
                     android:src="@drawable/ic_weibo_arrow_gray_right" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"/>
+                android:layout_height="1px" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/colorItemNormal"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:id="@+id/block_status"
                     android:layout_width="0dp"
@@ -122,19 +136,22 @@
                     android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{``+user.statuses_count}"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel1"/>
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="微博"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel2"/>
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="14sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/block_friend"
                     android:layout_width="0dp"
@@ -143,19 +160,22 @@
                     android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{``+user.friends_count}"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel1"/>
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="关注"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel2"/>
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="14sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/block_follower"
                     android:layout_width="0dp"
@@ -164,50 +184,137 @@
                     android:background="@drawable/layout_item"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{``+user.followers_count}"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel1"/>
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="粉丝"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorTextLevel2"/>
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
+
             <RelativeLayout
+                android:id="@+id/item_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:background="@color/colorItemNormal">
+                android:background="@drawable/layout_item"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin">
+
+                <ImageView
+                    android:layout_width="@dimen/item_icon_size"
+                    android:layout_height="@dimen/item_icon_size"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_mine_favorite" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginLeft="42dp"
+                    android:text="我的收藏"
+                    android:textColor="@color/colorTextLevel1"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_like"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/layout_item"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin">
+
+                <ImageView
+                    android:layout_width="@dimen/item_icon_size"
+                    android:layout_height="@dimen/item_icon_size"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_mine_like" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="42dp"
+                    android:text="我的赞"
+                    android:textColor="@color/colorTextLevel1"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_group"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/layout_item"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin">
+
+                <ImageView
+                    android:layout_width="@dimen/item_icon_size"
+                    android:layout_height="@dimen/item_icon_size"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_mine_group" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="42dp"
+                    android:text="我的分组"
+                    android:textColor="@color/colorTextLevel1"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/layout_item"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin">
+
+                <ImageView
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_mine_theme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="42dp"
                     android:text="主题"
                     android:textColor="@color/colorTextLevel1"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
+
                 <com.kyleduo.switchbutton.SwitchButton
                     android:id="@+id/switchButton"
                     style="@style/SwitchButtonStyleMD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/fab_margin"
                     android:layout_centerVertical="true"
                     app:kswBackColor="@color/colorHighlight" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/switchButton"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/switchButton"
                     android:text="夜间模式"
-                    android:textSize="12sp"
-                    android:textColor="@color/colorTextLevel2"/>
+                    android:textColor="@color/colorTextLevel2"
+                    android:textSize="12sp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

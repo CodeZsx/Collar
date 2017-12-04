@@ -64,7 +64,12 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
         mBinding.recyclerView.setLayoutManager(layoutManager);
         mBinding.recyclerView.setNestedScrollingEnabled(false);
         mBinding.recyclerView.setHasFixedSize(true);
-        mStatusAdapter = new StatusAdapter(getContext());
+        mStatusAdapter = new StatusAdapter(getContext(), new StatusAdapter.OnChangeAlphaListener() {
+            @Override
+            public void setAlpha(float alpha) {
+                setBgAlpha(alpha);
+            }
+        });
         mBinding.recyclerView.setAdapter(mStatusAdapter);
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             int itemPadding = DensityUtil.dp2px(getContext(), 8);
@@ -135,6 +140,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
             case VALUE_USER:
             default:
+                mStatusAdapter.setType(StatusAdapter.TYPE_OWN);
                 HttpUtils.getInstance().getWeiboService(getContext())
                         .getUserStatus(mUid, mScreenName, 1)
                         .subscribeOn(Schedulers.io())
@@ -162,19 +168,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     }
 
     private void handleData(StatusResultBean statusResultBean) {
-        if (curPage == 1) {
-            if (statusResultBean != null && statusResultBean.getStatuses() != null && statusResultBean.getStatuses().size() > 0) {
-                if (mStatusAdapter == null) {
-                    mStatusAdapter = new StatusAdapter(getContext());
-                }
-                mStatusAdapter.setList(statusResultBean.getStatuses());
-                mStatusAdapter.notifyDataSetChanged();
-                mBinding.recyclerView.setAdapter(mStatusAdapter);
-            }
-        }else {
-            mStatusAdapter.addAll(statusResultBean.getStatuses());
-            mStatusAdapter.notifyDataSetChanged();
-        }
+        mStatusAdapter.addAll(statusResultBean.getStatuses());
+        mStatusAdapter.notifyDataSetChanged();
     }
 
 

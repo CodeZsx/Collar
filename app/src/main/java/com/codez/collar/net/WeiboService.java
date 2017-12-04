@@ -17,23 +17,26 @@ import rx.Observable;
  */
 
 public interface WeiboService{
-    String BASE_URL = Constants.BASE_URL + "statuses/";
-    @GET("home_timeline.json")
+
+    @GET("statuses/home_timeline.json")
     Observable<StatusResultBean> getHomeStatus(@Query("uid") String uid, @Query("page") int page);
 
-    @GET("user_timeline.json")
+    @GET("statuses/user_timeline.json")
     Observable<StatusResultBean> getUserStatus(@Query("uid") String uid, @Query("screen_name") String screen_name, @Query("page") int page);
 
-    @GET("public_timeline.json")
+    @GET("statuses/public_timeline.json")
     Observable<StatusResultBean> getPublicStatus(@Query("page") int page);
 
-    @GET("repost_timeline.json")
+    @GET("statuses/repost_timeline.json")
     Observable<RepostResultBean> getRepostStatus(@Query("id") String id, @Query("page") int page);
 
-//    @Headers({"Content-Type:application/json;charset=UTF-8"})
     @FormUrlEncoded
-    @POST("update.json")
+    @POST("statuses/update.json")
     Observable<StatusBean> postTextStatus(@Field("access_token") String access_token, @Field(value = "status", encoded = true) String status);
+
+    @FormUrlEncoded
+    @POST("statuses/update.json")
+    Observable<StatusBean> destroyStatus(@Field("access_token") String access_token, @Field("id") String id);
 
 
 }

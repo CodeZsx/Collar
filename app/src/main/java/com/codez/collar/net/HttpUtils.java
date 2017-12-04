@@ -40,18 +40,21 @@ public class HttpUtils {
 
 
     public WeiboService getWeiboService(Context context){
-        return getRetrofit(context, WeiboService.BASE_URL).create(WeiboService.class);
+        return getRetrofit(context, Constants.BASE_URL).create(WeiboService.class);
     }
 
     public UserService getUserService(Context context) {
-        return getRetrofit(context, UserService.BASE_URL).create(UserService.class);
+        return getRetrofit(context, Constants.BASE_URL).create(UserService.class);
     }
 
     public CommentService getCommentService(Context context) {
-        return getRetrofit(context, CommentService.BASE_URL).create(CommentService.class);
+        return getRetrofit(context, Constants.BASE_URL).create(CommentService.class);
     }
     public SearchService getSearchService(Context context) {
-        return getRetrofit(context, SearchService.BASE_URL).create(SearchService.class);
+        return getRetrofit(context, Constants.BASE_URL).create(SearchService.class);
+    }
+    public FavoriteService getFavoriteService(Context context) {
+        return getRetrofit(context, Constants.BASE_URL).create(FavoriteService.class);
     }
 
 
