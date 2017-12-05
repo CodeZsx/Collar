@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.codez.collar.activity.TopicActivity;
 import com.codez.collar.activity.UserActivity;
+import com.codez.collar.activity.WebviewActivity;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
 
@@ -40,7 +40,7 @@ public class StatusContentTextUtil {
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(source);
         //设置正则
         Pattern pattern = Pattern.compile(ALL);
-        Matcher matcher = pattern.matcher(spannableStringBuilder);
+        final Matcher matcher = pattern.matcher(spannableStringBuilder);
 
 //        L.e(spannableStringBuilder.toString());
         if (matcher.find()) {
@@ -98,7 +98,10 @@ public class StatusContentTextUtil {
                 WeiBoContentClickableSpan urlClickableSpan = new WeiBoContentClickableSpan(context){
                     @Override
                     public void onClick(View widget) {
-                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+//                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        //调用自己的webviewactivity
+                        context.startActivity(new Intent(context, WebviewActivity.class)
+                                .putExtra(WebviewActivity.INTENT_URL, url));
                     }
 
                 };
