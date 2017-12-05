@@ -1,7 +1,13 @@
 package com.codez.collar.activity;
 
-import android.support.v7.app.ActionBar;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -11,11 +17,13 @@ import android.webkit.WebViewClient;
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityWebviewBinding;
+import com.codez.collar.utils.T;
 
 public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
 
 
     public static final String INTENT_URL = "url";
+    private String mUrl;
     @Override
     public int setContent() {
         return R.layout.activity_webview;
@@ -24,28 +32,16 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
     @Override
     public void initView() {
 
-        setSupportActionBar(mBinding.toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
-            mBinding.toolbar.setTitle("网页");
-        }
+        setToolbarTitle(mBinding.toolbar,"网页");
 
 
-        String url = getIntent().getStringExtra(INTENT_URL);
+        mUrl = getIntent().getStringExtra(INTENT_URL);
 
         final WebSettings webSettings = mBinding.webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSaveFormData(false);
         webSettings.setSavePassword(false);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webSettings.setJavaScriptEnabled(true);
         mBinding.webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -53,7 +49,7 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
                 return true;
             }
         });
-        mBinding.webView.loadUrl(url);
+        mBinding.webView.loadUrl(mUrl);
         mBinding.webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -83,5 +79,30 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
                 super.onProgressChanged(view, newProgress);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_webview, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_copy_link) {
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setPrimaryClip(ClipData.newPlainText(null, mUrl));
+            T.s(this,"已复制到剪贴板");
+            return true;
+        }else if (id == R.id.action_browser) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl)));
+            return true;
+        } else if (id == R.id.action_refresh) {
+            mBinding.webView.loadUrl(mUrl);
+            mBinding.progressbar.setVisibility(View.VISIBLE);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
