@@ -65,6 +65,7 @@
         <activity android:name=".activity.LocalAlbumActivity"/>
         <activity android:name=".activity.FavoriteActivity"/>
         <activity android:name=".activity.WebviewActivity"/>
+        <activity android:name=".activity.FriendshipActivity"/>
 
     </application>
 

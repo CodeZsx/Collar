@@ -16,7 +16,7 @@ import rx.Observable;
  * Description:
  */
 
-public interface WeiboService{
+public interface StatusService {
 
     @GET("statuses/home_timeline.json")
     Observable<StatusResultBean> getHomeStatus(@Query("uid") String uid, @Query("page") int page);

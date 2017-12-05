@@ -132,7 +132,7 @@ public class UserBean extends BaseObservable implements Serializable{
     /**
      * 用户的最近一条微博信息字段
      */
-    public Object status;
+    public StatusBean status;
     /**
      * 是否允许所有人对我的微博进行评论
      */
@@ -382,11 +382,11 @@ public class UserBean extends BaseObservable implements Serializable{
         this.remark = remark;
     }
 
-    public Object getStatus() {
+    public StatusBean getStatus() {
         return status;
     }
 
-    public void setStatus(Object status) {
+    public void setStatus(StatusBean status) {
         this.status = status;
     }
 
@@ -469,6 +469,7 @@ public class UserBean extends BaseObservable implements Serializable{
     public void setBlock_word(String block_word) {
         this.block_word = block_word;
     }
+
 
     @BindingAdapter(value = {"android:imageUrl"},requireAll = false)
     public static void imageLoader(ImageView iv, String coverUrl){

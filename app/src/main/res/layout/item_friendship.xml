@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.codez.collar.bean.UserBean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_item"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_friendship_height"
+            android:background="@color/colorItemNormal"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:padding="@dimen/fab_margin">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:imageUrl="@{user.avatar_large}"
+                android:src="@drawable/pic_head_test" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/iv_head"
+                android:layout_toLeftOf="@id/btn_follow"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_screen_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.screen_name}"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextLevel1"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_last_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:maxLines="1"
+                    android:text="@{user.status.text}"
+                    android:textColor="@color/colorTextLevel2"
+                    android:textSize="14sp"/>
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btn_follow"
+                android:layout_width="@dimen/btn_follow_width"
+                android:layout_height="@dimen/btn_follow_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="关注"
+                android:textColor="@drawable/btn_follow_text"
+                android:background="@drawable/btn_follow"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

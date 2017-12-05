@@ -2,6 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:state_selected="false"
         android:state_pressed="false"
         >
         <shape>
@@ -15,6 +16,7 @@
         </shape>
     </item>
     <item
+        android:state_selected="false"
         android:state_pressed="true"
         >
         <shape>
@@ -25,6 +27,19 @@
                 android:radius="15dp" />
             <solid
                 android:color="@color/colorItemNormal" />
+        </shape>
+    </item>
+    <item
+        android:state_selected="true"
+        >
+        <shape>
+            <stroke
+                android:color="@color/colorHighlight"
+                android:width="1dp"/>
+            <corners
+                android:radius="15dp" />
+            <solid
+                android:color="@color/colorHighlight" />
         </shape>
     </item>
 </selector>

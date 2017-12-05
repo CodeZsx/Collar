@@ -39,8 +39,8 @@ public class HttpUtils {
     }
 
 
-    public WeiboService getWeiboService(Context context){
-        return getRetrofit(context, Constants.BASE_URL).create(WeiboService.class);
+    public StatusService getWeiboService(Context context){
+        return getRetrofit(context, Constants.BASE_URL).create(StatusService.class);
     }
 
     public UserService getUserService(Context context) {
@@ -55,6 +55,9 @@ public class HttpUtils {
     }
     public FavoriteService getFavoriteService(Context context) {
         return getRetrofit(context, Constants.BASE_URL).create(FavoriteService.class);
+    }
+    public FriendshipService getFriendshipService(Context context) {
+        return getRetrofit(context, Constants.BASE_URL).create(FriendshipService.class);
     }
 
 

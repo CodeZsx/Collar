@@ -18,15 +18,15 @@
         <RelativeLayout
             android:id="@+id/rl_account"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/account_item_height"
+            android:layout_height="@dimen/item_account_height"
             android:background="@color/colorItemNormal"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_head"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/item_head_size"
+                android:layout_height="@dimen/item_head_size"
                 android:layout_centerVertical="true"
                 android:imageUrl="@{user.avatar_large}"
                 android:src="@drawable/pic_head_test" />
@@ -60,13 +60,13 @@
         <RelativeLayout
             android:id="@+id/rl_add"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/account_item_height"
+            android:layout_height="@dimen/item_account_height"
             android:visibility="gone"
             android:background="@color/colorItemNormal">
             <ImageView
                 android:id="@+id/iv_add_account"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/item_head_size"
+                android:layout_height="@dimen/item_head_size"
                 android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:layout_marginLeft="@dimen/fab_margin"

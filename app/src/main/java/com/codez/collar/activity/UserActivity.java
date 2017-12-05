@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.content.Intent;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,11 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.codez.collar.R;
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityUserBinding;
-import com.codez.collar.fragment.UserAlbumFragment;
 import com.codez.collar.fragment.StatusListFragment;
+import com.codez.collar.fragment.UserAlbumFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 
@@ -26,7 +28,7 @@ import rx.schedulers.Schedulers;
  * Description:
  */
 
-public class UserActivity extends BaseActivity<ActivityUserBinding>{
+public class UserActivity extends BaseActivity<ActivityUserBinding> implements View.OnClickListener{
     public static final String INTENT_KEY_UID = "uid";
     public static final String INTENT_KEY_SCREEN_NAME = "screen_name";
     public static final String INTENT_KEY_TYPE = "type";
@@ -66,6 +68,10 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
         screen_name = getIntent().getStringExtra(INTENT_KEY_SCREEN_NAME);
         L.e("uid:"+uid+" screen_name:"+screen_name);
 
+
+        if (uid != null && uid.equals(AccessTokenKeeper.getUid(this))) {
+            mBinding.btnFollow.setVisibility(View.GONE);
+        }
 
         HttpUtils.getInstance().getUserService(this)
                 .getUserInfo(uid, screen_name)
@@ -127,6 +133,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
             }
         });
         mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
+
+        mBinding.tvFriends.setOnClickListener(this);
+        mBinding.tvFriendsCount.setOnClickListener(this);
+        mBinding.tvFollowers.setOnClickListener(this);
+        mBinding.tvFollowersCount.setOnClickListener(this);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,5 +158,24 @@ public class UserActivity extends BaseActivity<ActivityUserBinding>{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_friends:
+            case R.id.tv_friends_count:
+                startActivity(new Intent(this, FriendshipActivity.class)
+                        .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FRIENDS)
+                        .putExtra(FriendshipActivity.INTENT_UID,mUserBean.getId()));
+                break;
+            case R.id.tv_followers:
+            case R.id.tv_followers_count:
+                startActivity(new Intent(this, FriendshipActivity.class)
+                        .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FOLLOWERS)
+                        .putExtra(FriendshipActivity.INTENT_UID,mUserBean.getId()));
+                break;
+        }
+
     }
 }

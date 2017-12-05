@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.activity.FavoriteActivity;
+import com.codez.collar.activity.FriendshipActivity;
 import com.codez.collar.activity.SetupActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
@@ -99,6 +100,16 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             case R.id.block_status:
                 startActivity(new Intent(getActivity(), UserActivity.class)
                         .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
+                break;
+            case R.id.block_friend:
+                startActivity(new Intent(getActivity(), FriendshipActivity.class)
+                        .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FRIENDS)
+                .putExtra(FriendshipActivity.INTENT_UID,AccessTokenKeeper.getUid(getContext())));
+                break;
+            case R.id.block_follower:
+                startActivity(new Intent(getActivity(), FriendshipActivity.class)
+                        .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FOLLOWERS)
+                        .putExtra(FriendshipActivity.INTENT_UID,AccessTokenKeeper.getUid(getContext())));
                 break;
             case R.id.item_favorite:
                 startActivity(new Intent(getActivity(), FavoriteActivity.class));
