@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WebviewActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.UserActivity" />
         <activity android:name=".activity.ImageDetailActivity" />

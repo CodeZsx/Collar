@@ -14,10 +14,10 @@ import com.codez.collar.MainActivity;
 import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseActivity;
-import com.codez.collar.databinding.ActivityWebviewBinding;
+import com.codez.collar.databinding.ActivityLoginBinding;
 import com.codez.collar.utils.L;
 
-public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
     private String authurl = "https://open.weibo.cn/oauth2/authorize" + "?" + "client_id=" + Config.APP_KEY
             + "&response_type=token&redirect_uri=" + Config.REDIRECT_URL
@@ -28,7 +28,7 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
 
     @Override
     public int setContent() {
-        return R.layout.activity_webview;
+        return R.layout.activity_login;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class WebviewActivity extends BaseActivity<ActivityWebviewBinding> {
             AccessTokenManager accessTokenManager = new AccessTokenManager();
             accessTokenManager.addToken(this, accessToken, expiresIn, refreshToken, uid);
 
-            Intent intent = new Intent(WebviewActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //            intent.putExtra("fisrtstart", true);
             if (isComeFromAccountAty) {
                 intent.putExtra("comeFromAccoutActivity", true);

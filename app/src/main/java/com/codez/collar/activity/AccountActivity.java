@@ -53,7 +53,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
 
     private void loadData() {
         if (!AccessTokenKeeper.readAccessToken(this).isSessionsValid()) {
-            Intent intent = new Intent(this, WebviewActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }

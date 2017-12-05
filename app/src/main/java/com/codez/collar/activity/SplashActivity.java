@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
                         if (AccessTokenKeeper.readAccessToken(SplashActivity.this).isSessionsValid()) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);
                         }else {
-                            intent = new Intent(SplashActivity.this, WebviewActivity.class);
+                            intent = new Intent(SplashActivity.this, LoginActivity.class);
                         }
                         startActivity(intent);
                         SplashActivity.this.finish();
