@@ -12,6 +12,7 @@ import com.codez.collar.R;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ItemFriendshipBinding;
+import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
     private Context mContext;
     private List<UserBean> list;
     private String mType;
+    private List<String> mFriendsIds;
 
     public FriendshipAdapter(Context mContext) {
         this.mContext = mContext;
@@ -38,6 +40,14 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
 
     public void setType(String type) {
         this.mType = type;
+    }
+
+    public List<String> getFriendsIds() {
+        return mFriendsIds;
+    }
+
+    public void setFriendsIds(List<String> mFriendsIds) {
+        this.mFriendsIds = mFriendsIds;
     }
 
     @Override
@@ -70,6 +80,14 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
         }
         private void bindItem(final UserBean bean, int position){
             mBinding.setUser(bean);
+            L.e(bean.getIdstr());
+            if (mFriendsIds.contains(bean.getIdstr())){
+                if (bean.isFollow_me()) {
+                    mBinding.btnFollow.setText("互相关注");
+                }else{
+                    mBinding.btnFollow.setText("已关注");
+                }
+            }
             mBinding.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

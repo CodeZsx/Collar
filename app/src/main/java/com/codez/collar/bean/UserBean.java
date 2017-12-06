@@ -21,7 +21,7 @@ public class UserBean extends BaseObservable implements Serializable{
     /**
      * 字符串型的用户UID
      */
-    public String idStr;
+    public String idstr;
     /**
      * 用户昵称
      */
@@ -174,12 +174,12 @@ public class UserBean extends BaseObservable implements Serializable{
         this.id = id;
     }
 
-    public String getIdStr() {
-        return idStr;
+    public String getIdstr() {
+        return idstr;
     }
 
-    public void setIdStr(String idStr) {
-        this.idStr = idStr;
+    public void setIdstr(String idstr) {
+        this.idstr = idstr;
     }
 
     public String getScreen_name() {
@@ -510,7 +510,7 @@ public class UserBean extends BaseObservable implements Serializable{
     public String toString() {
         return "UserBean{" +
                 "id='" + id + '\'' +
-                ", idStr='" + idStr + '\'' +
+                ", idStr='" + idstr + '\'' +
                 ", screen_name='" + screen_name + '\'' +
                 ", name='" + name + '\'' +
                 ", province=" + province +

@@ -5,23 +5,22 @@ import android.databinding.BaseObservable;
 import java.util.List;
 
 /**
- * Created by codez on 2017/12/5.
+ * Created by codez on 2017/12/6.
  * Description:
  */
 
-public class FriendshipResultBean extends BaseObservable {
-    private List<UserBean> users;
+public class FriendsIdsResultBean extends BaseObservable{
+    private List<String> ids;
     private int next_cursor;
     private int previous_cursor;
     private int total_number;
-    private int display_total_number;
 
-    public List<UserBean> getUsers() {
-        return users;
+    public List<String> getIds() {
+        return ids;
     }
 
-    public void setUsers(List<UserBean> users) {
-        this.users = users;
+    public void setIds(List<String> ids) {
+        this.ids = ids;
     }
 
     public int getNext_cursor() {
@@ -48,22 +47,13 @@ public class FriendshipResultBean extends BaseObservable {
         this.total_number = total_number;
     }
 
-    public int getDisplay_total_number() {
-        return display_total_number;
-    }
-
-    public void setDisplay_total_number(int display_total_number) {
-        this.display_total_number = display_total_number;
-    }
-
     @Override
     public String toString() {
-        return "FriendshipResultBean{" +
-                "users=" + users +
+        return "FriendsIdsResultBean{" +
+                "ids=" + ids +
                 ", next_cursor=" + next_cursor +
                 ", previous_cursor=" + previous_cursor +
                 ", total_number=" + total_number +
-                ", display_total_number=" + display_total_number +
                 '}';
     }
 }

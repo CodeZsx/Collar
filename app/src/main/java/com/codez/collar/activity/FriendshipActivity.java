@@ -7,6 +7,7 @@ import android.view.View;
 import com.codez.collar.R;
 import com.codez.collar.adapter.FriendshipAdapter;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.bean.FriendsIdsResultBean;
 import com.codez.collar.bean.FriendshipResultBean;
 import com.codez.collar.databinding.ActivityBaseListBinding;
 import com.codez.collar.net.HttpUtils;
@@ -67,12 +68,39 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
         });
         //取消下拉刷新
         mBinding.swipeRefreshLayout.setEnabled(false);
+        //设置初始时加载提示
         mBinding.swipeRefreshLayout.setRefreshing(true);
 
         loadData();
     }
 
     private void loadData() {
+        HttpUtils.getInstance().getFriendshipService(this)
+                .getFriendsIds(mUid, null)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<FriendsIdsResultBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.e("onError"+e.toString());
+                        mBinding.swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onNext(FriendsIdsResultBean friendsIdsResultBean) {
+                        L.e(friendsIdsResultBean.toString());
+                        mAdapter.setFriendsIds(friendsIdsResultBean.getIds());
+                        loadFriendship();
+                    }
+                });
+    }
+
+    private void loadFriendship() {
         if (mType.equals(this.TYPE_FRIENDS)) {
             HttpUtils.getInstance().getFriendshipService(this)
                     .getFriends(mUid, null, 0)
@@ -86,7 +114,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
 
                         @Override
                         public void onError(Throwable e) {
-
+                            T.s(FriendshipActivity.this,"加载失败");
                         }
 
                         @Override
@@ -108,7 +136,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
 
                         @Override
                         public void onError(Throwable e) {
-
+                            T.s(FriendshipActivity.this,"加载失败");
                         }
 
                         @Override
@@ -118,7 +146,6 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                         }
                     });
         }
-
     }
 
 

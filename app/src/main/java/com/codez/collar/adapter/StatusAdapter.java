@@ -114,23 +114,30 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                 mBinding.llRetweeted.setVisibility(View.GONE);
             }else{
                 //转发微博体的正文
-                mBinding.retweetedContent.setText(
-                        StatusContentTextUtil.getWeiBoContent(
-                                "@" + bean.getRetweeted_status().getUser().getScreen_name() +
-                                        ":" + bean.getRetweeted_status().getText(),
-                                mContext, mBinding.retweetedContent));
-                //转发微博体的图片
-                setStatusImage(mBinding.retweetedRecyclerView, bean.getRetweeted_status().getPic_urls());
+                if (bean.getRetweeted_status().getUser() != null) {
+                    mBinding.retweetedContent.setText(
+                            StatusContentTextUtil.getWeiBoContent(
+                                    "@" + bean.getRetweeted_status().getUser().getScreen_name() +
+                                            ":" + bean.getRetweeted_status().getText(),
+                                    mContext, mBinding.retweetedContent));
+                    //转发微博体的图片
+                    setStatusImage(mBinding.retweetedRecyclerView, bean.getRetweeted_status().getPic_urls());
 
-                mBinding.llRetweeted.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle mBundle = new Bundle();
-                        mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
-                        mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
-                                .putExtras(mBundle));
-                    }
-                });
+                    mBinding.llRetweeted.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle mBundle = new Bundle();
+                            mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean.getRetweeted_status());
+                            mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                                    .putExtras(mBundle));
+                        }
+                    });
+                }else{//微博已被删除情况，无user
+                    mBinding.retweetedContent.setText(
+                            StatusContentTextUtil.getWeiBoContent(bean.getRetweeted_status().getText(),
+                                    mContext, mBinding.retweetedContent));
+                }
+
             }
 
 
@@ -144,6 +151,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtras(mBundle));
                 }
             });
+
 
 
             //status更多操作按钮 点击事件
@@ -232,6 +240,33 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                     if (mType == TYPE_OWN) {
                         dialog_more.findViewById(R.id.tv_follow).setVisibility(View.GONE);
                         dialog_more.findViewById(R.id.tv_destroy).setVisibility(View.VISIBLE);
+                        dialog_more.findViewById(R.id.tv_destroy).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                HttpUtils.getInstance().getWeiboService(mContext)
+                                        .destroyStatus(AccessTokenKeeper.getAccessToken(mContext), bean.getId())
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Observer<StatusBean>() {
+                                            @Override
+                                            public void onCompleted() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable e) {
+                                                T.s(mContext, "操作失败");
+                                            }
+
+                                            @Override
+                                            public void onNext(StatusBean bean) {
+                                                T.s(mContext, "删除微博成功");
+                                                notifyDataSetChanged();
+                                            }
+                                        });
+                                dialog_more.dismiss();
+                            }
+                        });
 
                     }else{
                         dialog_more.findViewById(R.id.tv_follow).setOnClickListener(new View.OnClickListener() {
