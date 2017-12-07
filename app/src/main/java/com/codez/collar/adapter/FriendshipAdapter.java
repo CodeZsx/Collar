@@ -10,12 +10,24 @@ import android.view.ViewGroup;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.UserActivity;
+import com.codez.collar.auth.AccessTokenKeeper;
+import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ItemFriendshipBinding;
+import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
+import com.codez.collar.utils.T;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.codez.collar.activity.UserActivity.BTN_BOTH_SIDE;
+import static com.codez.collar.activity.UserActivity.BTN_FOLLOW;
+import static com.codez.collar.activity.UserActivity.BTN_FOLLOWING;
 
 /**
  * Created by codez on 2017/11/21.
@@ -87,7 +99,64 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
                 }else{
                     mBinding.btnFollow.setText("已关注");
                 }
+                mBinding.btnFollow.setSelected(true);
             }
+            mBinding.btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mBinding.btnFollow.isSelected()) {
+                        HttpUtils.getInstance().getFriendshipService(mContext)
+                                .destroyFriendships(AccessTokenKeeper.getAccessToken(mContext), bean.getIdstr())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<FavoriteBean>() {
+                                    @Override
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        T.s(mContext, "操作失败");
+                                    }
+
+                                    @Override
+                                    public void onNext(FavoriteBean favoriteBean) {
+                                        T.s(mContext, "取消关注");
+                                        mBinding.btnFollow.setText(BTN_FOLLOW);
+                                        mBinding.btnFollow.setSelected(false);
+                                    }
+                                });
+                    }else{//未关注
+                        HttpUtils.getInstance().getFriendshipService(mContext)
+                                .createFriendships(AccessTokenKeeper.getAccessToken(mContext), bean.getIdstr())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<FavoriteBean>() {
+                                    @Override
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        T.s(mContext, "操作失败");
+                                    }
+
+                                    @Override
+                                    public void onNext(FavoriteBean favoriteBean) {
+                                        T.s(mContext, "关注成功");
+                                        if (bean.isFollow_me()) {
+                                            mBinding.btnFollow.setText(BTN_BOTH_SIDE);
+                                        }else{
+                                            mBinding.btnFollow.setText(BTN_FOLLOWING);
+                                        }
+                                        mBinding.btnFollow.setSelected(true);
+                                    }
+                                });
+                    }
+                }
+            });
             mBinding.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

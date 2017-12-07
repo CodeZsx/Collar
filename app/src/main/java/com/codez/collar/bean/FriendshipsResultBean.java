@@ -9,7 +9,7 @@ import java.util.List;
  * Description:
  */
 
-public class FriendshipResultBean extends BaseObservable {
+public class FriendshipsResultBean extends BaseObservable {
     private List<UserBean> users;
     private int next_cursor;
     private int previous_cursor;
@@ -58,7 +58,7 @@ public class FriendshipResultBean extends BaseObservable {
 
     @Override
     public String toString() {
-        return "FriendshipResultBean{" +
+        return "FriendshipsResultBean{" +
                 "users=" + users +
                 ", next_cursor=" + next_cursor +
                 ", previous_cursor=" + previous_cursor +

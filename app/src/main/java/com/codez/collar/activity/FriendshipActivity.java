@@ -8,7 +8,7 @@ import com.codez.collar.R;
 import com.codez.collar.adapter.FriendshipAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.FriendsIdsResultBean;
-import com.codez.collar.bean.FriendshipResultBean;
+import com.codez.collar.bean.FriendshipsResultBean;
 import com.codez.collar.databinding.ActivityBaseListBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
@@ -106,7 +106,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                     .getFriends(mUid, null, 0)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<FriendshipResultBean>() {
+                    .subscribe(new Observer<FriendshipsResultBean>() {
                         @Override
                         public void onCompleted() {
                             mBinding.swipeRefreshLayout.setRefreshing(false);
@@ -118,8 +118,8 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                         }
 
                         @Override
-                        public void onNext(FriendshipResultBean friendshipResultBean) {
-                            mAdapter.addAll(friendshipResultBean.getUsers());
+                        public void onNext(FriendshipsResultBean friendshipsResultBean) {
+                            mAdapter.addAll(friendshipsResultBean.getUsers());
                             mAdapter.notifyDataSetChanged();
                         }
                     });
@@ -128,7 +128,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                     .getFollowers(mUid, null, 0)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<FriendshipResultBean>() {
+                    .subscribe(new Observer<FriendshipsResultBean>() {
                         @Override
                         public void onCompleted() {
                             mBinding.swipeRefreshLayout.setRefreshing(false);
@@ -140,8 +140,8 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                         }
 
                         @Override
-                        public void onNext(FriendshipResultBean friendshipResultBean) {
-                            mAdapter.addAll(friendshipResultBean.getUsers());
+                        public void onNext(FriendshipsResultBean friendshipsResultBean) {
+                            mAdapter.addAll(friendshipsResultBean.getUsers());
                             mAdapter.notifyDataSetChanged();
                         }
                     });

@@ -12,12 +12,15 @@ import android.view.View;
 import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.bean.FavoriteBean;
+import com.codez.collar.bean.FriendshipsShowResultBean;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityUserBinding;
 import com.codez.collar.fragment.StatusListFragment;
 import com.codez.collar.fragment.UserAlbumFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
+import com.codez.collar.utils.T;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,10 +38,16 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
     public static final int INTENT_VALUE_UID = 1;
     public static final int INTENT_VALUE_SCREEN_NAME = 2;
 
+    public static final String BTN_FOLLOW = "关注";
+    public static final String BTN_FOLLOWING = "已关注";
+    public static final String BTN_BOTH_SIDE = "相互关注";
+
 
     private UserBean mUserBean;
     private String uid;
     private String screen_name;
+
+    private boolean isFollowMe = false;
     @Override
     public int setContent() {
         return R.layout.activity_user;
@@ -71,8 +80,43 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
 
         if (uid != null && uid.equals(AccessTokenKeeper.getUid(this))) {
             mBinding.btnFollow.setVisibility(View.GONE);
+        }else{
+            //获取登录用户和此用户的关系
+            HttpUtils.getInstance().getFriendshipService(this)
+                    .showFriendships(AccessTokenKeeper.getUid(this), uid)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<FriendshipsShowResultBean>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(FriendshipsShowResultBean friendshipsShowResultBean) {
+                            if (friendshipsShowResultBean.getSource().isFollowing()) {
+                                if (friendshipsShowResultBean.getSource().isFollowed_by()) {
+                                    mBinding.btnFollow.setText(BTN_BOTH_SIDE);
+                                    isFollowMe = true;
+                                }else{
+                                    mBinding.btnFollow.setText(BTN_FOLLOWING);
+                                }
+                                //selected标志位即为是否关注的标志位
+                                mBinding.btnFollow.setSelected(true);
+
+                            }
+                        }
+                    });
+
+
         }
 
+        //获取用户信息
         HttpUtils.getInstance().getUserService(this)
                 .getUserInfo(uid, screen_name)
                 .subscribeOn(Schedulers.io())
@@ -95,6 +139,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                         mBinding.setUser(userBean);
                     }
                 });
+
         mBinding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -138,6 +183,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         mBinding.tvFriendsCount.setOnClickListener(this);
         mBinding.tvFollowers.setOnClickListener(this);
         mBinding.tvFollowersCount.setOnClickListener(this);
+        mBinding.btnFollow.setOnClickListener(this);
 
     }
     @Override
@@ -174,6 +220,60 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                 startActivity(new Intent(this, FriendshipActivity.class)
                         .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FOLLOWERS)
                         .putExtra(FriendshipActivity.INTENT_UID,mUserBean.getId()));
+                break;
+            case R.id.btn_follow:
+                //following
+                if (mBinding.btnFollow.isSelected()) {
+                    HttpUtils.getInstance().getFriendshipService(this)
+                            .destroyFriendships(AccessTokenKeeper.getAccessToken(this), uid)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<FavoriteBean>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    T.s(UserActivity.this, "操作失败");
+                                }
+
+                                @Override
+                                public void onNext(FavoriteBean favoriteBean) {
+                                    T.s(UserActivity.this, "取消关注");
+                                    mBinding.btnFollow.setText(BTN_FOLLOW);
+                                    mBinding.btnFollow.setSelected(false);
+                                }
+                            });
+                }else{//未关注
+                    HttpUtils.getInstance().getFriendshipService(this)
+                            .createFriendships(AccessTokenKeeper.getAccessToken(this), uid)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<FavoriteBean>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    T.s(UserActivity.this, "操作失败");
+                                }
+
+                                @Override
+                                public void onNext(FavoriteBean favoriteBean) {
+                                    T.s(UserActivity.this, "关注成功");
+                                    if (isFollowMe) {
+                                        mBinding.btnFollow.setText(BTN_BOTH_SIDE);
+                                    }else{
+                                        mBinding.btnFollow.setText(BTN_FOLLOWING);
+                                    }
+                                    mBinding.btnFollow.setSelected(true);
+                                }
+                            });
+                }
                 break;
         }
 
