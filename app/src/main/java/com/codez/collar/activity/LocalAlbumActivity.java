@@ -11,7 +11,7 @@ import com.codez.collar.adapter.LocalAlbumAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumFolder;
 import com.codez.collar.databinding.ActivityLocalAlbumBinding;
-import com.codez.collar.tools.ImageScan;
+import com.codez.collar.utils.ImageScan;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.T;
 

@@ -1,4 +1,4 @@
-package com.codez.collar.tools;
+package com.codez.collar.utils;
 
 import android.app.LoaderManager;
 import android.content.Context;

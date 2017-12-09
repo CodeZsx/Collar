@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.codez.collar.Config;
-import com.codez.collar.tools.PermissionUtil;
+import com.codez.collar.utils.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;

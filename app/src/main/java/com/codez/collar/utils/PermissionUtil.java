@@ -1,4 +1,4 @@
-package com.codez.collar.tools;
+package com.codez.collar.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,8 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-
-import com.codez.collar.utils.L;
 
 /**
  * Created by codez on 2017/11/27.
