@@ -21,11 +21,11 @@ public class CommentResultBean extends BaseObservable{
     /**
      *
      */
-    private int previous_cursor;
+    private String previous_cursor;
     /**
      *
      */
-    private int next_cursor;
+    private String next_cursor;
     /**
      * 评论条数
      */
@@ -33,11 +33,11 @@ public class CommentResultBean extends BaseObservable{
     /**
      *
      */
-    private int since_id;
+    private String since_id;
     /**
      *
      */
-    private int max_id;
+    private String max_id;
     /**
      *
      */
@@ -59,19 +59,19 @@ public class CommentResultBean extends BaseObservable{
         this.hasvisible = hasvisible;
     }
 
-    public int getPrevious_cursor() {
+    public String getPrevious_cursor() {
         return previous_cursor;
     }
 
-    public void setPrevious_cursor(int previous_cursor) {
+    public void setPrevious_cursor(String previous_cursor) {
         this.previous_cursor = previous_cursor;
     }
 
-    public int getNext_cursor() {
+    public String getNext_cursor() {
         return next_cursor;
     }
 
-    public void setNext_cursor(int next_cursor) {
+    public void setNext_cursor(String next_cursor) {
         this.next_cursor = next_cursor;
     }
 
@@ -83,19 +83,19 @@ public class CommentResultBean extends BaseObservable{
         this.total_number = total_number;
     }
 
-    public int getSince_id() {
+    public String getSince_id() {
         return since_id;
     }
 
-    public void setSince_id(int since_id) {
+    public void setSince_id(String since_id) {
         this.since_id = since_id;
     }
 
-    public int getMax_id() {
+    public String getMax_id() {
         return max_id;
     }
 
-    public void setMax_id(int max_id) {
+    public void setMax_id(String max_id) {
         this.max_id = max_id;
     }
 

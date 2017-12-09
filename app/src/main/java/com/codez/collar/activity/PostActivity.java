@@ -87,7 +87,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         }
         //发送文字微博
         HttpUtils.getInstance().getWeiboService(this)
-                .postTextStatus(AccessTokenKeeper.getAccessToken(this), mBinding.etContent.getText().toString())
+                .createTextStatus(AccessTokenKeeper.getAccessToken(this), mBinding.etContent.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<StatusBean>() {

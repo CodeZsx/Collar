@@ -32,7 +32,7 @@ public interface StatusService {
 
     @FormUrlEncoded
     @POST("statuses/update.json")
-    Observable<StatusBean> postTextStatus(@Field("access_token") String access_token, @Field(value = "status", encoded = true) String status);
+    Observable<StatusBean> createTextStatus(@Field("access_token") String access_token, @Field(value = "status", encoded = true) String status);
 
     @FormUrlEncoded
     @POST("statuses/destroy.json")
