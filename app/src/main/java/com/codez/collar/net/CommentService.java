@@ -24,7 +24,7 @@ public interface CommentService {
     @FormUrlEncoded
     @POST("comments/create.json")
     Observable<CommentBean> createComment(@Field("access_token") String access_token, @Field(value = "comment", encoded = true) String comment,
-                                           @Field("id") String id, @Field("comment_ori") boolean comment_ori);
+                                           @Field("id") String id, @Field("comment_ori") int comment_ori);
 
     @FormUrlEncoded
     @POST("comments/destroy.json")

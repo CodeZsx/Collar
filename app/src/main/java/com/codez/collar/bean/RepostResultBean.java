@@ -13,8 +13,8 @@ import java.util.List;
 public class RepostResultBean extends BaseObservable implements Serializable{
     private List<StatusBean> reposts;
     private boolean hasvisible;
-    private int previous_cursor;
-    private int next_cursor;
+    private String previous_cursor;
+    private String next_cursor;
     private int total_number;
     private int interval;
 
@@ -34,19 +34,19 @@ public class RepostResultBean extends BaseObservable implements Serializable{
         this.hasvisible = hasvisible;
     }
 
-    public int getPrevious_cursor() {
+    public String getPrevious_cursor() {
         return previous_cursor;
     }
 
-    public void setPrevious_cursor(int previous_cursor) {
+    public void setPrevious_cursor(String previous_cursor) {
         this.previous_cursor = previous_cursor;
     }
 
-    public int getNext_cursor() {
+    public String getNext_cursor() {
         return next_cursor;
     }
 
-    public void setNext_cursor(int next_cursor) {
+    public void setNext_cursor(String next_cursor) {
         this.next_cursor = next_cursor;
     }
 

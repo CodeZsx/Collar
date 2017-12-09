@@ -79,7 +79,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
 
     }
 
-    private void postStatus() {
+    private void createStatus() {
         //对微博内容长度进行判断，超过STATUS_MAX_LENGTH（140）则不予发送
         if (mBinding.etContent.length() > STATUS_MAX_LENGTH) {
             T.s(this,"微博无法发送，内容长度超过140个字符！");
@@ -145,6 +145,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE);
+        mBinding.tvAddress.setText("定位中...");
         AMapLocationListener mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
@@ -199,7 +200,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 break;
             case R.id.iv_commit:
                 if (mBinding.ivCommit.isSelected()) {
-                    postStatus();
+                    createStatus();
                 }
                 break;
             case R.id.tv_address:
