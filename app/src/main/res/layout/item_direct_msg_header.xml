@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="status"
+            type="com.codez.collar.bean.StatusBean" />
+    </data>
+<LinearLayout
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_at"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_direct_msg_height"
+        android:background="@drawable/layout_item"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+        <ImageView
+            android:id="@+id/iv_head_at"
+            android:layout_width="@dimen/item_head_size"
+            android:layout_height="@dimen/item_head_size"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_msg_at"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head_at"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:text="\@我的"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_weibo_arrow_gray_right" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_direct_msg_height"
+        android:background="@drawable/layout_item"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+        <ImageView
+            android:id="@+id/iv_head_comment"
+            android:layout_width="@dimen/item_head_size"
+            android:layout_height="@dimen/item_head_size"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_msg_comment"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head_comment"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:text="评论"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_weibo_arrow_gray_right" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_like"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_direct_msg_height"
+        android:background="@drawable/layout_item"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+        <ImageView
+            android:id="@+id/iv_head_like"
+            android:layout_width="@dimen/item_head_size"
+            android:layout_height="@dimen/item_head_size"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_msg_like"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head_like"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:text="赞"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_weibo_arrow_gray_right" />
+    </RelativeLayout>
+
+</LinearLayout>
+</layout>

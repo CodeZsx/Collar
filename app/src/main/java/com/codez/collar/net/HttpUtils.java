@@ -59,6 +59,9 @@ public class HttpUtils {
     public FriendshipService getFriendshipService(Context context) {
         return getRetrofit(context, Constants.BASE_URL).create(FriendshipService.class);
     }
+    public DirectMsgService getDirectMsgService(Context context) {
+        return getRetrofit(context, Constants.BASE_URL).create(DirectMsgService.class);
+    }
 
 
     private Retrofit getRetrofit(final Context context, String baseUrl) {

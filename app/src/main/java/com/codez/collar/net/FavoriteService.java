@@ -16,8 +16,6 @@ import rx.Observable;
  */
 
 public interface FavoriteService {
-    String BASE_URL = Constants.BASE_URL + "favorites/";
-
     @GET("favorites.json")
     Observable<FavoriteResultBean> getFavorite(@Query("page") int page);
 
