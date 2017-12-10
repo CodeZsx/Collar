@@ -43,6 +43,10 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_weibo_arrow_gray_right" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorPatingLine"/>
     <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"
@@ -72,6 +76,10 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_weibo_arrow_gray_right" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorPatingLine"/>
     <RelativeLayout
         android:id="@+id/rl_like"
         android:layout_width="match_parent"
@@ -101,6 +109,9 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_weibo_arrow_gray_right" />
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorPatingLine"/>
 </LinearLayout>
 </layout>
