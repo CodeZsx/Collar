@@ -189,6 +189,10 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        //若查看用户即为当前用户，则不需加载menu
+        if (uid != null && uid.equals(AccessTokenKeeper.getUid(this))) {
+            return false;
+        }
         getMenuInflater().inflate(R.menu.menu_user, menu);
         return true;
     }
@@ -199,6 +203,9 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         if (id == R.id.action_remark) {
             return true;
         }else if (id == R.id.action_contact) {
+            startActivity(new Intent(this, DirectMsgActivity.class)
+                    .putExtra(DirectMsgActivity.INTENT_UID, mUserBean.getId())
+                    .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, mUserBean.getScreen_name()));
             return true;
         }else if (id == R.id.action_defriend) {
             return true;
