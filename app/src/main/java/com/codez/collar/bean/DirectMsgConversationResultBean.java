@@ -9,7 +9,7 @@ import java.util.List;
  * Description:
  */
 
-public class DirectMsgResultBean extends BaseObservable{
+public class DirectMsgConversationResultBean extends BaseObservable{
     private List<DirectMsgBean> direct_messages;
     private String previous_cursor;
     private String next_cursor;

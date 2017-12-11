@@ -1,6 +1,7 @@
 package com.codez.collar.net;
 
-import com.codez.collar.bean.DirectMsgResultBean;
+import com.codez.collar.bean.DirectMsgConversationResultBean;
+import com.codez.collar.bean.DirectMsgUserlistResultBean;
 import com.codez.collar.bean.FavoriteBean;
 
 import retrofit2.http.Field;
@@ -22,7 +23,24 @@ public interface DirectMsgService {
      * @return
      */
     @GET("direct_messages.json")
-    Observable<DirectMsgResultBean> getDirectMsg(@Query("page") int page);
+    Observable<DirectMsgConversationResultBean> getDirectMsg(@Query("page") int page);
+
+    /**
+     * 获取私信往来用户列表
+     * @param cursor
+     * @return
+     */
+    @GET("direct_messages/user_list.json")
+    Observable<DirectMsgUserlistResultBean> getDirectMsgUserlist(@Query("cursor") String cursor);
+
+    /**
+     * 获取与指定用户的往来私信列表
+     * @param uid
+     * @param page
+     * @return
+     */
+    @GET("direct_messages/conversation.json")
+    Observable<DirectMsgConversationResultBean> getDirectMsgConversation(@Query("uid") String uid, @Query("page") int page);
 
     /**
      * 发送一条私信

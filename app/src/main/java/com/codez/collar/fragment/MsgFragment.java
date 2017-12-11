@@ -6,7 +6,7 @@ import android.view.View;
 import com.codez.collar.R;
 import com.codez.collar.adapter.DirectMsgAdapter;
 import com.codez.collar.base.BaseFragment;
-import com.codez.collar.bean.DirectMsgResultBean;
+import com.codez.collar.bean.DirectMsgUserlistResultBean;
 import com.codez.collar.databinding.FragmentMsgBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
@@ -66,10 +66,10 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
 
     private void loadData() {
         HttpUtils.getInstance().getDirectMsgService(getContext())
-                .getDirectMsg(curPage)
+                .getDirectMsgUserlist("0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DirectMsgResultBean>() {
+                .subscribe(new Observer<DirectMsgUserlistResultBean>() {
                     @Override
                     public void onCompleted() {
 //                        mBinding.swipeRefreshLayout.setRefreshing(false);
@@ -82,8 +82,8 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                     }
 
                     @Override
-                    public void onNext(DirectMsgResultBean directMsgResultBean) {
-                        mAdapter.addAll(directMsgResultBean.getDirect_messages());
+                    public void onNext(DirectMsgUserlistResultBean directMsgUserlistResultBean) {
+                        mAdapter.addAll(directMsgUserlistResultBean.getUser_list());
                         mAdapter.notifyDataSetChanged();
                     }
                 });

@@ -1,6 +1,7 @@
 package com.codez.collar.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codez.collar.R;
-import com.codez.collar.bean.DirectMsgBean;
+import com.codez.collar.activity.DirectMsgActivity;
+import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.databinding.ItemDirectMsgBinding;
 import com.codez.collar.databinding.ItemDirectMsgHeaderBinding;
-import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private List<DirectMsgBean> list;
+    private List<DirectMsgUserlistBean> list;
     private static final int VIEW_TYPE_HEADER = 1;
     private static final int VIEW_TYPE_DIRECT_MSG = 0;
 
@@ -110,23 +111,30 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(binding.llRoot);
             this.mBinding = binding;
         }
-        private void bindItem(final DirectMsgBean bean, int position){
-            mBinding.setMsg(bean);
-            L.e(bean.getSender().getScreen_name()+":"+bean.getText());
+        private void bindItem(final DirectMsgUserlistBean bean, int position){
+            mBinding.setMsg(bean.getDirect_message());
+            mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, DirectMsgActivity.class)
+                            .putExtra(DirectMsgActivity.INTENT_UID, bean.getUser().getId())
+                            .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, bean.getUser().getScreen_name()));
+                }
+            });
             mBinding.executePendingBindings();
         }
     }
 
 
-    public void setList(List<DirectMsgBean> list) {
+    public void setList(List<DirectMsgUserlistBean> list) {
         this.list.clear();
         this.list = list;
     }
 
-    public void add(DirectMsgBean bean) {
+    public void add(DirectMsgUserlistBean bean) {
         this.list.add(bean);
     }
-    public void addAll(List<DirectMsgBean> list){
+    public void addAll(List<DirectMsgUserlistBean> list){
         this.list.addAll(list);
     }
 }

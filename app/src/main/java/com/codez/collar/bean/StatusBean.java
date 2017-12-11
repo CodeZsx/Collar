@@ -222,6 +222,7 @@ public class StatusBean extends BaseObservable implements Serializable{
         this.source_type = source_type;
     }
 
+    //去除a标签
     public String getSource() {
         return HandleUtil.handleSource(source);
     }
