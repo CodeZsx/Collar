@@ -22,8 +22,6 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
     @Override
     public void initView() {
 
-        setStatusBarTranslucent();
-
         final AlbumsBean bean = (AlbumsBean) getIntent().getSerializableExtra(AlbumsBean.INTENT_SERIALIZABLE);
 
         final int size = bean.getPic_urls().size();

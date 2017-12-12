@@ -37,6 +37,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
         }
 
+        setStatusBarTranslucent();
         initView();
     }
 

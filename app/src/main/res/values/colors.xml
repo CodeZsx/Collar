@@ -15,14 +15,15 @@
     <color name="colorItemNormal_night">@color/colorToolbarBg_night</color>
 
     <color name="colorRetweetedBg">#F5F5F5</color>
+    <color name="colorRetweetedBg_night">#222222</color>
 
     <color name="colorTextLevel1">#333333</color>
-    <color name="colorTextLevel1_night">#ffffff</color>
+    <color name="colorTextLevel1_night">#999999</color>
     <color name="colorTextLevel2">#737373</color>
     <color name="colorTextLevel2_night">#6b6c74</color>
 
     <color name="colorTextLevel3">#a0a0a0</color>
-    <color name="colorTextLevel3_night">#303134</color>
+    <color name="colorTextLevel3_night">#6b6c74</color>
 
     <color name="colorTextLevel4">#CCCCCC</color>
     <color name="colorTextLevel4_night">#303134</color>
@@ -37,7 +38,8 @@
 
     <color name="layout_item_sel">#E4E4E4</color>
     <color name="layout_item_nol">@color/colorItemNormal</color>
-
+    <color name="layout_item_sel_night">#E4E4E4</color>
+    <color name="layout_item_nol_night">@color/colorItemNormal_night</color>
 
     <color name="background">#33000000</color>
 

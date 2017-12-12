@@ -56,8 +56,6 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
     @Override
     public void initView() {
 
-        setStatusBarTranslucent();
-
         setSupportActionBar(mBinding.toolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

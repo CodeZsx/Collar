@@ -12,7 +12,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f2f2f2"
+    android:background="@color/colorBgNormal"
     android:orientation="vertical"
     android:paddingBottom="16dp">
     
@@ -66,7 +66,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:textSize="16sp"
-            android:textColor="@color/colorTextLevel1"/>
+            android:textColor="#333333"/>
         <ImageView
             android:id="@+id/iv_picture"
             android:layout_width="wrap_content"

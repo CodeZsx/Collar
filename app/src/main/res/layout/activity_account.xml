@@ -9,6 +9,10 @@
         android:background="@color/colorBgNormal"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/statusbar_height"
+            android:background="@color/colorPrimaryDark"/>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

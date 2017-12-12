@@ -75,7 +75,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError");
+                        L.e("onError:"+e.toString());
                     }
 
                     @Override
