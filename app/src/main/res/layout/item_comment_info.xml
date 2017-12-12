@@ -76,16 +76,6 @@
             android:textColor="@color/colorTextLevel3"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/btn_reply"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/btn_reply"
-            android:visibility="gone"
-            android:text="回复"
-            android:textColor="@color/colorTextLevel2"
-            android:textSize="15sp" />
         <ImageView
             android:id="@+id/iv_like"
             android:layout_width="30dp"
@@ -94,7 +84,6 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:visibility="gone"
             android:src="@drawable/ic_like" />
-
         <TextView
             android:id="@+id/tv_like_count"
             android:layout_width="wrap_content"
@@ -123,43 +112,6 @@
         <!--android:layout_marginRight="@dimen/fab_margin"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"/>-->
-    <RelativeLayout
-        android:id="@+id/rl_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginLeft="72dp"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:background="@color/colorRetweetedBg">
-        <ImageView
-            android:id="@+id/iv_status_head"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/pic_head_test"/>
-        <TextView
-            android:id="@+id/tv_status_srceen_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_status_head"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:text="\@量大树洞"
-            android:textColor="@color/colorTextLevel1"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tv_status_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv_status_head"
-            android:layout_below="@id/tv_status_srceen_name"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:maxLines="2"
-            android:text="test,only test"
-            android:textColor="@color/colorTextLevel3"
-            android:textSize="12sp" />
-
-    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

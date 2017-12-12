@@ -20,6 +20,22 @@ public interface CommentService {
     @GET("comments/show.json")
     Observable<CommentResultBean> getStatusComment(@Query("id") String id, @Query("page") int page);
 
+    /**
+     * 发出评论列表
+     * @param page
+     * @return
+     */
+    @GET("comments/by_me.json")
+    Observable<CommentResultBean> getCommentByMe(@Query("page") int page);
+
+    /**
+     * 收到评论列表
+     * @param page
+     * @return
+     */
+    @GET("comments/to_me.json")
+    Observable<CommentResultBean> getCommentToMe(@Query("page") int page);
+
 
     @FormUrlEncoded
     @POST("comments/create.json")
