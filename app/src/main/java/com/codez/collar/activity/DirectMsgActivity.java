@@ -45,8 +45,9 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         mAdapter = new DirectMsgConversationAdapter(this);
         mAdapter.setUid(mUid);
         mBinding.recyclerView.setAdapter(mAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setStackFromEnd(true);
+        //(context,orientation,reverselayout) 上下文，方向，是否倒序
+        //
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
 
         //设置edittext

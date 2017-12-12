@@ -13,7 +13,7 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorItemNormal"
+    android:background="@color/colorBgNormal"
     android:orientation="vertical"
     android:paddingTop="16dp">
     

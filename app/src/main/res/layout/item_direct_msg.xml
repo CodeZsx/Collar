@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="msg"
-            type="com.codez.collar.bean.DirectMsgBean" />
+            name="userlist"
+            type="com.codez.collar.bean.DirectMsgUserlistBean"/>
     </data>
 
     <LinearLayout
@@ -30,7 +30,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:imageUrl="@{msg.sender.avatar_large}"
+                android:imageUrl="@{userlist.user.avatar_large}"
                 android:src="@drawable/pic_head_test" />
             <RelativeLayout
                 android:layout_width="0dp"
@@ -43,7 +43,7 @@
                     android:id="@+id/tv_screen_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{msg.sender.screen_name}"
+                    android:text="@{userlist.user.screen_name}"
                     android:textStyle="bold"
                     android:textColor="@color/colorTextLevel1"
                     android:textSize="16sp"/>
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:maxLines="1"
-                    android:text="@{msg.text}"
+                    android:text="@{userlist.direct_message.text}"
                     android:textColor="@color/colorTextLevel2"
                     android:textSize="14sp"/>
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@{msg.created_at}"
+                android:text="@{userlist.direct_message.created_at}"
                 android:textColor="@color/colorTextLevel3"
                 android:textSize="12sp" />
             <TextView
@@ -75,7 +75,8 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/tv_notice_num"
                 android:gravity="center"
-                android:text="6"
+                android:visibility="gone"
+                android:text="@{``+userlist.unread_count}"
                 android:textColor="#fff"
                 android:textSize="12sp"/>
         </RelativeLayout>

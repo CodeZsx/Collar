@@ -112,7 +112,7 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.mBinding = binding;
         }
         private void bindItem(final DirectMsgUserlistBean bean, int position){
-            mBinding.setMsg(bean.getDirect_message());
+            mBinding.setUserlist(bean);
             mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -121,6 +121,9 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, bean.getUser().getScreen_name()));
                 }
             });
+            if (bean.getUnread_count() > 0) {
+                mBinding.tvNoticeNum.setVisibility(View.VISIBLE);
+            }
             mBinding.executePendingBindings();
         }
     }

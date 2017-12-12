@@ -60,15 +60,18 @@ public class Emoticons {
         emojiMap.put("[爱你]", "d_aini");
         emojiMap.put("[奥特曼]", "d_aoteman");
         emojiMap.put("[拜拜]", "d_baibai");
+        emojiMap.put("[并不简单]", "d_bbjdnew");
         emojiMap.put("[悲伤]", "d_beishang");
         emojiMap.put("[鄙视]", "d_bishi");
         emojiMap.put("[闭嘴]", "d_bizui");
         emojiMap.put("[馋嘴]", "d_chanzui");
         emojiMap.put("[吃惊]", "d_chijing");
+        emojiMap.put("[憧憬]", "d_chongjing");
         emojiMap.put("[哈欠]", "d_dahaqi");
         emojiMap.put("[打脸]", "d_dalian");
         emojiMap.put("[顶]", "d_ding");
         emojiMap.put("[doge]", "d_doge");
+        emojiMap.put("[费解]", "d_feijie");
         emojiMap.put("[肥皂]", "d_feizao");
         emojiMap.put("[感冒]", "d_ganmao");
         emojiMap.put("[鼓掌]", "d_guzhang");
@@ -79,6 +82,7 @@ public class Emoticons {
         emojiMap.put("[微笑]", "d_hehe");
         emojiMap.put("[黑线]", "d_heixian");
         emojiMap.put("[哼]", "d_heng");
+        emojiMap.put("[坏人]", "d_huaixiao");
         emojiMap.put("[花心]", "d_huaxin");
         emojiMap.put("[挤眼]", "d_jiyan");
         emojiMap.put("[可爱]", "d_keai");
@@ -107,11 +111,14 @@ public class Emoticons {
         emojiMap.put("[思考]", "d_sikao");
         emojiMap.put("[太开心]", "d_taikaixin");
         emojiMap.put("[抱抱]", "d_taikaixin");
+        emojiMap.put("[舔屏]", "d_tian");
         emojiMap.put("[偷笑]", "d_touxiao");
         emojiMap.put("[吐]", "d_tu");
         emojiMap.put("[兔子]", "d_tuzi");
         emojiMap.put("[挖鼻]", "d_wabishi");
         emojiMap.put("[委屈]", "d_weiqu");
+        emojiMap.put("[污]", "d_wu");
+        emojiMap.put("[笑而不语]", "d_xiaoerbuyu");
         emojiMap.put("[笑cry]", "d_xiaoku");
         emojiMap.put("[熊猫]", "d_xiongmao");
         emojiMap.put("[嘻嘻]", "d_xixi");
@@ -120,10 +127,12 @@ public class Emoticons {
         emojiMap.put("[疑问]", "d_yiwen");
         emojiMap.put("[右哼哼]", "d_youhengheng");
         emojiMap.put("[晕]", "d_yun");
+        emojiMap.put("[允悲]", "d_yunbei");
         emojiMap.put("[抓狂]", "d_zhuakuang");
         emojiMap.put("[猪头]", "d_zhutou");
         emojiMap.put("[最右]", "d_zuiyou");
         emojiMap.put("[左哼哼]", "d_zuohengheng");
+
 
         //浪小花表情
         emojiMap.put("[悲催]", "lxh_beicui");

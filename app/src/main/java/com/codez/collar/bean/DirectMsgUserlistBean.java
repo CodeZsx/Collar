@@ -10,6 +10,7 @@ import android.databinding.BaseObservable;
 public class DirectMsgUserlistBean extends BaseObservable{
     private UserBean user;
     private DirectMsgBean direct_message;
+    private int unread_count;
 
     public UserBean getUser() {
         return user;
@@ -25,5 +26,13 @@ public class DirectMsgUserlistBean extends BaseObservable{
 
     public void setDirect_message(DirectMsgBean direct_message) {
         this.direct_message = direct_message;
+    }
+
+    public int getUnread_count() {
+        return unread_count;
+    }
+
+    public void setUnread_count(int unread_count) {
+        this.unread_count = unread_count;
     }
 }
