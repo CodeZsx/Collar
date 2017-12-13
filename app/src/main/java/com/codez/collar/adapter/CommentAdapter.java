@@ -3,14 +3,17 @@ package com.codez.collar.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.bean.CommentBean;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemCommentBinding;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 
@@ -26,10 +29,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
 
     private Context mContext;
     private List<CommentBean> list;
+    private int mType;
+    public static final int TYPE_COMMENT_STATUS = 0;
+    public static final int TYPE_COMMENT_TO_ME = 1;
+    public static final int TYPE_COMMENT_BY_ME = 2;
+
 
     public CommentAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
+    }
+
+    public void setType(int mType) {
+        this.mType = mType;
     }
 
     @Override
@@ -92,6 +104,30 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
                             .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()));
                 }
             });
+            //若是评论列表界面,则显示"回复按钮"和微博item
+            if (mType == TYPE_COMMENT_TO_ME || mType == TYPE_COMMENT_BY_ME) {
+                mBinding.btnReply.setVisibility(View.VISIBLE);
+                mBinding.btnReply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+                mBinding.rlStatus.setVisibility(View.VISIBLE);
+                mBinding.tvStatusText.setText(StatusContentTextUtil.getWeiBoContent(bean.getStatus().getText(),
+                        mContext, mBinding.tvContent));
+                mBinding.rlStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle mBundle = new Bundle();
+                        mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean.getStatus());
+                        mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                                .putExtras(mBundle));
+                    }
+                });
+            }
+
+
             mBinding.executePendingBindings();
         }
     }

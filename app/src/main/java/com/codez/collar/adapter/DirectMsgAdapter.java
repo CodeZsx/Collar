@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.CommentActivity;
 import com.codez.collar.activity.DirectMsgActivity;
 import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.databinding.ItemDirectMsgBinding;
@@ -92,7 +93,7 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mBinding.rlComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    mContext.startActivity(new Intent(mContext, CommentActivity.class));
                 }
             });
             mBinding.rlLike.setOnClickListener(new View.OnClickListener() {

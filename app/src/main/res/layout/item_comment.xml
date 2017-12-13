@@ -128,6 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_marginTop="4dp"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="@dimen/fab_margin"
         android:background="@color/colorRetweetedBg">
@@ -135,6 +136,7 @@
             android:id="@+id/iv_status_head"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:imageUrl="@{comment.status.user.avatar_large}"
             android:src="@drawable/pic_head_test"/>
         <TextView
             android:id="@+id/tv_status_srceen_name"
@@ -142,8 +144,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/iv_status_head"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
-            android:text="\@量大树洞"
+            android:layout_marginTop="4dp"
+            android:text="@{`@`+comment.status.user.screen_name}"
             android:textColor="@color/colorTextLevel1"
             android:textSize="15sp" />
         <TextView
@@ -153,9 +155,8 @@
             android:layout_toRightOf="@id/iv_status_head"
             android:layout_below="@id/tv_status_srceen_name"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:maxLines="2"
-            android:text="test,only test"
             android:textColor="@color/colorTextLevel3"
             android:textSize="12sp" />
 

@@ -67,6 +67,7 @@
         <activity android:name=".activity.WebviewActivity"/>
         <activity android:name=".activity.FriendshipActivity"/>
         <activity android:name=".activity.DirectMsgActivity"/>
+        <activity android:name=".activity.CommentActivity"/>
 
     </application>
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.codez.collar.R;
+import com.codez.collar.adapter.CommentAdapter;
 import com.codez.collar.adapter.UserAlbumAdapter;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
@@ -99,7 +100,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             public Fragment getItem(int position) {
                 if (position == 0) {
 
-                    return new CommentListFragment().newInstance(mBean.getId());
+                    return new CommentListFragment().newInstance(mBean.getId(), CommentAdapter.TYPE_COMMENT_STATUS);
                 }else{
                     return new RepostListFragment().newInstance(mBean.getId());
                 }
