@@ -120,6 +120,8 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mContext.startActivity(new Intent(mContext, DirectMsgActivity.class)
                             .putExtra(DirectMsgActivity.INTENT_UID, bean.getUser().getId())
                             .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, bean.getUser().getScreen_name()));
+                    //若此用户有未读私信，即未读消息提示气泡Visible，则需使其Gone
+                    mBinding.tvNoticeNum.setVisibility(View.GONE);
                 }
             });
             if (bean.getUnread_count() > 0) {
