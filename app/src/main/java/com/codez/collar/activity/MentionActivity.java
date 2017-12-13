@@ -9,13 +9,14 @@ import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityCommentBinding;
 import com.codez.collar.fragment.CommentListFragment;
+import com.codez.collar.fragment.StatusListFragment;
 
 /**
  * Created by codez on 2017/11/22.
  * Description:
  */
 
-public class CommentActivity extends BaseActivity<ActivityCommentBinding> implements View.OnClickListener{
+public class MentionActivity extends BaseActivity<ActivityCommentBinding> implements View.OnClickListener{
 
     private UserBean mUserBean;
     private String uid;
@@ -30,17 +31,17 @@ public class CommentActivity extends BaseActivity<ActivityCommentBinding> implem
     @Override
     public void initView() {
 
-        setToolbarTitle(mBinding.toolbar, "评论");
+        setToolbarTitle(mBinding.toolbar, "@我的");
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            String[] titles = {"收到的评论","发出的评论"};
+            String[] titles = {"微博","评论"};
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
 
-                    return new CommentListFragment().newInstance(null, CommentListFragment.TYPE_COMMENT_TO_ME);
+                    return new StatusListFragment().newInstance(null, null, StatusListFragment.VALUE_MENTION);
                 }else{
-                    return new CommentListFragment().newInstance(null, CommentListFragment.TYPE_COMMENT_BY_ME);
+                    return new CommentListFragment().newInstance(null, CommentListFragment.TYPE_COMMENT_MENTION);
                 }
             }
 

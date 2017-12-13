@@ -30,9 +30,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
     private Context mContext;
     private List<CommentBean> list;
     private int mType;
-    public static final int TYPE_COMMENT_STATUS = 0;
-    public static final int TYPE_COMMENT_TO_ME = 1;
-    public static final int TYPE_COMMENT_BY_ME = 2;
+    public static final int TYPE_COMMENT_NO_STATUS = 0;
+    public static final int TYPE_COMMENT_STATUS = 1;
 
 
     public CommentAdapter(Context mContext) {
@@ -105,7 +104,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
                 }
             });
             //若是评论列表界面,则显示"回复按钮"和微博item
-            if (mType == TYPE_COMMENT_TO_ME || mType == TYPE_COMMENT_BY_ME) {
+            if (mType == TYPE_COMMENT_STATUS) {
                 mBinding.btnReply.setVisibility(View.VISIBLE);
                 mBinding.btnReply.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -114,8 +113,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingV
                     }
                 });
                 mBinding.rlStatus.setVisibility(View.VISIBLE);
-                mBinding.tvStatusText.setText(StatusContentTextUtil.getWeiBoContent(bean.getStatus().getText(),
-                        mContext, mBinding.tvContent));
                 mBinding.rlStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

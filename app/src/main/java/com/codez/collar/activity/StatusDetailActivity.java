@@ -100,7 +100,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             public Fragment getItem(int position) {
                 if (position == 0) {
 
-                    return new CommentListFragment().newInstance(mBean.getId(), CommentAdapter.TYPE_COMMENT_STATUS);
+                    return new CommentListFragment().newInstance(mBean.getId(), CommentAdapter.TYPE_COMMENT_NO_STATUS);
                 }else{
                     return new RepostListFragment().newInstance(mBean.getId());
                 }

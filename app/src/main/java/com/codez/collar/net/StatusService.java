@@ -30,6 +30,9 @@ public interface StatusService {
     @GET("statuses/repost_timeline.json")
     Observable<RepostResultBean> getRepostStatus(@Query("id") String id, @Query("page") int page);
 
+    @GET("statuses/mentions.json")
+    Observable<StatusResultBean> getStatusMention(@Query("page") int page);
+
     @FormUrlEncoded
     @POST("statuses/update.json")
     Observable<StatusBean> createTextStatus(@Field("access_token") String access_token, @Field(value = "status", encoded = true) String status);

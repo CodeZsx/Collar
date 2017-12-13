@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.codez.collar.R;
 import com.codez.collar.activity.CommentActivity;
 import com.codez.collar.activity.DirectMsgActivity;
+import com.codez.collar.activity.MentionActivity;
 import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.databinding.ItemDirectMsgBinding;
 import com.codez.collar.databinding.ItemDirectMsgHeaderBinding;
@@ -87,7 +88,7 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mBinding.rlAt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    mContext.startActivity(new Intent(mContext, MentionActivity.class));
                 }
             });
             mBinding.rlComment.setOnClickListener(new View.OnClickListener() {

@@ -21,7 +21,7 @@ public interface CommentService {
     Observable<CommentResultBean> getStatusComment(@Query("id") String id, @Query("page") int page);
 
     /**
-     * 发出评论列表
+     * 发出评论
      * @param page
      * @return
      */
@@ -29,12 +29,20 @@ public interface CommentService {
     Observable<CommentResultBean> getCommentByMe(@Query("page") int page);
 
     /**
-     * 收到评论列表
+     * 收到评论
      * @param page
      * @return
      */
     @GET("comments/to_me.json")
     Observable<CommentResultBean> getCommentToMe(@Query("page") int page);
+
+    /**
+     * '@'我的评论
+     * @param page
+     * @return
+     */
+    @GET("comments/mentions.json")
+    Observable<CommentResultBean> getCommentMentions(@Query("page") int page);
 
 
     @FormUrlEncoded

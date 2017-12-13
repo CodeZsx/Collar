@@ -23,6 +23,11 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
     private static final String KEY_ID = "id";
     private static final String KEY_TYPE = "type";
 
+    public static final int TYPE_COMMENT_STATUS_DETAIL = 0;
+    public static final int TYPE_COMMENT_TO_ME = 1;
+    public static final int TYPE_COMMENT_BY_ME = 2;
+    public static final int TYPE_COMMENT_MENTION = 3;
+
 
     private String mId;
     private int mType;
@@ -64,7 +69,8 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
 
     private void loadData() {
         switch (mType) {
-            case CommentAdapter.TYPE_COMMENT_STATUS:
+            case TYPE_COMMENT_STATUS_DETAIL:
+                mAdapter.setType(CommentAdapter.TYPE_COMMENT_NO_STATUS);
                 HttpUtils.getInstance().getCommentService(getContext())
                         .getStatusComment(mId, 1)
                         .subscribeOn(Schedulers.io())
@@ -87,8 +93,8 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                             }
                         });
                 break;
-            case CommentAdapter.TYPE_COMMENT_TO_ME:
-                mAdapter.setType(CommentAdapter.TYPE_COMMENT_TO_ME);
+            case TYPE_COMMENT_TO_ME:
+                mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
                 HttpUtils.getInstance().getCommentService(getContext())
                         .getCommentToMe(1)
                         .subscribeOn(Schedulers.io())
@@ -111,10 +117,35 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                             }
                         });
                 break;
-            case CommentAdapter.TYPE_COMMENT_BY_ME:
-                mAdapter.setType(CommentAdapter.TYPE_COMMENT_BY_ME);
+            case TYPE_COMMENT_BY_ME:
+                mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
                 HttpUtils.getInstance().getCommentService(getContext())
                         .getCommentByMe(1)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<CommentResultBean>() {
+                            @Override
+                            public void onCompleted() {
+                                L.e("onCompleted");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                L.e("onError:"+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(CommentResultBean commentResultBean) {
+                                mAdapter.addAll(commentResultBean.getComments());
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                break;
+
+            case TYPE_COMMENT_MENTION:
+                mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
+                HttpUtils.getInstance().getCommentService(getContext())
+                        .getCommentMentions(1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<CommentResultBean>() {

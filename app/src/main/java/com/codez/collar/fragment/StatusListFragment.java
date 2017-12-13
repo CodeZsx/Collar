@@ -29,6 +29,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     public static final int VALUE_USER = 1;
     public static final int VALUE_HOME = 2;
     public static final int VALUE_PUBLIC = 3;
+    public static final int VALUE_MENTION = 4;
 
 
     private String mUid;
@@ -137,6 +138,27 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             }
                         });
                 break;
+            case VALUE_MENTION:
+                HttpUtils.getInstance().getWeiboService(getContext())
+                        .getStatusMention(1)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<StatusResultBean>() {
+                            @Override
+                            public void onCompleted() {
+                                L.e("onCompleted");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                L.e("onError:"+e.toString());
+                            }
+
+                            @Override
+                            public void onNext(StatusResultBean statusResultBean) {
+                                handleData(statusResultBean);
+                            }
+                        });
 
             case VALUE_USER:
             default:

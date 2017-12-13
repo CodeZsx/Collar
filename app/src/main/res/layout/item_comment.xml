@@ -155,8 +155,8 @@
             android:layout_toRightOf="@id/iv_status_head"
             android:layout_below="@id/tv_status_srceen_name"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
             android:maxLines="2"
+            android:text="@{comment.status.text}"
             android:textColor="@color/colorTextLevel3"
             android:textSize="12sp" />
 
