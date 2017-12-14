@@ -69,6 +69,7 @@
         <activity android:name=".activity.DirectMsgActivity"/>
         <activity android:name=".activity.CommentActivity"/>
         <activity android:name=".activity.MentionActivity"/>
+        <activity android:name=".activity.SearchActivity"/>
 
     </application>
 

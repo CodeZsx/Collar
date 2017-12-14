@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.PostActivity;
+import com.codez.collar.activity.SearchActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
@@ -74,6 +75,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.tvRight.changeState(HomeTitleTextView.STATE_UNSELECTED);
         mBinding.tvLeft.setOnClickListener(this);
         mBinding.tvRight.setOnClickListener(this);
+        mBinding.ivSearch.setOnClickListener(this);
         mBinding.ivScan.setOnClickListener(this);
         mBinding.ivUser.setOnClickListener(this);
         initData();
@@ -133,6 +135,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
             case R.id.iv_user:
                 startActivity(new Intent(getActivity(), UserActivity.class)
                         .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
+                break;
+            case R.id.iv_search:
+                startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             case R.id.iv_scan:
                 new IntentIntegrator(getActivity())

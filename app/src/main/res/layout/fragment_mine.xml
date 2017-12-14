@@ -42,8 +42,8 @@
 
                     <ImageView
                         android:id="@+id/iv_setup"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/fab_margin"
