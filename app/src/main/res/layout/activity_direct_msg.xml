@@ -10,6 +10,7 @@
             type="com.codez.collar.bean.StatusBean" />
     </data>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,11 +62,26 @@
                     android:paddingTop="8dp"
                     android:background="@color/colorItemNormal">
 
+
+                    <ImageView
+                        android:id="@+id/iv_album"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_post_album"/>
+                    <ImageView
+                        android:id="@+id/iv_emoj"
+                        android:layout_width="@dimen/toolbar_icon_size"
+                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_marginLeft="@dimen/fab_margin"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_post_emoj" />
                     <EditText
                         android:id="@+id/et_content"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/fab_margin"
                         android:background="@null"
                         android:hint="发送消息"
                         android:textColor="@color/colorTextLevel1"
@@ -83,37 +99,8 @@
                 <RelativeLayout
                     android:id="@+id/rl_additional"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin"
-                    android:paddingTop="8dp"
-                    android:visibility="gone"
+                    android:layout_height="wrap_content"
                     android:background="@color/colorItemNormal">
-                    <ImageView
-                        android:id="@+id/iv_emoj"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_emoj" />
-                    <ImageView
-                        android:id="@+id/iv_album"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_toRightOf="@id/iv_emoj"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_album"/>
-                    <TextView
-                        android:id="@+id/tv_status_length"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:text="140"
-                        android:textColor="@color/colorTextLevel3"
-                        android:textSize="12sp" />
                 </RelativeLayout>
 
             </LinearLayout>

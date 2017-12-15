@@ -121,6 +121,9 @@ public class DirectMsgConversationAdapter extends RecyclerView.Adapter<RecyclerV
     public void add(DirectMsgBean bean) {
         this.list.add(bean);
     }
+    public void addToFirst(DirectMsgBean bean){
+        this.list.add(0,bean);
+    }
     public void addAll(List<DirectMsgBean> list){
         this.list.addAll(list);
     }

@@ -1,5 +1,6 @@
 package com.codez.collar.net;
 
+import com.codez.collar.bean.DirectMsgBean;
 import com.codez.collar.bean.DirectMsgConversationResultBean;
 import com.codez.collar.bean.DirectMsgUserlistResultBean;
 import com.codez.collar.bean.FavoriteBean;
@@ -50,7 +51,7 @@ public interface DirectMsgService {
      */
     @FormUrlEncoded
     @POST("direct_messages/new.json")
-    Observable<FavoriteBean> createDirectMsg(@Field("access_token") String access_token, @Field("id") String id);
+    Observable<DirectMsgBean> createDirectMsg(@Field("access_token") String access_token, @Field("text") String text, @Field("uid") String uid);
 
     @FormUrlEncoded
     @POST("direct_messages/destroy.json")

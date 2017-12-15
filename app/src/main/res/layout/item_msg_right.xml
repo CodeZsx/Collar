@@ -15,7 +15,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorBgNormal"
     android:orientation="vertical"
-    android:paddingTop="16dp">
+    android:paddingBottom="16dp">
     
     <TextView
         android:id="@+id/tv_date"
