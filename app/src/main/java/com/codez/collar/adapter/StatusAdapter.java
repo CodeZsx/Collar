@@ -174,7 +174,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                     param.width = (int) (ScreenUtil.getScreenWidth(mContext) * 0.8); // 宽度设置为屏幕的
                     dialog_more.getWindow().setAttributes(param);
                     dialog_more.getWindow().setWindowAnimations(R.style.SelectPicStyle);//设置进出动画
-                    TextView tv_favorite = (TextView) dialog_more.findViewById(R.id.tv_favorite);
+                    final TextView tv_favorite = (TextView) dialog_more.findViewById(R.id.tv_favorite);
                     tv_favorite.setText((bean.isFavorited() ? "取消" : "")+ "收藏");
                     dialog_more.findViewById(R.id.tv_favorite).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -200,6 +200,8 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             public void onNext(FavoriteBean resultBean) {
                                                 T.s(mContext, "已取消收藏");
                                                 list.get(list.indexOf(bean)).setFavorited(false);
+                                                tv_favorite.setText("收藏");
+                                                tv_favorite.setSelected(false);
                                                 //如果当前页面是"我的收藏"页面，则取消收藏后，需删除当前微博item
                                                 if (mType == TYPE_FAVORITE) {
                                                     list.remove(list.indexOf(bean));
@@ -227,6 +229,8 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             @Override
                                             public void onNext(FavoriteBean resultBean) {
                                                 T.s(mContext, "已收藏");
+                                                tv_favorite.setText("取消收藏");
+                                                tv_favorite.setSelected(true);
                                                 list.get(list.indexOf(bean)).setFavorited(true);
                                             }
                                         });
