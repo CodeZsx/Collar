@@ -361,6 +361,10 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
         this.list.addAll(list);
     }
 
+    public void clearList() {
+        this.list = new ArrayList<>();
+    }
+
     public interface OnChangeAlphaListener{
         void setAlpha(float alpha);
     }

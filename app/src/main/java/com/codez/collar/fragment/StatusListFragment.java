@@ -3,6 +3,7 @@ package com.codez.collar.fragment;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,9 +13,11 @@ import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
+import com.codez.collar.listener.EndlessRecyclerViewOnScrollListener;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
+import com.codez.collar.utils.T;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,6 +90,21 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 }
             }
         });
+        mBinding.recyclerView.addOnScrollListener(new EndlessRecyclerViewOnScrollListener(){
+            @Override
+            public void onLoadNextPage(View view) {
+                super.onLoadNextPage(view);
+                T.s(getContext(),"load more");
+            }
+        });
+        mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mStatusAdapter.clearList();
+                loadData();
+            }
+        });
+        mBinding.swipeRefreshLayout.setRefreshing(true);
         loadData();
 
     }
@@ -192,6 +210,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private void handleData(StatusResultBean statusResultBean) {
         mStatusAdapter.addAll(statusResultBean.getStatuses());
         mStatusAdapter.notifyDataSetChanged();
+        mBinding.swipeRefreshLayout.setRefreshing(false);
     }
 
 

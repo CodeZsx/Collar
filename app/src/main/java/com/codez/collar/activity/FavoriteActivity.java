@@ -64,7 +64,7 @@ public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> impleme
                 }
             }
         });
-        mBinding.recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastVisibleItem;
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

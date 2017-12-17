@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/colorBgNormal"-->
-        <!--android:orientation="vertical">-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingBottom="8dp"-->
-            <!--android:paddingLeft="@dimen/fab_margin"-->
-            <!--android:paddingTop="8dp">-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="@{`全部微博 - `+user.statuses_count}"-->
-                <!--android:textColor="@color/colorTextLevel1"-->
-                <!--android:textSize="13sp" />-->
-        <!--</LinearLayout>-->
-        <!---->
-        <!--<android.support.v4.widget.SwipeRefreshLayout-->
-            <!--android:id="@+id/swipeRefreshLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/colorBgNormal"-->
+    <!--android:orientation="vertical">-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:paddingBottom="8dp"-->
+    <!--android:paddingLeft="@dimen/fab_margin"-->
+    <!--android:paddingTop="8dp">-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@{`全部微博 - `+user.statuses_count}"-->
+    <!--android:textColor="@color/colorTextLevel1"-->
+    <!--android:textSize="13sp" />-->
+    <!--</LinearLayout>-->
+    <!---->
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+    <!--android:id="@+id/swipeRefreshLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-        <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <!--</LinearLayout>-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </layout>

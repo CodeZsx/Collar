@@ -17,7 +17,6 @@ import com.codez.collar.databinding.ActivityDirectMsgBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
-import com.sqk.emojirelease.FaceFragment;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -54,8 +53,8 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
 
-        FaceFragment faceFragment = FaceFragment.Instance();
-        getSupportFragmentManager().beginTransaction().add(R.id.rl_additional, faceFragment).commit();
+//        FaceFragment faceFragment = FaceFragment.Instance();
+//        getSupportFragmentManager().beginTransaction().add(R.id.rl_additional, faceFragment).commit();
 //        faceFragment.OnEmojiClickListener(new FaceFragment.OnEmojiClickListener(){
 //
 //            @Override
