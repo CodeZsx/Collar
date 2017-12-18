@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.codez.collar.bean.UserBean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="更多"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextLevel2"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_normal"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="更多"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextLevel2"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_loading"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="正在加载中"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextLevel2"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_end"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="已经到底了"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextLevel2"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_net_error"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="网络错误"
+                android:textSize="16sp"
+                android:textColor="@color/colorTextLevel2"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

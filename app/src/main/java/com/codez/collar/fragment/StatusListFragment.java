@@ -1,5 +1,6 @@
 package com.codez.collar.fragment;
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -13,11 +14,12 @@ import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
+import com.codez.collar.databinding.ItemRvFooterBinding;
 import com.codez.collar.listener.EndlessRecyclerViewOnScrollListener;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.ui.recyclerview.HeaderAndFooterWrapper;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
-import com.codez.collar.utils.T;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,6 +42,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private int mSource;
     private int curPage;
     private StatusAdapter mStatusAdapter;
+    private HeaderAndFooterWrapper mWrapper;
+    private ItemRvFooterBinding mFooterBinding;
     @Override
     public int setContent() {
         return R.layout.fragment_status_list;
@@ -74,7 +78,14 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 setBgAlpha(alpha);
             }
         });
+
+        mWrapper = new HeaderAndFooterWrapper(mStatusAdapter);
+        mFooterBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_rv_footer, null, false);
+        mWrapper.addFooterView(mFooterBinding.getRoot());
+
+//        mBinding.recyclerView.setAdapter(mWrapper);
         mBinding.recyclerView.setAdapter(mStatusAdapter);
+
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             int itemPadding = DensityUtil.dp2px(getContext(), 8);
             @Override
@@ -94,27 +105,31 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
             @Override
             public void onLoadNextPage(View view) {
                 super.onLoadNextPage(view);
-                T.s(getContext(),"load more");
+                changeFooterState(STATE_LOADING);
+                loadData();
             }
         });
         mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                curPage = 1;
                 mStatusAdapter.clearList();
                 loadData();
             }
         });
         mBinding.swipeRefreshLayout.setRefreshing(true);
+
         loadData();
 
     }
+
 
     private void loadData() {
 
         switch (mSource) {
             case VALUE_HOME:
                 HttpUtils.getInstance().getWeiboService(getContext())
-                        .getHomeStatus(mUid, 1)
+                        .getHomeStatus(mUid, curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<StatusResultBean>() {
@@ -136,7 +151,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 break;
             case VALUE_PUBLIC:
                 HttpUtils.getInstance().getWeiboService(getContext())
-                        .getPublicStatus(1)
+                        .getPublicStatus(curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<StatusResultBean>() {
@@ -158,7 +173,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 break;
             case VALUE_MENTION:
                 HttpUtils.getInstance().getWeiboService(getContext())
-                        .getStatusMention(1)
+                        .getStatusMention(curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<StatusResultBean>() {
@@ -182,7 +197,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
             default:
                 mStatusAdapter.setType(StatusAdapter.TYPE_OWN);
                 HttpUtils.getInstance().getWeiboService(getContext())
-                        .getUserStatus(mUid, mScreenName, 1)
+                        .getUserStatus(mUid, mScreenName,curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<StatusResultBean>() {
@@ -204,7 +219,27 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 break;
         }
 
+    }
 
+    private static final int STATE_NORMAL = 0;
+    private static final int STATE_LOADING = 1;
+    private static final int STATE_END = 2;
+    private static final int STATE_ERROR = 3;
+    private void changeFooterState(int state) {
+        switch (state) {
+            case STATE_NORMAL:
+                mFooterBinding.tvInfo.setText("更多");
+                break;
+            case STATE_LOADING:
+                mFooterBinding.tvInfo.setText("正在加载中");
+                break;
+            case STATE_END:
+                mFooterBinding.tvInfo.setText("已经到底了");
+                break;
+            case STATE_ERROR:
+                mFooterBinding.tvInfo.setText("网络错误");
+                break;
+        }
     }
 
     private void handleData(StatusResultBean statusResultBean) {

@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.codez.collar.utils.L;
-
 /**
  * Created by codez on 2017/12/17.
  * Description:
@@ -40,9 +38,7 @@ public class EndlessRecyclerViewOnScrollListener extends RecyclerView.OnScrollLi
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-
-
-        if (layoutManager == null) {
+        if (layoutManager != null) {
             if (layoutManager instanceof LinearLayoutManager) {
                 layoutManagerType = LINEARLAYOUT;
             } else if (layoutManager instanceof GridLayoutManager) {
@@ -53,7 +49,6 @@ public class EndlessRecyclerViewOnScrollListener extends RecyclerView.OnScrollLi
                 throw new RuntimeException("Unsupported LayoutManager used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
             }
         }
-        L.e("scroll");
         switch (layoutManagerType){
             case LINEARLAYOUT:
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
@@ -79,23 +74,15 @@ public class EndlessRecyclerViewOnScrollListener extends RecyclerView.OnScrollLi
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        L.e("state changed");
         currentScrollState = newState;
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
-        L.e(visibleItemCount+" "+currentScrollState+" "+totalItemCount);
-        if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= (totalItemCount - 1))) {
+        if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount - 1)) {
             onLoadNextPage(recyclerView);
         }
     }
 
     public void onLoadNextPage(View view) {
-    }
-
-    public static enum LayoutManagerType{
-        LinearLayout,
-        StaggeredGridLayout,
-        GridLayout
     }
 }
