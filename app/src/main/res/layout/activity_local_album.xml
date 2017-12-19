@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:background="#66000000">
+                android:background="#aa000000">
                 <TextView
                     android:id="@+id/tv_preview"
                     android:layout_width="wrap_content"

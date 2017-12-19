@@ -1,6 +1,5 @@
 package com.codez.collar.fragment;
 
-import android.databinding.DataBindingUtil;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.recyclerview.HeaderAndFooterWrapper;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.L;
+import com.codez.collar.utils.T;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -79,10 +79,9 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
             }
         });
 
-        mWrapper = new HeaderAndFooterWrapper(mStatusAdapter);
-        mFooterBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_rv_footer, null, false);
-        mWrapper.addFooterView(mFooterBinding.getRoot());
-
+//        mWrapper = new HeaderAndFooterWrapper(mStatusAdapter);
+//        mFooterBinding = DataBindingUtil.inflate(getActivity().getLayoutInflater(), R.layout.item_rv_footer, null, false);
+//        mWrapper.addFooterView(mFooterBinding.llRoot);
 //        mBinding.recyclerView.setAdapter(mWrapper);
         mBinding.recyclerView.setAdapter(mStatusAdapter);
 
@@ -140,7 +139,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                handleError(e);
                             }
 
                             @Override
@@ -162,7 +161,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                handleError(e);
                             }
 
                             @Override
@@ -184,7 +183,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                handleError(e);
                             }
 
                             @Override
@@ -208,7 +207,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:" + e.toString());
+                                handleError(e);
                             }
 
                             @Override
@@ -226,26 +225,33 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private static final int STATE_END = 2;
     private static final int STATE_ERROR = 3;
     private void changeFooterState(int state) {
-        switch (state) {
-            case STATE_NORMAL:
-                mFooterBinding.tvInfo.setText("更多");
-                break;
-            case STATE_LOADING:
-                mFooterBinding.tvInfo.setText("正在加载中");
-                break;
-            case STATE_END:
-                mFooterBinding.tvInfo.setText("已经到底了");
-                break;
-            case STATE_ERROR:
-                mFooterBinding.tvInfo.setText("网络错误");
-                break;
-        }
+//        switch (state) {
+//            case STATE_NORMAL:
+//                mFooterBinding.tvInfo.setText("更多");
+//                break;
+//            case STATE_LOADING:
+//                mFooterBinding.tvInfo.setText("正在加载中");
+//                break;
+//            case STATE_END:
+//                mFooterBinding.tvInfo.setText("已经到底了");
+//                break;
+//            case STATE_ERROR:
+//                mFooterBinding.tvInfo.setText("网络错误");
+//                break;
+//        }
     }
 
     private void handleData(StatusResultBean statusResultBean) {
+//        mStatusAdapter.addAll(statusResultBean.getStatuses());
+//        mWrapper.notifyDataSetChanged();
         mStatusAdapter.addAll(statusResultBean.getStatuses());
         mStatusAdapter.notifyDataSetChanged();
         mBinding.swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void handleError(Throwable e) {
+        L.e(e.toString());
+        T.s(getContext(), "请求数据失败");
     }
 
 

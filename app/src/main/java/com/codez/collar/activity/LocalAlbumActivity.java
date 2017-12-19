@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,9 +12,8 @@ import com.codez.collar.adapter.LocalAlbumAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumFolder;
 import com.codez.collar.databinding.ActivityLocalAlbumBinding;
-import com.codez.collar.utils.ImageScan;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.T;
+import com.codez.collar.utils.ImageScan;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,8 +84,10 @@ public class LocalAlbumActivity extends BaseActivity<ActivityLocalAlbumBinding> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commit:
-                //TODO
-                T.s(this, "完成");
+                setResult(PostActivity.REQUEST_CODE,
+                        new Intent().putStringArrayListExtra(PostActivity.INTENT_ALBUM_RESULT,
+                                (ArrayList<String>) mAdapter.getListSelected()));
+                this.finish();
                 break;
         }
     }

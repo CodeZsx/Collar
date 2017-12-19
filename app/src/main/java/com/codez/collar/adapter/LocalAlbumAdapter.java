@@ -27,11 +27,13 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
     private Context mContext;
     private List<String> list;
     private int mSelectedCount;
+    private List<String> mListSelected;
     private static final int SELECTED_COUNT = 9;
 
     public LocalAlbumAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
+        this.mListSelected = new ArrayList<>();
         this.mSelectedCount = 0;
     }
 
@@ -87,12 +89,14 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
                     public void onClick(View v) {
                         if (mBinding.ivSelect.isSelected()) {
                             mBinding.ivSelect.setSelected(false);
+                            mListSelected.remove(list.get(postition - 1));
                             mSelectedCount--;
                             onSelectedCountChangedListener.onChanged(mSelectedCount);
                         } else if (mSelectedCount == SELECTED_COUNT) {
                             T.s(mContext, "最多只能选择9张图片");
                         } else {
                             mBinding.ivSelect.setSelected(true);
+                            mListSelected.add(list.get(postition - 1));
                             mSelectedCount++;
                             onSelectedCountChangedListener.onChanged(mSelectedCount);
                         }
@@ -121,6 +125,10 @@ public class LocalAlbumAdapter extends RecyclerView.Adapter<LocalAlbumAdapter.Bi
     public List<String> getList() {
         return list;
     }
+    public List<String> getListSelected() {
+        return mListSelected;
+    }
+
 
     private OnSelectedCountChangedListener onSelectedCountChangedListener;
     public void addSelectedCountChangedListener(OnSelectedCountChangedListener listener) {

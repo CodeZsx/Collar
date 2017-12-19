@@ -22,6 +22,8 @@ import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
+import java.util.List;
+
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -192,11 +194,32 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         }
     }
 
+    public static final int REQUEST_CODE = 1;
+    public static final String INTENT_ALBUM_RESULT = "album_result";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            List<String> result = data.getStringArrayListExtra(INTENT_ALBUM_RESULT);
+            L.e("result:"+result.toString());
+        }
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        super.startActivityForResult(intent, requestCode);
+        if (requestCode == REQUEST_CODE) {
+
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_album:
-                startActivity(new Intent(this, LocalAlbumActivity.class));
+                startActivityForResult(new Intent(this, LocalAlbumActivity.class), REQUEST_CODE);
+
                 break;
             case R.id.iv_commit:
                 if (mBinding.ivCommit.isSelected()) {
