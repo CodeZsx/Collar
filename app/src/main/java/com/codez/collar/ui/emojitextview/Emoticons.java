@@ -84,6 +84,7 @@ public class Emoticons {
         emojiMap.put("[哼]", "d_heng");
         emojiMap.put("[坏人]", "d_huaixiao");
         emojiMap.put("[花心]", "d_huaxin");
+        emojiMap.put("[色]", "d_huanglianse");
         emojiMap.put("[挤眼]", "d_jiyan");
         emojiMap.put("[可爱]", "d_keai");
         emojiMap.put("[可怜]", "d_kelian");
