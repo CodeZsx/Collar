@@ -59,7 +59,7 @@
         <activity android:name=".activity.AccountActivity"/>
         <activity android:name=".activity.TopicActivity"/>
         <activity android:name=".activity.PostActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize">
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
         <activity android:name=".activity.LocalAlbumActivity"/>

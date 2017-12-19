@@ -9,17 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBgNormal"
+        android:background="@color/colorPrimaryDark"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/statusbar_height"
-                android:background="@color/colorPrimaryDark"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -32,117 +28,136 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorItemNormal"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/et_content"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="left|top"
-                android:imeOptions="actionDone"
-                android:background="@null"
-                android:hint="分享新鲜事"
-                android:padding="@dimen/fab_margin"
-                android:textColor="@color/colorTextLevel1"
-                android:textColorHint="@color/colorTextLevel3"
-                android:textSize="16sp" />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:background="@color/colorItemNormal"
+                android:orientation="vertical">
 
-            </android.support.v7.widget.RecyclerView>
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@null"
+                    android:gravity="left|top"
+                    android:hint="分享新鲜事"
+                    android:imeOptions="actionDone"
+                    android:padding="@dimen/fab_margin"
+                    android:textColor="@color/colorTextLevel1"
+                    android:textColorHint="@color/colorTextLevel3"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </ScrollView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorItemNormal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:background="@color/colorItemNormal">
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_person_location_gray" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="40dp"
+                android:layout_toRightOf="@id/iv_location"
+                android:maxLines="1"
+                android:text="你在哪里？"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_status_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="140"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
+                android:paddingRight="@dimen/fab_margin"
+                android:background="@color/colorItemNormal">
 
                 <ImageView
-                    android:id="@+id/iv_location"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/iv_album"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_person_location_gray" />
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/iv_location"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="4dp"
-                    android:maxLines="1"
-                    android:text="你在哪里？"
-                    android:textColor="@color/colorTextLevel3"
-                    android:textSize="12sp" />
+                    android:src="@drawable/ic_post_album" />
 
-                <TextView
-                    android:id="@+id/tv_status_length"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/iv_emoj"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_toRightOf="@id/iv_album"
+                    android:src="@drawable/ic_post_emoj" />
+
+                <ImageView
+                    android:id="@+id/iv_at"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_toRightOf="@id/iv_emoj"
+                    android:src="@drawable/ic_post_at" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_topic"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_toRightOf="@id/iv_at"
+                    android:src="@drawable/ic_post_topic" />
+
+                <ImageView
+                    android:id="@+id/iv_commit"
+                    android:layout_width="@dimen/toolbar_icon_size"
+                    android:layout_height="@dimen/toolbar_icon_size"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="140"
-                    android:textColor="@color/colorTextLevel3"
-                    android:textSize="12sp" />
+                    android:src="@drawable/ic_post_send" />
             </RelativeLayout>
-
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
-
-                    <ImageView
-                        android:id="@+id/iv_album"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_album" />
-                    <ImageView
-                        android:id="@+id/iv_emoj"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_toRightOf="@id/iv_album"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_emoj" />
-                    <ImageView
-                        android:id="@+id/iv_at"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_toRightOf="@id/iv_emoj"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_at"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_topic"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_toRightOf="@id/iv_at"
-                        android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_topic"/>
-
-                    <ImageView
-                        android:id="@+id/iv_commit"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_post_send" />
-                </RelativeLayout>
-            </android.support.design.widget.AppBarLayout>
-        </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
     </LinearLayout>
 </layout>

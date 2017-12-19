@@ -1,6 +1,7 @@
 package com.codez.collar.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -69,6 +72,13 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
 
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+        mBinding.etContent.post(new Runnable() {
+            @Override
+            public void run() {
+                openKeybord(mBinding.etContent,PostActivity.this);
+                mBinding.etContent.requestFocus();
             }
         });
 
@@ -192,6 +202,14 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         if (mLocationClient != null) {
             mLocationClient.onDestroy();
         }
+    }
+
+    public void openKeybord(EditText mEditText, Context mContext) {
+        InputMethodManager imm = (InputMethodManager) mContext
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     public static final int REQUEST_CODE = 1;
