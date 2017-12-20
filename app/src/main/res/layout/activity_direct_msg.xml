@@ -92,12 +92,13 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_post_send" />
                 </LinearLayout>
-                <RelativeLayout
+                <FrameLayout
                     android:id="@+id/rl_additional"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="210dp"
+                    android:visibility="gone"
                     android:background="@color/colorItemNormal">
-                </RelativeLayout>
+                </FrameLayout>
 
             </LinearLayout>
 
