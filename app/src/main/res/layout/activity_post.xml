@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorToolbarBg"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -28,51 +28,39 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <ScrollView
+        <EditText
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="120dp"
+            android:background="@null"
+            android:gravity="left|top"
+            android:hint="分享新鲜事"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/fab_margin"
+            android:textColor="@color/colorTextLevel1"
+            android:textColorHint="@color/colorTextLevel3"
+            android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorItemNormal"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/et_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:background="@null"
-                    android:gravity="left|top"
-                    android:hint="分享新鲜事"
-                    android:imeOptions="actionDone"
-                    android:padding="@dimen/fab_margin"
-                    android:textColor="@color/colorTextLevel1"
-                    android:textColorHint="@color/colorTextLevel3"
-                    android:textSize="16sp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
-
-                </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-        </ScrollView>
-
-        <ImageView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/colorItemNormal"/>
+            android:background="@color/colorItemNormal" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorItemNormal" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:background="@color/colorItemNormal"
             android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
-            android:background="@color/colorItemNormal">
+            android:paddingRight="@dimen/fab_margin">
 
             <ImageView
                 android:id="@+id/iv_location"
@@ -112,9 +100,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:background="@color/colorItemNormal"
                 android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin"
-                android:background="@color/colorItemNormal">
+                android:paddingRight="@dimen/fab_margin">
 
                 <ImageView
                     android:id="@+id/iv_album"

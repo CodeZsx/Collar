@@ -14,16 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBgNormal"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/statusbar_height"
-                android:background="@color/colorPrimaryDark"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorToolbarBg">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

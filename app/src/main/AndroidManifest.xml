@@ -55,7 +55,9 @@
         <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.UserActivity" />
         <activity android:name=".activity.ImageDetailActivity" />
-        <activity android:name=".activity.StatusDetailActivity"/>
+        <activity android:name=".activity.StatusDetailActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            </activity>
         <activity android:name=".activity.AccountActivity"/>
         <activity android:name=".activity.TopicActivity"/>
         <activity android:name=".activity.PostActivity"
@@ -67,7 +69,7 @@
         <activity android:name=".activity.WebviewActivity"/>
         <activity android:name=".activity.FriendshipActivity"/>
         <activity android:name=".activity.DirectMsgActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
         <activity android:name=".activity.CommentActivity"/>
