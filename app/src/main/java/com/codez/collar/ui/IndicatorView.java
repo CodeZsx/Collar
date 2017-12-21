@@ -105,6 +105,7 @@ public class IndicatorView extends LinearLayout{
         mPlayToAnimatorSet.start();
     }
 
+    //指示器圆点从start位置滑动到next位置时，圆点选中状态设置以及动画设置
     public void playBy(int startPosition, int nextPosition) {
         boolean isShowInAnimOnly = false;
         if (startPosition < 0 || nextPosition < 0 || nextPosition == startPosition) {

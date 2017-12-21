@@ -14,8 +14,11 @@ import com.codez.collar.bean.DirectMsgConversationResultBean;
 import com.codez.collar.databinding.ActivityDirectMsgBinding;
 import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.ui.emoji.Emoji;
+import com.codez.collar.ui.emoji.EmojiUtil;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
+import com.codez.collar.utils.Tools;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -91,9 +94,38 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         EmojiFragment emojiFragment = new EmojiFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.rl_additional, emojiFragment).show(emojiFragment).commit();
+        emojiFragment.addOnEmojiClickListener(new EmojiFragment.OnEmojiClickListener() {
+            @Override
+            public void onEmojiDelete() {
+                L.e("delete");
+            }
+
+            @Override
+            public void onEmojiClick(Emoji emoji) {
+                L.e(emoji.getContent());
+                mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), DirectMsgActivity.this));
+                mBinding.etContent.setSelection(mBinding.etContent.getText().length());
+            }
+        });
 
         mBinding.ivCommit.setOnClickListener(this);
         mBinding.ivEmoj.setOnClickListener(this);
+
+//        mBinding.getRoot().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                //获取View可见区域的bottom
+//                Rect rect = new Rect();
+//                getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+//                if(bottom!=0 && oldBottom!=0 && bottom - rect.bottom <= 0){
+//                    L.e("keboard close");
+//                }else {
+//                    mBinding.rlAdditional.setVisibility(View.GONE);
+//                    mBinding.ivEmoj.setSelected(false);
+//                    L.e("keyboard open");
+//                }
+//            }
+//        });
 
         loadData();
     }
@@ -170,10 +202,9 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
                 }else{
                     mBinding.rlAdditional.setVisibility(View.VISIBLE);
                     mBinding.ivEmoj.setSelected(true);
+                    Tools.hiddenKeyboard(this);
                 }
                 break;
         }
     }
-
-
 }
