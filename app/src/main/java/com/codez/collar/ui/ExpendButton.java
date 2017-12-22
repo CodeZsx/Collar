@@ -15,6 +15,8 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
+import com.codez.collar.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +81,7 @@ public class ExpendButton extends FloatingActionButton {
                 mRootView.getWidth(),
                 mRootView.getHeight());
         mBackground.setLayoutParams(params);
-        mBackground.setBackgroundColor(0xffffffff);
+        mBackground.setBackgroundColor(getResources().getColor(R.color.bgExpendBtn));
         mBackground.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

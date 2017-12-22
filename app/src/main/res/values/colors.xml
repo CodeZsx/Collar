@@ -41,7 +41,7 @@
     <color name="layout_item_sel_night">#E4E4E4</color>
     <color name="layout_item_nol_night">@color/colorItemNormal_night</color>
 
-    <color name="background">#33000000</color>
+    <color name="bgExpendBtn">#33000000</color>
 
     <!--<color name="colorPrimary_night">#ce3d3a</color>-->
     <!--<color name="colorPrimaryDark_night">#ce3d4b</color>-->
