@@ -2,6 +2,7 @@ package com.codez.collar.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -29,6 +30,7 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
         if (size == 1) {
             mBinding.tabLayout.setVisibility(View.GONE);
         }
+        mBinding.indicatorView.init(bean.getPic_urls().size());
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -45,6 +47,24 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
             @Override
             public CharSequence getPageTitle(int position) {
                 return "#";
+            }
+        });
+        mBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            int oldPos = bean.getCurPosition();
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mBinding.indicatorView.playBy(oldPos, position);
+                oldPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
         mBinding.viewPager.setCurrentItem(bean.getCurPosition());

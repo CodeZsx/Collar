@@ -21,6 +21,8 @@ import com.codez.collar.utils.L;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,227 +39,158 @@ public class EmojiUtil {
 
     private static ArrayList<Emoji> generateEmojis() {
         ArrayList<Emoji> list = new ArrayList<>();
-        for (int i = 0; i < EmojiResArray.length; i++) {
+//        for (int i = 0; i < EmojiResArray.length; i++) {
+//            Emoji emoji = new Emoji();
+//            emoji.setResourceId(EmojiResArray[i]);
+//            emoji.setContent(EmojiTextArray[i]);
+//            list.add(emoji);
+//        }
+        Iterator it = emojiMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+
             Emoji emoji = new Emoji();
-            emoji.setResourceId(EmojiResArray[i]);
-            emoji.setContent(EmojiTextArray[i]);
+            emoji.setResourceId((Integer) entry.getValue());
+            emoji.setContent((String) entry.getKey());
             list.add(emoji);
         }
         return list;
     }
 
+    public static Map<String, Integer> emojiMap;
 
-    public static final int[] EmojiResArray = {
-            R.drawable.d_aini,
-            R.drawable.d_aoteman,
-            R.drawable.d_baibai,
-            R.drawable.d_beishang,
-            R.drawable.d_bishi,
-            R.drawable.d_bizui,
-            R.drawable.d_chanzui,
-            R.drawable.d_chijing,
-            R.drawable.d_dahaqi,
-            R.drawable.d_dalian,
-            R.drawable.d_ding,
-            R.drawable.d_doge,
-            R.drawable.d_feizao,
-            R.drawable.d_ganmao,
-            R.drawable.d_guzhang,
-            R.drawable.d_haha,
-            R.drawable.d_haixiu,
-            R.drawable.d_han,
-            R.drawable.d_hehe,
-            R.drawable.d_heixian,
-            R.drawable.d_heng,
-            R.drawable.d_huaxin,
-            R.drawable.d_jiyan,
-            R.drawable.d_keai,
-            R.drawable.d_kelian,
-            R.drawable.d_ku,
-            R.drawable.d_kun,
-            R.drawable.d_landelini,
-            R.drawable.d_lei,
-            R.drawable.d_madaochenggong,
-            R.drawable.d_miao,
-            R.drawable.d_nanhaier,
-            R.drawable.d_nu,
-            R.drawable.d_numa,
-            R.drawable.d_numa,
-            R.drawable.d_qian,
-            R.drawable.d_qinqin,
-            R.drawable.d_shayan,
-            R.drawable.d_shengbing,
-            R.drawable.d_shenshou,
-            R.drawable.d_shiwang,
-            R.drawable.d_shuai,
-            R.drawable.d_shuijiao,
-            R.drawable.d_sikao,
-            R.drawable.d_taikaixin,
-            R.drawable.d_touxiao,
-            R.drawable.d_tu,
-            R.drawable.d_tuzi,
-            R.drawable.d_wabishi,
-            R.drawable.d_weiqu,
-            R.drawable.d_xiaoku,
-            R.drawable.d_xiongmao,
-            R.drawable.d_xixi,
-            R.drawable.d_xu,
-            R.drawable.d_yinxian,
-            R.drawable.d_yiwen,
-            R.drawable.d_youhengheng,
-            R.drawable.d_yun,
-            R.drawable.d_zhajipijiu,
-            R.drawable.d_zhuakuang,
-            R.drawable.d_zhutou,
-            R.drawable.d_zuiyou,
-            R.drawable.d_zuohengheng,
-            R.drawable.f_geili,
-            R.drawable.f_hufen,
-            R.drawable.f_jiong,
-            R.drawable.f_meng,
-            R.drawable.f_shenma,
-            R.drawable.f_v5,
-            R.drawable.f_xi,
-            R.drawable.f_zhi,
-            R.drawable.h_buyao,
-            R.drawable.h_good,
-            R.drawable.h_haha,
-            R.drawable.h_lai,
-            R.drawable.h_ok,
-            R.drawable.h_quantou,
-            R.drawable.h_ruo,
-            R.drawable.h_woshou,
-            R.drawable.h_ye,
-            R.drawable.h_zan,
-            R.drawable.h_zuoyi,
-            R.drawable.l_shangxin,
-            R.drawable.l_xin,
-            R.drawable.o_dangao,
-            R.drawable.o_feiji,
-            R.drawable.o_ganbei,
-            R.drawable.o_huatong,
-            R.drawable.o_lazhu,
-            R.drawable.o_liwu,
-            R.drawable.o_lvsidai,
-            R.drawable.o_weibo,
-            R.drawable.o_weiguan,
-            R.drawable.o_yinyue,
-            R.drawable.o_zhaoxiangji,
-            R.drawable.o_zhong,
-            R.drawable.w_fuyun,
-            R.drawable.w_shachenbao,
-            R.drawable.w_taiyang,
-            R.drawable.w_weifeng,
-            R.drawable.w_xianhua,
-            R.drawable.w_xiayu,
-            R.drawable.w_yueliang,
-    };
+    static {
+        emojiMap = new LinkedHashMap<>();
+        //表情面板表情
+        emojiMap.put("[微笑]", R.drawable.d_hehe);
+        emojiMap.put("[可爱]", R.drawable.d_keai);
+        emojiMap.put("[太开心]", R.drawable.d_taikaixin);
+        emojiMap.put("[鼓掌]", R.drawable.d_guzhang);
+        emojiMap.put("[嘻嘻]", R.drawable.d_xixi);
+        emojiMap.put("[哈哈]", R.drawable.d_haha);
+        emojiMap.put("[笑cry]", R.drawable.d_xiaoku);
+        emojiMap.put("[挤眼]", R.drawable.d_jiyan);
+        emojiMap.put("[馋嘴]", R.drawable.d_chanzui);
+        emojiMap.put("[黑线]", R.drawable.d_heixian);
+        emojiMap.put("[汗]", R.drawable.d_han);
+        emojiMap.put("[挖鼻]", R.drawable.d_wabishi);
+        emojiMap.put("[哼]", R.drawable.d_heng);
+        emojiMap.put("[怒]", R.drawable.d_nu);
+        emojiMap.put("[委屈", R.drawable.d_weiqu);
+        emojiMap.put("[可怜]", R.drawable.d_kelian);
+        emojiMap.put("[失望]", R.drawable.d_shiwang);
+        emojiMap.put("[悲伤]", R.drawable.d_beishang);
+        emojiMap.put("[泪]", R.drawable.d_lei);
+        emojiMap.put("[允悲]", R.drawable.d_yunbei);//thumb
 
-    public static final String[] EmojiTextArray = {
-            "[爱你]",
-            "[奥特曼]",
-            "[拜拜]",
-            "[悲伤]",
-            "[鄙视]",
-            "[闭嘴]",
-            "[馋嘴]",
-            "[吃惊]",
-            "[哈欠]",
-            "[打脸]",
-            "[顶]",
-            "[doge]",
-            "[肥皂]",
-            "[感冒]",
-            "[鼓掌]",
-            "[哈哈]",
-            "[害羞]",
-            "[汗]",
-            "[微笑]",
-            "[黑线]",
-            "[哼]",
-            "[色]",
-            "[挤眼]",
-            "[可爱]",
-            "[可怜]",
-            "[酷]",
-            "[困]",
-            "[白眼]",
-            "[泪]",
-            "[马到成功]",
-            "[喵喵]",
-            "[男孩儿]",
-            "[怒]",
-            "[怒骂]",
-            "[女孩儿]",
-            "[钱]",
-            "[亲亲]",
-            "[傻眼]",
-            "[生病]",
-            "[草泥马]",
-            "[失望]",
-            "[衰]",
-            "[睡]",
-            "[思考]",
-            "[太开心]",
-            "[偷笑]",
-            "[吐]",
-            "[兔子]",
-            "[挖鼻]",
-            "[委屈]",
-            "[笑cry]",
-            "[熊猫]",
-            "[嘻嘻]",
-            "[嘘]",
-            "[阴险]",
-            "[疑问]",
-            "[右哼哼]",
-            "[晕]",
-            "[炸鸡啤酒]",
-            "[抓狂]",
-            "[猪头]",
-            "[最右]",
-            "[左哼哼]",
-            "[给力]",
-            "[互粉]",
-            "[囧]",
-            "[萌]",
-            "[神马]",
-            "[威武]",
-            "[喜]",
-            "[织]",
-            "[NO]",
-            "[good]",
-            "[haha]",
-            "[来]",
-            "[OK]",
-            "[拳头]",
-            "[弱]",
-            "[握手]",
-            "[耶]",
-            "[赞]",
-            "[作揖]",
-            "[伤心]",
-            "[心]",
-            "[蛋糕]",
-            "[飞机]",
-            "[干杯]",
-            "[话筒]",
-            "[蜡烛]",
-            "[礼物]",
-            "[绿丝带]",
-            "[围脖]",
-            "[围观]",
-            "[音乐]",
-            "[照相机]",
-            "[钟]",
-            "[浮云]",
-            "[沙尘暴]",
-            "[太阳]",
-            "[微风]",
-            "[鲜花]",
-            "[下雨]",
-            "[月亮]",
-    };
+        emojiMap.put("[害羞]", R.drawable.d_haixiu);
+        emojiMap.put("[污]", R.drawable.d_wu);//thumb
+        emojiMap.put("[爱你]", R.drawable.d_aini);
+        emojiMap.put("[亲亲]", R.drawable.d_qinqin);
+        emojiMap.put("[色]", R.drawable.d_huaxin);
+        emojiMap.put("[舔屏]", R.drawable.d_tian);//
+        emojiMap.put("[憧憬]", R.drawable.d_chongjing);//thumb
+        emojiMap.put("[doge]", R.drawable.d_doge);
+        emojiMap.put("[喵喵]", R.drawable.d_miao);
+//        emojiMap.put("[二哈]", R.drawable.d_erha);
+        emojiMap.put("[坏笑]", R.drawable.d_huaixiao);//thumb
+        emojiMap.put("[阴险]", R.drawable.d_yinxian);
+        emojiMap.put("[笑而不语]", R.drawable.d_xiaoerbuyu);//thumb
+        emojiMap.put("[偷笑]", R.drawable.d_touxiao);
+        emojiMap.put("[酷]", R.drawable.d_ku);
+//        emojiMap.put("[并不简单]", R.drawable.d_bingbujiandan);
+        emojiMap.put("[思考]", R.drawable.d_sikao);
+        emojiMap.put("[疑问]", R.drawable.d_yiwen);
+        emojiMap.put("[费解]", R.drawable.d_feijie);//thumb
+        emojiMap.put("[晕]", R.drawable.d_yun);
+
+        emojiMap.put("[衰]", R.drawable.d_shuai);
+//        emojiMap.put("[骷髅]", R.drawable.d_kulou);
+        emojiMap.put("[嘘]", R.drawable.d_xu);
+        emojiMap.put("[闭嘴]", R.drawable.d_bizui);
+        emojiMap.put("[傻眼]", R.drawable.d_shayan);
+        emojiMap.put("[吃惊]", R.drawable.d_chijing);
+        emojiMap.put("[吐]", R.drawable.d_tu);
+        emojiMap.put("[感冒]", R.drawable.d_ganmao);
+        emojiMap.put("[生病]", R.drawable.d_shengbing);
+        emojiMap.put("[拜拜]", R.drawable.d_baibai);
+        emojiMap.put("[鄙视]", R.drawable.d_bishi);
+        emojiMap.put("[白眼]", R.drawable.landeln_baiyan);//thumb
+        emojiMap.put("[左哼哼]", R.drawable.d_zuohengheng);
+        emojiMap.put("[右哼哼]", R.drawable.d_youhengheng);
+        emojiMap.put("[抓狂]", R.drawable.d_zhuakuang);
+        emojiMap.put("[怒骂]", R.drawable.d_numa);
+        emojiMap.put("[打脸]", R.drawable.d_dalian);
+        emojiMap.put("[顶]", R.drawable.d_ding);
+        emojiMap.put("[互粉]", R.drawable.f_hufen);
+        emojiMap.put("[钱]", R.drawable.d_qian);
+
+        emojiMap.put("[哈欠]", R.drawable.d_dahaqi);
+        emojiMap.put("[困]", R.drawable.d_kun);
+        emojiMap.put("[睡]", R.drawable.d_shuijiao);
+//        emojiMap.put("[吃瓜]", R.drawable.chigua);
+//        emojiMap.put("[抱抱]", R.drawable.baobao);
+//        emojiMap.put("[摊手]", R.drawable.tanshou);
+//        emojiMap.put("[跪了]", R.drawable.guile);
+        emojiMap.put("[心]", R.drawable.l_xin);
+        emojiMap.put("[伤心]", R.drawable.l_shangxin);
+        emojiMap.put("[鲜花]", R.drawable.w_xianhua);
+        emojiMap.put("[男孩儿]", R.drawable.d_nanhaier);
+        emojiMap.put("[女孩儿]", R.drawable.d_nvhaier);
+        emojiMap.put("[握手]", R.drawable.h_woshou);
+        emojiMap.put("[作辑]", R.drawable.h_zuoyi);
+        emojiMap.put("[赞]", R.drawable.h_zan);
+        emojiMap.put("[耶]", R.drawable.h_ye);
+        emojiMap.put("[good]", R.drawable.h_good);
+        emojiMap.put("[弱]", R.drawable.ruo);
+//        emojiMap.put("[NO]", R.drawable.no);
+        emojiMap.put("[ok]", R.drawable.h_ok);
+
+        emojiMap.put("[haha]", R.drawable.h_haha);
+        emojiMap.put("[来]", R.drawable.h_lai);
+        emojiMap.put("[拳头]", R.drawable.h_quantou);
+//        emojiMap.put("[加油]", R.drawable.jiayou);
+
+        emojiMap.put("[奥特曼]", R.drawable.d_aoteman);
+        emojiMap.put("[馋嘴]", R.drawable.d_chanzui);
+        emojiMap.put("[肥皂]", R.drawable.d_feizao);
+
+        emojiMap.put("[马到成功]", R.drawable.d_madaochenggong);
+        emojiMap.put("[草泥马]", R.drawable.d_shenshou);
+        emojiMap.put("[兔子]", R.drawable.d_tuzi);
+        emojiMap.put("[熊猫]", R.drawable.d_xiongmao);
+        emojiMap.put("[炸鸡啤酒]", R.drawable.d_zhajipijiu);
+        emojiMap.put("[猪头]", R.drawable.d_zhutou);
+        emojiMap.put("[最右]", R.drawable.d_zuiyou);
+        emojiMap.put("[给力]", R.drawable.f_geili);
+        emojiMap.put("[互粉]", R.drawable.f_hufen);
+        emojiMap.put("[囧]", R.drawable.f_jiong);
+        emojiMap.put("[萌]", R.drawable.f_meng);
+        emojiMap.put("[神马]", R.drawable.f_shenma);
+        emojiMap.put("[威武]", R.drawable.f_v5);
+        emojiMap.put("[喜]", R.drawable.f_xi);
+        emojiMap.put("[织]", R.drawable.f_zhi);
+        emojiMap.put("[蛋糕]", R.drawable.o_dangao);
+        emojiMap.put("[飞机]", R.drawable.o_feiji);
+        emojiMap.put("[干杯]", R.drawable.o_ganbei);
+        emojiMap.put("[话筒]", R.drawable.o_huatong);
+        emojiMap.put("[蜡烛]", R.drawable.o_lazhu);
+        emojiMap.put("[礼物]", R.drawable.o_liwu);
+        emojiMap.put("[绿丝带]", R.drawable.o_lvsidai);
+        emojiMap.put("[围脖]", R.drawable.o_weibo);
+        emojiMap.put("[围观]", R.drawable.o_weiguan);
+        emojiMap.put("[音乐]", R.drawable.o_yinyue);
+        emojiMap.put("[照相机]", R.drawable.o_zhaoxiangji);
+        emojiMap.put("[钟]", R.drawable.o_zhong);
+        emojiMap.put("[鲜花]", R.drawable.w_xianhua);
+        emojiMap.put("[浮云]", R.drawable.w_fuyun);
+        emojiMap.put("[沙尘暴]", R.drawable.w_shachenbao);
+        emojiMap.put("[太阳]", R.drawable.w_taiyang);
+        emojiMap.put("[微风]", R.drawable.w_weifeng);
+        emojiMap.put("[下雨]", R.drawable.w_xiayu);
+        emojiMap.put("[月亮]", R.drawable.w_yueliang);
+
+    }
 
     static {
         emojiList = generateEmojis();
