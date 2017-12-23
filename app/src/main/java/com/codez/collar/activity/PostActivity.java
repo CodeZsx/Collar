@@ -23,6 +23,7 @@ import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
 import com.codez.collar.ui.emoji.EmojiUtil;
+import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
@@ -52,6 +53,8 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         isRepost = getIntent().getBooleanExtra(INTENT_REPOST, false);
         if (isRepost) {
             setToolbarTitle(mBinding.toolbar, "转发微博");
+            StatusBean statusBean = (StatusBean) getIntent().getSerializableExtra(StatusBean.INTENT_SERIALIZABLE);
+            initRetweeted(statusBean);
         }else{
             setToolbarTitle(mBinding.toolbar, "发布微博");
         }
@@ -124,6 +127,29 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         mBinding.ivTopic.setOnClickListener(this);
         mBinding.ivCommit.setOnClickListener(this);
         mBinding.tvAddress.setOnClickListener(this);
+
+    }
+
+    private void initRetweeted(StatusBean status) {
+        //显示转发体
+        mBinding.llRetweeted.setVisibility(View.VISIBLE);
+
+        //转发内容是原创微博
+        if (status.getRetweeted_status() == null) {
+            String text = "@" + status.getUser().getScreen_name() + ":" + status.getText().toString();
+            mBinding.tvRetweeted.setText(StatusContentTextUtil.translateEmoji(text, this, mBinding.tvRetweeted));
+        }
+        //转发内容是转发微博
+        else{
+            //转发内容
+            String text = "@" + status.getRetweeted_status().getUser().getScreen_name() + ":" + status.getRetweeted_status().getText().toString();
+            mBinding.tvRetweeted.setText(StatusContentTextUtil.translateEmoji(text, this, mBinding.tvRetweeted));
+            //填写内容（//@user:text）
+//            mBinding.etContent.setText(StatusContentTextUtil.getWeiBoContent("//@" + status.getUser().getScreen_name() + ":" + status.getText(),
+//                    this, mBinding.etContent));//若内容进行处理，则出现不可编辑状态，TODO:待改进
+            mBinding.etContent.setText("//@" + status.getUser().getScreen_name() + ":" + status.getText());
+            mBinding.etContent.setSelection(0);
+        }
 
     }
 

@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
@@ -307,6 +308,16 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                     mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
                             .putExtras(mBundle)
                             .putExtra(StatusDetailActivity.INTENT_FROM_COMMENT, true));
+                }
+            });
+            mBinding.blockRepost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
+                    mContext.startActivity(new Intent(mContext, PostActivity.class)
+                            .putExtras(mBundle)
+                            .putExtra(PostActivity.INTENT_REPOST, true));
                 }
             });
             mBinding.executePendingBindings();

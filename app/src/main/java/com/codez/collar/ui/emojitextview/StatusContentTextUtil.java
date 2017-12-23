@@ -143,4 +143,57 @@ public class StatusContentTextUtil {
         }
         return spannableStringBuilder;
     }
+    public static SpannableStringBuilder translateEmoji(String source, final Context context, TextView textView) {
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(source);
+        //设置正则
+        Pattern pattern = Pattern.compile(EMOJI);
+        final Matcher matcher = pattern.matcher(spannableStringBuilder);
+
+        if (matcher.find()) {
+            if (!(textView instanceof EditText)) {
+                textView.setMovementMethod(ClickableMovementMethod.getInstance());
+                textView.setFocusable(false);
+                textView.setClickable(false);
+                textView.setLongClickable(false);
+            }
+            matcher.reset();
+        }
+
+        int offset = 0;
+        while (matcher.find()) {
+            final String emoji = matcher.group(1);
+            //emoji
+            if (emoji != null) {
+                int start = matcher.start(1)-offset;
+                int end = start + emoji.length();
+                String imgName = Emoticons.getImgName(emoji);
+                if (!TextUtils.isEmpty(imgName)) {
+                    int resId = context.getResources().getIdentifier(imgName, "drawable", context.getPackageName());
+                    Drawable emojiDrawable = null;
+                    try {
+                        emojiDrawable = context.getResources().getDrawable(resId);
+                    } catch (Resources.NotFoundException e) {
+                        L.e("not found:" + resId + " name:" + imgName);
+                        e.printStackTrace();
+                    }
+                    if (emojiDrawable != null) {
+                        emojiDrawable.setBounds(0, 0, DensityUtil.sp2px(context, 17), DensityUtil.sp2px(context, 17));
+                        ImageSpan imageSpan = new ImageSpan(emojiDrawable, ImageSpan.ALIGN_BOTTOM) {
+                            public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
+                                Drawable b = getDrawable();
+                                canvas.save();
+                                int transY = bottom - b.getBounds().bottom;
+                                transY -= paint.getFontMetricsInt().descent / 2;
+                                canvas.translate(x, transY);
+                                b.draw(canvas);
+                                canvas.restore();
+                            }
+                        };
+                        spannableStringBuilder.setSpan(imageSpan, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                    }
+                }
+            }
+        }
+        return spannableStringBuilder;
+    }
 }
