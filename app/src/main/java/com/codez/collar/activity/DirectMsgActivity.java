@@ -16,7 +16,6 @@ import com.codez.collar.databinding.ActivityDirectMsgBinding;
 import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
-import com.codez.collar.ui.emoji.EmojiUtil;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
@@ -88,12 +87,14 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
 
             @Override
             public void onEmojiClick(Emoji emoji) {
-                L.e(emoji.getContent());
-                mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), DirectMsgActivity.this));
+                //TODO：增加表情转化功能
+//                mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), DirectMsgActivity.this));
+                mBinding.etContent.setText(mBinding.etContent.getText().toString() + emoji.getContent());
                 mBinding.etContent.setSelection(mBinding.etContent.getText().length());
             }
         });
 
+        //当软键盘呼出时，关闭表情界面
         getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             int oldRectBottom = 0;
             @Override

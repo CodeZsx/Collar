@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--theme-->
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimary_night">#262626</color>
+    <color name="colorPrimary_a">#ffffffff</color>
+    <color name="colorPrimary_b">#ff00bcd4</color>
+    <color name="colorPrimary_c">#ffffa000</color>
+    <color name="colorPrimary_d">#ffb8c500</color>
+    <color name="colorPrimary_e">#ff8bc34a</color>
+    <color name="colorPrimary_f">#ff4caf50</color>
+    <color name="colorPrimary_g">#ff009688</color>
+    <color name="colorPrimary_h">#fff57c00</color>
+    <color name="colorPrimary_i">#fff44336</color>
+    <color name="colorPrimary_j">#ffe91e63</color>
+    <color name="colorPrimary_k">#ffc2185b</color>
+    <color name="colorPrimary_l">#ff313638</color>
+    <color name="colorPrimary_m">#ff9c27b0</color>
+    <color name="colorPrimary_n">#ff673ab7</color>
+    <color name="colorPrimary_o">#ff3f51b5</color>
+    <color name="colorPrimary_p">#ff0288d1</color>
+    <color name="colorPrimary_night">#262626</color><!--夜间-->
+
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <color name="colorPrimaryDark_night">@color/colorPrimary_night</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorHighlight">#ff3F51B5</color>
+    <color name="colorHighlight_a">#ff3F51B5</color>
+    <color name="colorHighlight_b">#ff00bcd4</color>
+    <color name="colorHighlight_c">#ffffa000</color>
+    <color name="colorHighlight_d">#ffb8c500</color>
+    <color name="colorHighlight_e">#ff8bc34a</color>
+    <color name="colorHighlight_f">#ff4caf50</color>
+    <color name="colorHighlight_g">#ff009688</color>
+    <color name="colorHighlight_h">#fff57c00</color>
+    <color name="colorHighlight_i">#fff44336</color>
+    <color name="colorHighlight_j">#ffe91e63</color>
+    <color name="colorHighlight_k">#ffc2185b</color>
+    <color name="colorHighlight_l">#ff313638</color>
+    <color name="colorHighlight_m">#ff9c27b0</color>
+    <color name="colorHighlight_n">#ff673ab7</color>
+    <color name="colorHighlight_o">#ff3f51b5</color>
+    <color name="colorHighlight_p">#ff0288d1</color>
 
     <color name="colorToolbarBg">@color/colorPrimary</color>
     <color name="colorToolbarBg_night">#262626</color>
 
     <color name="colorBgNormal">#eeeeee</color>
-    <color name="colorBgNormal_night">#000</color>
-    <color name="colorItemNormal">@color/colorToolbarBg</color>
-    <color name="colorItemNormal_night">@color/colorToolbarBg_night</color>
+    <color name="colorBgNormal_night">#000000</color>
+    <color name="colorItemNormal">#ffffffff</color>
+    <color name="colorItemNormal_night">#262626</color>
 
     <color name="colorRetweetedBg">#F5F5F5</color>
     <color name="colorRetweetedBg_night">#222222</color>
@@ -21,10 +58,8 @@
     <color name="colorTextLevel1_night">#999999</color>
     <color name="colorTextLevel2">#737373</color>
     <color name="colorTextLevel2_night">#6b6c74</color>
-
     <color name="colorTextLevel3">#a0a0a0</color>
     <color name="colorTextLevel3_night">#6b6c74</color>
-
     <color name="colorTextLevel4">#CCCCCC</color>
     <color name="colorTextLevel4_night">#303134</color>
 
@@ -32,9 +67,6 @@
     
     <color name="colorPatingLine">#cccccc</color>
     <color name="colorPatingLine_night">#303134</color>
-    
-    <color name="colorHighlight">#3F51B5</color>
-
 
     <color name="layout_item_sel">#E4E4E4</color>
     <color name="layout_item_nol">@color/colorItemNormal</color>
@@ -43,8 +75,5 @@
 
     <color name="bgExpendBtn">#33000000</color>
 
-    <!--<color name="colorPrimary_night">#ce3d3a</color>-->
-    <!--<color name="colorPrimaryDark_night">#ce3d4b</color>-->
-    <!--<color name="colorAccent_night">#FF4081</color>-->
 
 </resources>

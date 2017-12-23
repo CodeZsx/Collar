@@ -10,6 +10,7 @@ import com.codez.collar.R;
 import com.codez.collar.activity.FavoriteActivity;
 import com.codez.collar.activity.FriendshipActivity;
 import com.codez.collar.activity.SetupActivity;
+import com.codez.collar.activity.ThemeActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
@@ -59,6 +60,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.blockFriend.setOnClickListener(this);
         mBinding.blockFollower.setOnClickListener(this);
         mBinding.itemFavorite.setOnClickListener(this);
+        mBinding.itemTheme.setOnClickListener(this);
         initData();
     }
 
@@ -113,6 +115,9 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 break;
             case R.id.item_favorite:
                 startActivity(new Intent(getActivity(), FavoriteActivity.class));
+                break;
+            case R.id.item_theme:
+                startActivity(new Intent(getActivity(), ThemeActivity.class));
                 break;
         }
 

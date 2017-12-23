@@ -19,14 +19,24 @@ public class Config {
     public static final String PREF_NAME_NIGHT_MODE = "night_mode";
 
 
-    //获取sex
+    //获取
     public static boolean getCachedNight(Context context) {
         return context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).getBoolean("night", false);
     }
-    //缓存sex
+    //缓存
     public static void cacheNight(Context context,boolean isNight) {
         SharedPreferences.Editor e = context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).edit();
         e.putBoolean("night", isNight);
+        e.commit();
+    }
+    //获取
+    public static String getCachedTheme(Context context) {
+        return context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).getString("theme", "a");
+    }
+    //缓存
+    public static void cacheTheme(Context context,String theme) {
+        SharedPreferences.Editor e = context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).edit();
+        e.putString("theme", theme);
         e.commit();
     }
 }

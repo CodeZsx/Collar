@@ -71,7 +71,6 @@
                         android:layout_height="@dimen/toolbar_icon_size"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_gravity="center_vertical"
-                        android:focusable="false"
                         android:src="@drawable/ic_post_emoj" />
                     <EditText
                         android:id="@+id/et_content"
@@ -80,6 +79,7 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:hint="发送消息"
+                        android:background="@null"
                         android:textColor="@color/colorTextLevel1"
                         android:textColorHint="@color/colorTextLevel3"
                         android:textSize="15sp" />

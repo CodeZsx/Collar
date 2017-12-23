@@ -97,6 +97,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
             }
         });
 
+        //当软键盘呼出时，关闭表情界面
         getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             int oldRectBottom = 0;
             @Override
