@@ -3,6 +3,7 @@ package com.codez.collar.base;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -72,6 +73,17 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.alpha = bgAlpha;
         getWindow().setAttributes(params);
+    }
+    protected boolean isSoftShowing() {
+        //获取当前屏幕内容的高度
+        int screenHeight = getWindow().getDecorView().getHeight();
+        //获取View可见区域的bottom
+        Rect rect = new Rect();
+        //DecorView即为activity的顶级view
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        //考虑到虚拟导航栏的情况（虚拟导航栏情况下：screenHeight = rect.bottom + 虚拟导航栏高度）
+        //选取screenHeight*2/3进行判断
+        return screenHeight*2/3 > rect.bottom;
     }
 
     @Override
