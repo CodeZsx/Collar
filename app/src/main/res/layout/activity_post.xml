@@ -47,13 +47,27 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/colorItemNormal" />
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/colorItemNormal" />
+        <LinearLayout
+            android:id="@+id/ll_retweeted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="40dp"
+            android:visibility="gone"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:background="@color/colorRetweetedBg">
+            <TextView
+                android:id="@+id/tv_retweeted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="16sp"/>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -150,7 +164,7 @@
             <FrameLayout
                 android:id="@+id/rl_additional"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="170dp"
                 android:visibility="gone"
                 android:background="@color/colorItemNormal">
             </FrameLayout>

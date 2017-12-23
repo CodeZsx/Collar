@@ -1,16 +1,14 @@
 package com.codez.collar.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -78,13 +76,6 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
             public void afterTextChanged(Editable s) {
             }
         });
-        mBinding.etContent.post(new Runnable() {
-            @Override
-            public void run() {
-                openKeybord(mBinding.etContent,PostActivity.this);
-                mBinding.etContent.requestFocus();
-            }
-        });
 
         EmojiFragment emojiFragment = new EmojiFragment();
         getSupportFragmentManager().beginTransaction()
@@ -100,6 +91,29 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 L.e(emoji.getContent());
                 mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), PostActivity.this));
                 mBinding.etContent.setSelection(mBinding.etContent.getText().length());
+            }
+        });
+
+        getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            int oldRectBottom = 0;
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                //获取View可见区域的bottom
+                Rect rect = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+                //界面收缩即软键盘正在打开
+                if (rect.bottom - oldRectBottom < 0) {
+                    mBinding.rlAdditional.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBinding.rlAdditional.setVisibility(View.GONE);
+                            mBinding.ivEmoj.setSelected(false);
+                        }
+                    });
+                } else if (rect.bottom - oldRectBottom > 0) {//界面扩展即软键盘正在关闭
+                }
+                oldRectBottom = rect.bottom;
+
             }
         });
 
@@ -143,20 +157,67 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 });
     }
 
-    private void getLocation() {
-        Observable.just("")
-                .map(new Func1<String, String>() {
-                    @Override
-                    public String call(String s) {
-                        startLocation();
-                        return null;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_album:
+                startActivityForResult(new Intent(this, LocalAlbumActivity.class), REQUEST_CODE);
+
+                break;
+            case R.id.iv_commit:
+                if (mBinding.ivCommit.isSelected()) {
+                    createStatus();
+                }
+                break;
+            case R.id.tv_address:
+                if (mBinding.tvAddress.isSelected()) {
+                    mBinding.tvAddress.setText("你在哪里？");
+                    mBinding.tvAddress.setSelected(false);
+                }else {
+                    //异步执行获取定位
+                    Observable.just("")
+                            .map(new Func1<String, String>() {
+                                @Override
+                                public String call(String s) {
+                                    startLocation();
+                                    return null;
+                                }
+                            })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe();
+                }
+                break;
+            case R.id.iv_emoj:
+                if (mBinding.ivEmoj.isSelected()) {
+                    mBinding.rlAdditional.setVisibility(View.GONE);
+                    mBinding.ivEmoj.setSelected(false);
+                }else{
+                    mBinding.rlAdditional.setVisibility(View.VISIBLE);
+                    mBinding.ivEmoj.setSelected(true);
+                    if (isSoftShowing()) {
+                        Tools.hiddenKeyboard(this);
                     }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                }
+                break;
+        }
     }
 
+    //选择图片结束后的数据获取
+    public static final int REQUEST_CODE = 1;
+    public static final String INTENT_ALBUM_RESULT = "album_result";
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            List<String> result = data.getStringArrayListExtra(INTENT_ALBUM_RESULT);
+            L.e("result:"+result.toString());
+        }
+    }
+
+    /**
+     * 定位相关
+     */
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -167,7 +228,6 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 }
                 mBinding.tvAddress.setText(msg.obj.toString());
                 mBinding.tvAddress.setSelected(true);
-                L.e("地址："+msg.obj);
             }
 
         }
@@ -226,64 +286,9 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         }
     }
 
-    public void openKeybord(EditText mEditText, Context mContext) {
-        InputMethodManager imm = (InputMethodManager) mContext
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
-
-    public static final int REQUEST_CODE = 1;
-    public static final String INTENT_ALBUM_RESULT = "album_result";
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            List<String> result = data.getStringArrayListExtra(INTENT_ALBUM_RESULT);
-            L.e("result:"+result.toString());
-        }
-    }
+    protected void onResume() {
+        super.onResume();
 
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-        if (requestCode == REQUEST_CODE) {
-
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_album:
-                startActivityForResult(new Intent(this, LocalAlbumActivity.class), REQUEST_CODE);
-
-                break;
-            case R.id.iv_commit:
-                if (mBinding.ivCommit.isSelected()) {
-                    createStatus();
-                }
-                break;
-            case R.id.tv_address:
-                if (mBinding.tvAddress.isSelected()) {
-                    mBinding.tvAddress.setText("你在哪里？");
-                    mBinding.tvAddress.setSelected(false);
-                }else {
-                    getLocation();
-                }
-                break;
-            case R.id.iv_emoj:
-                if (mBinding.ivEmoj.isSelected()) {
-                    mBinding.rlAdditional.setVisibility(View.GONE);
-                    mBinding.ivEmoj.setSelected(false);
-                }else{
-                    mBinding.rlAdditional.setVisibility(View.VISIBLE);
-                    mBinding.ivEmoj.setSelected(true);
-                    Tools.hiddenKeyboard(this);
-                }
-                break;
-        }
     }
 }

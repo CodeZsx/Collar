@@ -1,5 +1,6 @@
 package com.codez.collar.activity;
 
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,24 +52,8 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         mAdapter = new DirectMsgConversationAdapter(this);
         mAdapter.setUid(mUid);
         mBinding.recyclerView.setAdapter(mAdapter);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
-
-//        FaceFragment faceFragment = FaceFragment.Instance();
-//        getSupportFragmentManager().beginTransaction().add(R.id.rl_additional, faceFragment).commit();
-//        faceFragment.OnEmojiClickListener(new FaceFragment.OnEmojiClickListener(){
-//
-//            @Override
-//            public void onEmojiDelete() {
-//
-//            }
-//
-//            @Override
-//            public void onEmojiClick(Emoji emoji) {
-//                L.e(""+emoji.getContent());
-//            }
-//        });
 
         //设置edittext
         mBinding.etContent.addTextChangedListener(new TextWatcher() {
@@ -91,6 +76,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
             }
         });
 
+        //设置表情界面
         EmojiFragment emojiFragment = new EmojiFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.rl_additional, emojiFragment).show(emojiFragment).commit();
@@ -105,6 +91,29 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
                 L.e(emoji.getContent());
                 mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), DirectMsgActivity.this));
                 mBinding.etContent.setSelection(mBinding.etContent.getText().length());
+            }
+        });
+
+        getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            int oldRectBottom = 0;
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                //获取View可见区域的bottom
+                Rect rect = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+                //界面收缩即软键盘正在打开
+                if (rect.bottom - oldRectBottom < 0) {
+                    mBinding.rlAdditional.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBinding.rlAdditional.setVisibility(View.GONE);
+                            mBinding.ivEmoj.setSelected(false);
+                        }
+                    },10);
+                } else if (rect.bottom - oldRectBottom > 0) {//界面扩展即软键盘正在关闭
+                }
+                oldRectBottom = rect.bottom;
+
             }
         });
 
@@ -202,7 +211,9 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
                 }else{
                     mBinding.rlAdditional.setVisibility(View.VISIBLE);
                     mBinding.ivEmoj.setSelected(true);
-                    Tools.hiddenKeyboard(this);
+                    if (isSoftShowing()) {
+                        Tools.hiddenKeyboard(this);
+                    }
                 }
                 break;
         }

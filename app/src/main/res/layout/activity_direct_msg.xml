@@ -71,6 +71,7 @@
                         android:layout_height="@dimen/toolbar_icon_size"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_gravity="center_vertical"
+                        android:focusable="false"
                         android:src="@drawable/ic_post_emoj" />
                     <EditText
                         android:id="@+id/et_content"
@@ -94,7 +95,7 @@
                 <FrameLayout
                     android:id="@+id/rl_additional"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="170dp"
                     android:visibility="gone"
                     android:background="@color/colorItemNormal">
                 </FrameLayout>

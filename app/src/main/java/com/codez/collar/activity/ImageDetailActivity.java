@@ -31,6 +31,7 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
             mBinding.tabLayout.setVisibility(View.GONE);
         }
         mBinding.indicatorView.init(bean.getPic_urls().size());
+        mBinding.indicatorView.playTo(bean.getCurPosition());
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
