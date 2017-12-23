@@ -95,7 +95,8 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -146,6 +147,13 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_post_send" />
             </RelativeLayout>
+            <FrameLayout
+                android:id="@+id/rl_additional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@color/colorItemNormal">
+            </FrameLayout>
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
 </layout>

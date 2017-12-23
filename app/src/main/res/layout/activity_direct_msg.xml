@@ -78,7 +78,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/fab_margin"
-                        android:background="@null"
                         android:hint="发送消息"
                         android:textColor="@color/colorTextLevel1"
                         android:textColorHint="@color/colorTextLevel3"
@@ -95,7 +94,7 @@
                 <FrameLayout
                     android:id="@+id/rl_additional"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp"
+                    android:layout_height="wrap_content"
                     android:visibility="gone"
                     android:background="@color/colorItemNormal">
                 </FrameLayout>

@@ -21,9 +21,13 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityPostBinding;
+import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.ui.emoji.Emoji;
+import com.codez.collar.ui.emoji.EmojiUtil;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
+import com.codez.collar.utils.Tools;
 
 import java.util.List;
 
@@ -81,6 +85,24 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                 mBinding.etContent.requestFocus();
             }
         });
+
+        EmojiFragment emojiFragment = new EmojiFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.rl_additional, emojiFragment).show(emojiFragment).commit();
+        emojiFragment.addOnEmojiClickListener(new EmojiFragment.OnEmojiClickListener() {
+            @Override
+            public void onEmojiDelete() {
+                L.e("delete");
+            }
+
+            @Override
+            public void onEmojiClick(Emoji emoji) {
+                L.e(emoji.getContent());
+                mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), PostActivity.this));
+                mBinding.etContent.setSelection(mBinding.etContent.getText().length());
+            }
+        });
+
 
         mBinding.ivAlbum.setOnClickListener(this);
         mBinding.ivEmoj.setOnClickListener(this);
@@ -250,6 +272,16 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                     mBinding.tvAddress.setSelected(false);
                 }else {
                     getLocation();
+                }
+                break;
+            case R.id.iv_emoj:
+                if (mBinding.ivEmoj.isSelected()) {
+                    mBinding.rlAdditional.setVisibility(View.GONE);
+                    mBinding.ivEmoj.setSelected(false);
+                }else{
+                    mBinding.rlAdditional.setVisibility(View.VISIBLE);
+                    mBinding.ivEmoj.setSelected(true);
+                    Tools.hiddenKeyboard(this);
                 }
                 break;
         }
