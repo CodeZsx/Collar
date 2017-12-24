@@ -25,8 +25,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import skin.support.SkinCompatManager;
-
 /**
  * Created by codez on 2017/11/17.
  * Description:
@@ -65,12 +63,6 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
             } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
-
-            } else {
-                if (!Config.getCachedTheme(this).equals("b")) {
-                    SkinCompatManager.getInstance().loadSkin("b", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
-                    Config.cacheTheme(this, "b");
-                }
 
             }
         }

@@ -35,7 +35,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
 
     @Override
     public void initView(View root) {
-        mBinding.switchButton.setChecked(Config.getCachedNight(getContext()));
+
         mBinding.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -62,6 +62,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.itemFavorite.setOnClickListener(this);
         mBinding.itemTheme.setOnClickListener(this);
         initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBinding.switchButton.setChecked(Config.getCachedNight(getContext()));
     }
 
     private void initData(){
