@@ -113,7 +113,7 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(binding.llRoot);
             this.mBinding = binding;
         }
-        private void bindItem(final DirectMsgUserlistBean bean, int position){
+        private void bindItem(final DirectMsgUserlistBean bean, final int position){
             mBinding.setUserlist(bean);
             mBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,6 +123,8 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, bean.getUser().getScreen_name()));
                     //若此用户有未读私信，即未读消息提示气泡Visible，则需使其Gone
                     mBinding.tvNoticeNum.setVisibility(View.GONE);
+                    //并修改此用户的未读私信数
+                    list.get(position).setUnread_count(0);
                 }
             });
             if (bean.getUnread_count() > 0) {
@@ -136,6 +138,10 @@ public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setList(List<DirectMsgUserlistBean> list) {
         this.list.clear();
         this.list = list;
+    }
+
+    public List<DirectMsgUserlistBean> getList() {
+        return list;
     }
 
     public void add(DirectMsgUserlistBean bean) {

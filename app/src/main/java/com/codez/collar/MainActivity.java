@@ -76,6 +76,38 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         }
     }
 
+    public void setNavgationNotice(int index, int count) {
+        switch (index) {
+            case 1:
+                if (count == 0 && mBinding.tvNoticeHome.getVisibility() == View.VISIBLE) {
+                    mBinding.tvNoticeHome.setVisibility(View.GONE);
+                    mBinding.tvNoticeHome.setText(count + "");
+                } else {
+                    mBinding.tvNoticeHome.setVisibility(View.VISIBLE);
+                    mBinding.tvNoticeHome.setText(count + "");
+                }
+                break;
+            case 2:
+                if (count == 0 && mBinding.tvNoticeMsg.getVisibility() == View.VISIBLE) {
+                    mBinding.tvNoticeMsg.setVisibility(View.GONE);
+                    mBinding.tvNoticeMsg.setText(count + "");
+                } else {
+                    mBinding.tvNoticeMsg.setVisibility(View.VISIBLE);
+                    mBinding.tvNoticeMsg.setText(count + "");
+                }
+                break;
+            case 3:
+                if (count == 0 && mBinding.tvNoticeUser.getVisibility() == View.VISIBLE) {
+                    mBinding.tvNoticeUser.setVisibility(View.GONE);
+                    mBinding.tvNoticeUser.setText(count + "");
+                } else {
+                    mBinding.tvNoticeUser.setVisibility(View.VISIBLE);
+                    mBinding.tvNoticeUser.setText(count + "");
+                }
+                break;
+        }
+    }
+
     //记录退出时间
     private long exitTime = 0l;
     @Override

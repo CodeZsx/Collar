@@ -3,9 +3,11 @@ package com.codez.collar.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.codez.collar.MainActivity;
 import com.codez.collar.R;
 import com.codez.collar.adapter.DirectMsgAdapter;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.bean.DirectMsgUserlistResultBean;
 import com.codez.collar.databinding.FragmentMsgBinding;
 import com.codez.collar.net.HttpUtils;
@@ -35,31 +37,6 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
         mBinding.recyclerView.setNestedScrollingEnabled(false);
-//        mBinding.recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//            int lastVisibleItem;
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
-//                    T.s(getContext(), "加载更多");
-//                    loadData();
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-//            }
-//        });
-//        mBinding.swipeRefreshLayout.setRefreshing(true);
-//        mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                curPage = 1;
-//                loadData();
-//            }
-//        });
 
         loadData();
     }
@@ -84,10 +61,30 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                     @Override
                     public void onNext(DirectMsgUserlistResultBean directMsgUserlistResultBean) {
                         mAdapter.addAll(directMsgUserlistResultBean.getUser_list());
+                        countUnreadMsg();
                         mAdapter.notifyDataSetChanged();
                     }
                 });
     }
+
+    private int lastCount = 0;
+    private void countUnreadMsg() {
+        int count = 0;
+        for (DirectMsgUserlistBean bean : mAdapter.getList()) {
+            count += bean.getUnread_count();
+        }
+        if (lastCount != 0 || count != 0) {
+            ((MainActivity) getActivity()).setNavgationNotice(2, count);
+        }
+        lastCount = count;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        countUnreadMsg();
+    }
+
     @Override
     public void onClick(View v) {
 
