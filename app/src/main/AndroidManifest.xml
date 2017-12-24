@@ -2,25 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codez.collar">
 
-    <!--Normal Permissions-->
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- Normal Permissions -->
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-    <!--Dangerours Permissions-->
-    <!--获取精确位置：通过GPS芯片接收卫星的定位信息，定位精度达10米以内-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--获取错略位置：通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米-->
+    <!-- Dangerours Permissions -->
+    <!-- 获取精确位置：通过GPS芯片接收卫星的定位信息，定位精度达10米以内 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 获取错略位置：通过WiFi或移动基站的方式获取用户错略的经纬度信息，定位精度大概误差在30~1500米 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--获取手机当前状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--访问网络-->
+    <!-- 获取手机当前状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 访问网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -33,12 +33,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="f32ea11a46bfcdb6f9ec3463d92cfeb5">
-
-        </meta-data>
+            android:value="f32ea11a46bfcdb6f9ec3463d92cfeb5"></meta-data>
 
         <activity
             android:name=".MainActivity"
@@ -55,28 +52,26 @@
         <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.UserActivity" />
         <activity android:name=".activity.ImageDetailActivity" />
-        <activity android:name=".activity.StatusDetailActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-            </activity>
-        <activity android:name=".activity.AccountActivity"/>
-        <activity android:name=".activity.TopicActivity"/>
-        <activity android:name=".activity.PostActivity"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
-        <activity android:name=".activity.LocalAlbumActivity"/>
-        <activity android:name=".activity.FavoriteActivity"/>
-        <activity android:name=".activity.WebviewActivity"/>
-        <activity android:name=".activity.FriendshipActivity"/>
-        <activity android:name=".activity.DirectMsgActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-
-        </activity>
-        <activity android:name=".activity.CommentActivity"/>
-        <activity android:name=".activity.MentionActivity"/>
-        <activity android:name=".activity.SearchActivity"/>
-        <activity android:name=".activity.ThemeActivity"/>
-
+        <activity
+            android:name=".activity.StatusDetailActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity android:name=".activity.AccountActivity" />
+        <activity android:name=".activity.TopicActivity" />
+        <activity
+            android:name=".activity.PostActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".activity.LocalAlbumActivity" />
+        <activity android:name=".activity.FavoriteActivity" />
+        <activity android:name=".activity.WebviewActivity" />
+        <activity android:name=".activity.FriendshipActivity" />
+        <activity
+            android:name=".activity.DirectMsgActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity android:name=".activity.CommentActivity" />
+        <activity android:name=".activity.MentionActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ThemeActivity" />
+        <activity android:name=".ui.zxing.CaptureActivity"/>
     </application>
 
 </manifest>

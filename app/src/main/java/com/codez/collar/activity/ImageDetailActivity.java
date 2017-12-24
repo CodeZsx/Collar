@@ -10,6 +10,7 @@ import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.databinding.ActivityImageDetailBinding;
 import com.codez.collar.fragment.ImageDetailFragment;
+import com.codez.collar.utils.L;
 
 public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding> {
 
@@ -31,6 +32,7 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
             mBinding.tabLayout.setVisibility(View.GONE);
         }
         mBinding.indicatorView.init(bean.getPic_urls().size());
+        L.e("pos:"+bean.getCurPosition());
         mBinding.indicatorView.playTo(bean.getCurPosition());
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

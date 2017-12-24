@@ -46,6 +46,25 @@
     <color name="colorToolbarBg">@color/colorPrimary</color>
     <color name="colorToolbarBg_night">#262626</color>
 
+    <color name="colorToolbarText">@color/colorTextLevel1</color>
+    <color name="colorToolbarText_b">#ffffffff</color>
+    <color name="colorToolbarText_c">#ffffffff</color>
+    <color name="colorToolbarText_d">#ffffffff</color>
+    <color name="colorToolbarText_e">#ffffffff</color>
+    <color name="colorToolbarText_f">#ffffffff</color>
+    <color name="colorToolbarText_g">#ffffffff</color>
+    <color name="colorToolbarText_h">#ffffffff</color>
+    <color name="colorToolbarText_i">#ffffffff</color>
+    <color name="colorToolbarText_j">#ffffffff</color>
+    <color name="colorToolbarText_k">#ffffffff</color>
+    <color name="colorToolbarText_l">#ffffffff</color>
+    <color name="colorToolbarText_m">#ffffffff</color>
+    <color name="colorToolbarText_n">#ffffffff</color>
+    <color name="colorToolbarText_o">#ffffffff</color>
+    <color name="colorToolbarText_p">#ffffffff</color>
+
+    <color name="colorToolbarHint">#DF8DAD</color>
+
     <color name="colorBgNormal">#eeeeee</color>
     <color name="colorBgNormal_night">#000000</color>
     <color name="colorItemNormal">#ffffffff</color>

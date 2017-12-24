@@ -12,13 +12,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.codez.collar.Config;
+import com.codez.collar.utils.L;
 import com.codez.collar.utils.PermissionUtil;
+import com.codez.collar.utils.RomUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import skin.support.SkinCompatManager;
 
 /**
  * Created by codez on 2017/11/17.
@@ -33,14 +40,11 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
-//        setStatusBarTranslucent();
-        if (!Config.getCachedNight(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
-        }
-
         setStatusBarTranslucent();
         initView();
     }
+
+
 
 
     public abstract int setContent();
@@ -48,6 +52,29 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     public abstract void initView();
 
     protected void setToolbar(String title) {
+
+    }
+
+    private void initStatusBar() {
+        //仅当当前主题色为白色时，修改状态栏字体颜色
+        if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
+            //api23以上，调用系统方法
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                L.e(">=23");
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
+            } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
+
+            } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
+
+            } else {
+                if (!Config.getCachedTheme(this).equals("b")) {
+                    SkinCompatManager.getInstance().loadSkin("b", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
+                    Config.cacheTheme(this, "b");
+                }
+
+            }
+        }
+
 
     }
 
@@ -89,19 +116,17 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     @Override
     protected void onResume() {
         super.onResume();
+        initStatusBar();
     }
 
 
     protected void requestPermission(String... permissons) {
-        ActivityCompat.requestPermissions(this, permissons, PERPERMISSION_REQUEST_CODE);
-
         List<String> list = new ArrayList<>();
         for (String permission : permissons) {
             if (!(this.getPackageManager().checkPermission(permission, this.getPackageName()) == PackageManager.PERMISSION_GRANTED)) {
                 list.add(permission);
             }
         }
-
         if (list.size()>0) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, list.get(0))) {
                 //用户曾经拒绝过授予权限，弹出dialog告知用户开启相关权限
@@ -128,14 +153,82 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     @Override
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERPERMISSION_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             } else {
                 requestPermission();
             }
             return;
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    /**
+     * 设置状态栏图标为深色和魅族特定的文字风格
+     * 可以用来判断是否为Flyme用户
+     * @param window 需要设置的窗口
+     * @param dark 是否把状态栏字体及图标颜色设置为深色
+     * @return  boolean 成功执行返回true
+     *
+     */
+    protected boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
+        boolean result = false;
+        if (window != null) {
+            try {
+                WindowManager.LayoutParams lp = window.getAttributes();
+                Field darkFlag = WindowManager.LayoutParams.class
+                        .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                Field meizuFlags = WindowManager.LayoutParams.class
+                        .getDeclaredField("meizuFlags");
+                darkFlag.setAccessible(true);
+                meizuFlags.setAccessible(true);
+                int bit = darkFlag.getInt(null);
+                int value = meizuFlags.getInt(lp);
+                if (dark) {
+                    value |= bit;
+                } else {
+                    value &= ~bit;
+                }
+                meizuFlags.setInt(lp, value);
+                window.setAttributes(lp);
+                result = true;
+            } catch (Exception e) {
+
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 设置状态栏字体图标为深色，需要MIUIV6以上
+     * @param window 需要设置的窗口
+     * @param dark 是否把状态栏字体及图标颜色设置为深色
+     * @return  boolean 成功执行返回true
+     *
+     */
+    public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
+        boolean result = false;
+        L.e("start");
+        if (window != null) {
+            L.e("in");
+            Class clazz = window.getClass();
+            try {
+                int darkModeFlag = 0;
+                Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+                Field  field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+                darkModeFlag = field.getInt(layoutParams);
+                Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+                if(dark){
+                    extraFlagField.invoke(window,darkModeFlag,darkModeFlag);//状态栏透明且黑色字体
+                }else{
+                    extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+                }
+                result=true;
+            }catch (Exception e){
+                L.e(e.toString());
+            }
+        }
+        L.e("end");
+        return result;
     }
 }

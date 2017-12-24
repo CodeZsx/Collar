@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.codez.collar.R;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
 

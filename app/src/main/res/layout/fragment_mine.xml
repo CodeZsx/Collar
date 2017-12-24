@@ -37,7 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="我"
-                        android:textColor="@color/colorTextLevel1"
+                        android:textColor="@color/colorToolbarText"
                         android:textSize="18sp" />
 
                     <ImageView

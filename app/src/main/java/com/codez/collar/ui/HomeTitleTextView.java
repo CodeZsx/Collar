@@ -59,7 +59,6 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
             case STATE_SELECTED_CLOSE:
                 mState = STATE_SELECTED_CLOSE;
                 setTextAppearance(R.style.HomeTitleColorSel);
-//                setTextColor(mContext.getResources().getColor(R.color.colorTextLevel1));
                 arrow = mContext.getResources().getDrawable(R.drawable.ic_arrow_fill_down);
                 arrow.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
                         DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE));
@@ -68,7 +67,6 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
             case STATE_SELECTED_OPEN:
                 mState = STATE_SELECTED_OPEN;
                 setTextAppearance(R.style.HomeTitleColorSel);
-//                setTextColor(mContext.getResources().getColor(R.color.colorTextLevel1));
                 arrow = mContext.getResources().getDrawable(R.drawable.ic_arrow_fill_up);
                 arrow.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
                         DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE));
@@ -77,7 +75,6 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
             case STATE_UNSELECTED:
                 mState = STATE_UNSELECTED;
                 setTextAppearance(R.style.HomeTitleColorNor);
-//                setTextColor(mContext.getResources().getColor(R.color.colorTextLevel2));
                 setCompoundDrawables(null, null, null, null);
                 break;
         }

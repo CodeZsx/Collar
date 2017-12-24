@@ -36,6 +36,7 @@ dependencies {
     // skin-support-cardview CardView support [selectable]
 
     // skin-support-constraint-layout ConstraintLayout support [selectable]
+    compile files('libs/AMap_Location_V3.6.1_20171012.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -62,5 +63,4 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.orhanobut:logger:1.15'
-    compile files('libs/AMap_Location_V3.6.1_20171012.jar')
 }
