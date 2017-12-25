@@ -8,7 +8,7 @@
 
     <dimen name="toolbar_height">45dp</dimen>
     <dimen name="statusbar_height">20dp</dimen>
-    <dimen name="toolbar_icon_size">26dp</dimen>
+    <dimen name="toolbar_icon_size">24dp</dimen>
     <dimen name="item_icon_size">20dp</dimen>
 
     <dimen name="btn_follow_width">80dp</dimen>

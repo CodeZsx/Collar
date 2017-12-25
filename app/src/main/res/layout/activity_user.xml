@@ -197,10 +197,10 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:titleTextAppearance="@style/Toolbar.TitleText"
-                    app:layout_collapseMode="pin" >
-                </android.support.v7.widget.Toolbar>
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="@color/colorToolbarBg"
+                    app:titleTextColor="@color/colorToolbarText"
+                    app:titleTextAppearance="@style/Toolbar.TitleText" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

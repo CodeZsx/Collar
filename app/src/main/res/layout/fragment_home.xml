@@ -17,8 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@color/colorToolbarBg"
-                app:contentInsetStart="0dp"
-                app:popupTheme="@style/AppTheme.PopupOverlay">
+                app:contentInsetStart="0dp">
 
                 <RelativeLayout
                     android:id="@+id/ll"
@@ -89,7 +88,7 @@
                         android:layout_toLeftOf="@+id/iv_scan"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/fab_margin"
-                        android:src="@drawable/ic_search_gray"/>
+                        android:src="@drawable/ic_search_dark"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>

@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.codez.collar.Config;
+import com.codez.collar.R;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.PermissionUtil;
 import com.codez.collar.utils.RomUtils;
@@ -79,6 +80,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationIcon(R.drawable.ic_toolbar_back);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

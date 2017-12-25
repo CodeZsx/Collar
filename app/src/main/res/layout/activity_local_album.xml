@@ -29,19 +29,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:contentInsetStart="0dp"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextAppearance="@style/Toolbar.TitleText" >
-                <RelativeLayout
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:foregroundGravity="right"
-                    android:layout_marginLeft="150dp">
-
-                </RelativeLayout>
-                </android.support.v7.widget.Toolbar>
+                android:background="@color/colorToolbarBg"
+                app:titleTextColor="@color/colorToolbarText"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
         </android.support.design.widget.AppBarLayout>
 
 

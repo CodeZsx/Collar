@@ -15,12 +15,16 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/statusbar_height"
+                android:background="@color/colorToolbarBg"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorToolbarBg"
                 app:contentInsetStart="0dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:titleTextAppearance="@style/Toolbar.TitleText" />

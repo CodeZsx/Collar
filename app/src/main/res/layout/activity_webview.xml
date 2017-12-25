@@ -19,8 +19,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
+                android:background="@color/colorToolbarBg"
+                app:titleTextColor="@color/colorToolbarText"
                 app:titleTextAppearance="@style/Toolbar.TitleText" />
             <ProgressBar
                 android:id="@+id/progressbar"
