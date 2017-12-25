@@ -24,14 +24,14 @@ import java.util.List;
  * Description:
  */
 
-public class DirectMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DirectMsgUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private List<DirectMsgUserlistBean> list;
     private static final int VIEW_TYPE_HEADER = 1;
     private static final int VIEW_TYPE_DIRECT_MSG = 0;
 
-    public DirectMsgAdapter(Context mContext) {
+    public DirectMsgUserListAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
     }

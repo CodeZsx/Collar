@@ -1,8 +1,6 @@
 package com.codez.collar.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -18,6 +16,7 @@ import com.codez.collar.databinding.FragmentHomeBinding;
 import com.codez.collar.ui.HomeTitleTextView;
 import com.codez.collar.ui.zxing.CaptureActivity;
 import com.codez.collar.utils.T;
+import com.codez.collar.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -32,13 +31,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         return R.layout.fragment_home;
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
 
     @Override
     public void initView(View root) {
@@ -80,6 +72,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.ivScan.setOnClickListener(this);
         mBinding.ivUser.setOnClickListener(this);
         initData();
+
+        TimeUtil.getMsgTime("Mon Dec 25 15:42:32 +0800 2017");
     }
 
     private void initData(){

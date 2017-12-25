@@ -49,7 +49,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
 
 
         mAdapter = new DirectMsgConversationAdapter(this);
-        mAdapter.setUid(mUid);
+        mAdapter.setUid(AccessTokenKeeper.getUid(this));
         mBinding.recyclerView.setAdapter(mAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);

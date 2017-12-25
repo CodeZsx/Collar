@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.codez.collar.MainActivity;
 import com.codez.collar.R;
-import com.codez.collar.adapter.DirectMsgAdapter;
+import com.codez.collar.adapter.DirectMsgUserListAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.bean.DirectMsgUserlistResultBean;
@@ -21,7 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements View.OnClickListener {
 
-    private DirectMsgAdapter mAdapter;
+    private DirectMsgUserListAdapter mAdapter;
     private int curPage = 1;
 
 
@@ -32,7 +32,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
 
     @Override
     public void initView(View root) {
-        mAdapter = new DirectMsgAdapter(getContext());
+        mAdapter = new DirectMsgUserListAdapter(getContext());
         mBinding.recyclerView.setAdapter(mAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);

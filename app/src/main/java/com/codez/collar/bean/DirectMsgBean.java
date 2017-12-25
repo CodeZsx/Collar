@@ -17,7 +17,7 @@ public class DirectMsgBean extends BaseObservable{
     /**
      * 私信创建时间
      */
-    private String created_at;
+    public String created_at;
     /**
      * 私信内容
      */
@@ -68,7 +68,7 @@ public class DirectMsgBean extends BaseObservable{
     }
 
     public String getCreated_at() {
-        return TimeUtil.getWeiboTime(created_at);
+        return TimeUtil.getMsgTime(created_at);
     }
 
     public void setCreated_at(String created_at) {

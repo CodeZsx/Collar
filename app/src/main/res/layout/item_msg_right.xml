@@ -13,9 +13,9 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorItemNormal"
+    android:background="@color/colorBgNormal"
     android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:paddingBottom="8dp">
     
     <TextView
         android:id="@+id/tv_date"
@@ -23,19 +23,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/tv_chat_date"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
         android:text="@{msg.created_at}"
-        android:textSize="14sp"
-        android:textColor="#fff"/>
+        android:textSize="12sp"
+        android:textColor="@color/colorTextLevel2"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="56dp"
         android:layout_marginRight="8dp">
 
