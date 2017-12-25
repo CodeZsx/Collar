@@ -80,7 +80,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/fab_margin"
-                        android:src="@drawable/ic_scan"/>
+                        android:src="@drawable/ic_toolbar_scan"/>
                     <ImageView
                         android:id="@+id/iv_search"
                         android:layout_width="@dimen/toolbar_icon_size"
@@ -88,7 +88,7 @@
                         android:layout_toLeftOf="@+id/iv_scan"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/fab_margin"
-                        android:src="@drawable/ic_search_dark"/>
+                        android:src="@drawable/ic_toolbar_search"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>

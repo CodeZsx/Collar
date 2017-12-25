@@ -51,7 +51,7 @@
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:drawableLeft="@drawable/ic_search_left"
+                        android:drawableLeft="@drawable/ic_search_edittext_left"
                         android:hint="搜索"
                         android:textColorHint="@color/colorTextLevel3"
                         android:textColor="@color/colorTextLevel1"
