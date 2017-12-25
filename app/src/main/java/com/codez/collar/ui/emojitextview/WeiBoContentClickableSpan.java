@@ -14,9 +14,14 @@ import com.codez.collar.R;
 public class WeiBoContentClickableSpan extends ClickableSpan {
 
     private Context mContext;
+    private int color;
 
     public WeiBoContentClickableSpan(Context context) {
         mContext = context;
+    }
+    public WeiBoContentClickableSpan(Context context,int color) {
+        mContext = context;
+        this.color = color;
     }
 
     @Override
@@ -26,7 +31,11 @@ public class WeiBoContentClickableSpan extends ClickableSpan {
     @Override
     public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
-        ds.setColor(mContext.getResources().getColor(R.color.colorTextStatusLink));
+        if (color != 0) {
+            ds.setColor(color);
+        }else{
+            ds.setColor(mContext.getResources().getColor(R.color.colorTextStatusLink));
+        }
         ds.setUnderlineText(false);
     }
 
