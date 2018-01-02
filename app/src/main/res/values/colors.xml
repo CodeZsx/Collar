@@ -80,6 +80,7 @@
     <color name="colorToolbarText_n">#ffffffff</color>
     <color name="colorToolbarText_o">#ffffffff</color>
     <color name="colorToolbarText_p">#ffffffff</color>
+    <color name="colorToolbarText_night">#ff999999</color>
 
     <color name="colorToolbarHint">#ff737373</color>
     <color name="colorToolbarHint_a">#ff737373</color>
@@ -98,6 +99,7 @@
     <color name="colorToolbarHint_n">#99ffffff</color>
     <color name="colorToolbarHint_o">#99ffffff</color>
     <color name="colorToolbarHint_p">#99ffffff</color>
+    <color name="colorToolbarHint_night">#ff6b6c74</color>
 
 
     <color name="colorTextStatusLink">#507daf</color>

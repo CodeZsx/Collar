@@ -39,8 +39,8 @@
 
                     <ImageView
                         android:id="@+id/iv_back"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_toolbar_back"/>
 
@@ -49,8 +49,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/fab_margin"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
                         android:drawableLeft="@drawable/ic_search_edittext_left"
                         android:hint="搜索"
                         android:textColorHint="@color/colorTextLevel3"

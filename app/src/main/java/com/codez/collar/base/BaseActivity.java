@@ -40,6 +40,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
         setStatusBarTranslucent();
+        initStatusBar();
         initView();
     }
 

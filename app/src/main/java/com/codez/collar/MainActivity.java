@@ -9,10 +9,15 @@ import android.widget.Toast;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityMainBinding;
+import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.utils.L;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{
 
@@ -42,6 +47,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
 
 
     }
+
     private void changeFragment(int index){
         FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
         trx.hide(fragments[curIndex]);
@@ -76,8 +82,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         }
     }
 
-    public void setNavgationNotice(int index, int count) {
-        switch (index) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UnreadNoticeEvent event) {
+        int count = event.getCount();
+        switch (event.getNavigationId()) {
             case 1:
                 if (count == 0 && mBinding.tvNoticeHome.getVisibility() == View.VISIBLE) {
                     mBinding.tvNoticeHome.setVisibility(View.GONE);
@@ -106,6 +114,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     //记录退出时间

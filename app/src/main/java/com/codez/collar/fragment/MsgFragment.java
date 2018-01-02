@@ -3,16 +3,18 @@ package com.codez.collar.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.codez.collar.MainActivity;
 import com.codez.collar.R;
 import com.codez.collar.adapter.DirectMsgUserListAdapter;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.DirectMsgUserlistBean;
 import com.codez.collar.bean.DirectMsgUserlistResultBean;
 import com.codez.collar.databinding.FragmentMsgBinding;
+import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
+
+import org.greenrobot.eventbus.EventBus;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,6 +40,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
         mBinding.recyclerView.setNestedScrollingEnabled(false);
 
+        mBinding.swipeRefreshLayout.setRefreshing(true);
         loadData();
     }
 
@@ -49,7 +52,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                 .subscribe(new Observer<DirectMsgUserlistResultBean>() {
                     @Override
                     public void onCompleted() {
-//                        mBinding.swipeRefreshLayout.setRefreshing(false);
+                        mBinding.swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -74,7 +77,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
             count += bean.getUnread_count();
         }
         if (lastCount != 0 || count != 0) {
-            ((MainActivity) getActivity()).setNavgationNotice(2, count);
+            EventBus.getDefault().post(new UnreadNoticeEvent(2, count));
         }
         lastCount = count;
     }
