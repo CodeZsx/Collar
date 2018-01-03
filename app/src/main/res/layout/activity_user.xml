@@ -58,6 +58,7 @@
                         android:layout_below="@id/iv_cover"
                         android:layout_marginTop="-30dp"
                         android:imageUrl="@{user.avatar_large}"
+                        android:transitionName="shareAvatar"
                         android:src="@drawable/pic_head_test"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_gravity="bottom"

@@ -1,5 +1,6 @@
 package com.codez.collar.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -129,7 +130,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 break;
             case R.id.iv_user:
                 startActivity(new Intent(getActivity(), UserActivity.class)
-                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
+                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())),
+                        ActivityOptions.makeSceneTransitionAnimation(getActivity(),mBinding.ivUser,"shareAvatar").toBundle());
                 break;
             case R.id.iv_search:
                 startActivity(new Intent(getActivity(), SearchActivity.class));

@@ -31,6 +31,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/fab_margin"
+                        android:transitionName="shareAvatar"
                         android:src="@drawable/pic_head_test" />
                     <LinearLayout
                         android:layout_width="wrap_content"

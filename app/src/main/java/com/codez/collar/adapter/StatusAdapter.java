@@ -1,5 +1,7 @@
 package com.codez.collar.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -290,7 +292,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                 @Override
                 public void onClick(View v) {
                     mContext.startActivity(new Intent(mContext, UserActivity.class)
-                    .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()));
+                    .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()), ActivityOptions.makeSceneTransitionAnimation((Activity) mContext,mBinding.ivHead,"shareAvatar").toBundle());
                 }
             });
             mBinding.tvName.setOnClickListener(new View.OnClickListener() {
