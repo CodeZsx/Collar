@@ -162,7 +162,8 @@
                             android:paddingBottom="8dp"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin"
-                            android:paddingTop="8dp">
+                            android:paddingTop="8dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/retweeted_content"
