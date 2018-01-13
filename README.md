@@ -6,6 +6,8 @@
 主页模块
 —————
 
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home.png)
+
 <p align="center">
     <a target="_blank">
         <img src="https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home.png" alt="Collar" width=960/>
