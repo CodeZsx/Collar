@@ -17,9 +17,13 @@ import android.view.WindowManager;
 
 import com.codez.collar.Config;
 import com.codez.collar.R;
+import com.codez.collar.event.RefreshStatusBarEvent;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.PermissionUtil;
 import com.codez.collar.utils.RomUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,7 +44,6 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
         setStatusBarTranslucent();
-        initStatusBar();
         initView();
     }
 
@@ -62,6 +65,16 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 L.e(">=23");
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
+            } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
+
+            } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
+
+            }
+        }else{
+            //api23以上，调用系统方法
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                L.e(">=23");
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//设置状态栏白色字体
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
             } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
@@ -225,5 +238,9 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         }
         L.e("end");
         return result;
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRefreshStatusBarEvent(RefreshStatusBarEvent event) {
+        initStatusBar();
     }
 }

@@ -1,7 +1,6 @@
 package com.codez.collar.fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -16,8 +15,11 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentMineBinding;
+import com.codez.collar.event.RefreshStatusBarEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.L;
+
+import org.greenrobot.eventbus.EventBus;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,18 +42,15 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    SkinCompatManager.getInstance().restoreDefaultTheme();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
-                    }
+                    //取消夜间模式后，主题恢复为之前的存储的主题
+                    SkinCompatManager.getInstance().loadSkin(Config.getCachedTheme(getContext()),SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                     Config.cacheNight(getContext(), false);
                 }else {
                     SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                    }
                     Config.cacheNight(getContext(), true);
                 }
+                //切换夜间模式后刷新状态栏字体颜色
+                EventBus.getDefault().post(new RefreshStatusBarEvent());
             }
         });
         mBinding.ivSetup.setOnClickListener(this);
