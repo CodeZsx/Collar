@@ -8,6 +8,6 @@
 
 <p align="center">
     <a target="_blank">
-        <img src="https://github.com/CodeZsx/Collar/ScreenShot/home.png" alt="Collar" width=960/>
+        <img src="https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home.png" alt="Collar" width=960/>
     </a>
 </p>
