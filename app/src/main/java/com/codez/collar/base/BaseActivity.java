@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 
 import com.codez.collar.Config;
 import com.codez.collar.R;
+import com.codez.collar.base.swipeback.SwipeBackActivityHelper;
 import com.codez.collar.event.RefreshStatusBarEvent;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.PermissionUtil;
@@ -37,18 +39,37 @@ import java.util.List;
 
 public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompatActivity {
     protected VD mBinding;
+    private SwipeBackActivityHelper mHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHelper = new SwipeBackActivityHelper(this);
+        mHelper.onActivityCreate();
         mBinding = DataBindingUtil.setContentView(this, setContent());
 
         setStatusBarTranslucent();
         initView();
     }
 
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mHelper.onPostCreate();
+    }
 
+    @Override
+    public View findViewById(int id) {
+        View v = super.findViewById(id);
+        if (v == null && mHelper != null) {
+            return mHelper.findViewById(id);
+        }
+        return v;
+    }
 
+    public void setSwipeBackEnable(boolean enable) {
+        mHelper.setSwipeBackEnable(enable);
+    }
 
     public abstract int setContent();
 

@@ -36,6 +36,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
 
         L.e("MainActivity:"+ AccessTokenKeeper.readAccessToken(this).toString());
 
+        //MainActivity不需要滑动后退
+        setSwipeBackEnable(false);
         fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new MineFragment()};
         getSupportFragmentManager().beginTransaction().add(R.id.container,fragments[0])
                 .show(fragments[0]).commit();

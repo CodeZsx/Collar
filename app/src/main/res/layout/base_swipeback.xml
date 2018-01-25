@@ -1,0 +1,9 @@
+<com.codez.collar.base.swipeback.SwipeBackLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:edge_size="50dp"
+    app:shadow_left="@drawable/shadow_left"
+    app:shadow_right="@drawable/shadow_right"
+    app:shadow_bottom="@drawable/shadow_bottom"/>
