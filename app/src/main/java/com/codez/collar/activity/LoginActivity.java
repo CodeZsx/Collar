@@ -39,6 +39,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     public void initView() {
 
         isComeFromAccountAty = getIntent().getBooleanExtra("comFromAccountActivity", false);
+        if (!isComeFromAccountAty){
+            setSwipeBackEnable(false);
+        }
 
         //若当前手机系统无法修改状态栏黑色字体，则不选用默认白色主题
         if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {

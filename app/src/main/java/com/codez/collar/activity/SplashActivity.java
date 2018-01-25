@@ -26,6 +26,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     @Override
     public void initView() {
         hideBottomUIMenu();
+        setSwipeBackEnable(false);
         mBinding.btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
