@@ -14,7 +14,7 @@
             <corners
                 android:radius="5dp"/>
             <solid
-                android:color="@color/layout_item_nol" />
+                android:color="@color/layout_item_nor" />
         </shape>
     </item>
 </selector>

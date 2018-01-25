@@ -19,4 +19,9 @@
     <dimen name="item_direct_msg_height">70dp</dimen>
     <dimen name="item_head_size">50dp</dimen>
 
+    <!-- 我界面 -->
+    <dimen name="height_frag_mine_item">50dp</dimen>
+    <dimen name="margin_frag_mine_item">8dp</dimen>
+    <dimen name="elevation_frag_mine_item">1dp</dimen>
+
 </resources>

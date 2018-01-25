@@ -10,7 +10,7 @@
                 android:color="@color/colorPatingLine"
                 android:width="1px"/>
             <solid
-                android:color="@color/layout_item_nol" />
+                android:color="@color/layout_item_nor" />
         </shape>
     </item>
     <item

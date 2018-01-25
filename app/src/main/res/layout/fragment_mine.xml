@@ -9,67 +9,29 @@
             type="com.codez.collar.bean.UserBean" />
     </data>
 
-    <LinearLayout
-
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.design.widget.AppBarLayout
+        android:background="@color/colorBgNormal">
+        <ImageView
+            android:id="@+id/iv_top_bg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorToolbarBg"
-                app:contentInsetStart="0dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="我"
-                        android:textColor="@color/colorToolbarText"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:id="@+id/iv_setup"
-                        android:layout_width="@dimen/toolbar_icon_size"
-                        android:layout_height="@dimen/toolbar_icon_size"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/fab_margin"
-                        android:src="@drawable/ic_toolbar_setting" />
-                </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
-
-
-        <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/colorBgNormal"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-        <!---->
-        <!--</android.support.v4.widget.NestedScrollView>-->
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="centerCrop"
+            android:background="@drawable/pic_user_cover_test"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBgNormal"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_top_bg"
+            android:layout_marginTop="-110dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_header"
                 android:layout_width="match_parent"
-                android:layout_height="86dp"
-                android:background="@drawable/layout_item">
+                android:layout_height="86dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_head"
@@ -94,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{user.screen_name}"
-                        android:textColor="@color/colorTextLevel1"
+                        android:textColor="#ffffff"
                         android:textSize="16sp" />
 
                     <TextView
@@ -103,7 +65,7 @@
                         android:layout_marginTop="4dp"
                         android:maxLines="1"
                         android:text="@{`简介：`+user.description}"
-                        android:textColor="@color/colorTextLevel2"
+                        android:textColor="#eee"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -114,17 +76,19 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@id/ll_info"
                     android:layout_marginRight="@dimen/fab_margin"
+                    android:visibility="gone"
                     android:src="@drawable/ic_weibo_arrow_gray_right" />
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/colorItemNormal"
+                android:background="@drawable/layout_item_radius"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:divider="@drawable/line_gray"
+                android:showDividers="middle"
+                android:dividerPadding="8dp"
+                android:elevation="@dimen/elevation_frag_mine_item"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -132,7 +96,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/layout_item"
+                    android:background="@drawable/layout_item_radius"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -148,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:text="微博"
                         android:textColor="@color/colorTextLevel2"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -156,7 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/layout_item"
+                    android:background="@drawable/layout_item_radius"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -172,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:text="关注"
                         android:textColor="@color/colorTextLevel2"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -180,7 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/layout_item"
+                    android:background="@drawable/layout_item_radius"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -196,126 +160,195 @@
                         android:layout_height="wrap_content"
                         android:text="粉丝"
                         android:textColor="@color/colorTextLevel2"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/item_favorite"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:background="@drawable/layout_item"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
+                android:layout_marginLeft="@dimen/margin_frag_mine_item"
+                android:layout_marginRight="@dimen/margin_frag_mine_item"
+                android:background="@drawable/layout_item_radius"
+                android:divider="@drawable/line_gray"
+                android:showDividers="middle"
+                android:dividerPadding="@dimen/fab_margin"
+                android:elevation="@dimen/elevation_frag_mine_item"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/item_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
 
-                <ImageView
-                    android:layout_width="@dimen/item_icon_size"
-                    android:layout_height="@dimen/item_icon_size"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_mine_favorite" />
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_favorite" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="42dp"
-                    android:text="我的收藏"
-                    android:textColor="@color/colorTextLevel1"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="我的收藏"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/item_like"
+                <RelativeLayout
+                    android:id="@+id/item_like"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
+
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_like" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="我的赞"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/item_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
+
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_group" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="我的分组"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/layout_item"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
-
-                <ImageView
-                    android:layout_width="@dimen/item_icon_size"
-                    android:layout_height="@dimen/item_icon_size"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_mine_like" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="42dp"
-                    android:text="我的赞"
-                    android:textColor="@color/colorTextLevel1"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/item_group"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/layout_item"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
-
-                <ImageView
-                    android:layout_width="@dimen/item_icon_size"
-                    android:layout_height="@dimen/item_icon_size"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_mine_group" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="42dp"
-                    android:text="我的分组"
-                    android:textColor="@color/colorTextLevel1"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/item_theme"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/layout_item"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:layout_marginLeft="@dimen/margin_frag_mine_item"
+                android:layout_marginRight="@dimen/margin_frag_mine_item"
+                android:background="@drawable/layout_item_radius"
+                android:divider="@drawable/line_gray"
+                android:showDividers="middle"
+                android:dividerPadding="@dimen/fab_margin"
+                android:elevation="@dimen/elevation_frag_mine_item"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="@dimen/item_icon_size"
-                    android:layout_height="@dimen/item_icon_size"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_mine_theme" />
+                <RelativeLayout
+                    android:id="@+id/item_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="42dp"
-                    android:text="主题"
-                    android:textColor="@color/colorTextLevel1"
-                    android:textSize="14sp" />
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_theme" />
 
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/switchButton"
-                    style="@style/SwitchButtonStyleMD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:kswBackColor="@color/colorHighlight" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="主题"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/switchButton"
-                    android:text="夜间模式"
-                    android:textColor="@color/colorTextLevel2"
-                    android:textSize="12sp" />
-            </RelativeLayout>
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/switchButton"
+                        style="@style/SwitchButtonStyleMD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        app:kswBackColor="@color/colorHighlight" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/switchButton"
+                        android:text="夜间模式"
+                        android:textColor="@color/colorTextLevel2"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/item_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_settings" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="设置"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/item_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_frag_mine_item"
+                    android:background="@drawable/layout_item_radius"
+                    android:paddingLeft="@dimen/fab_margin"
+                    android:paddingRight="@dimen/fab_margin">
+                    <ImageView
+                        android:layout_width="@dimen/item_icon_size"
+                        android:layout_height="@dimen/item_icon_size"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_mine_about" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="42dp"
+                        android:text="关于"
+                        android:textColor="@color/colorTextLevel1"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

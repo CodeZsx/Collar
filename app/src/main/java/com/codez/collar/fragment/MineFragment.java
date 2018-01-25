@@ -53,13 +53,13 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 EventBus.getDefault().post(new RefreshStatusBarEvent());
             }
         });
-        mBinding.ivSetup.setOnClickListener(this);
         mBinding.rlHeader.setOnClickListener(this);
         mBinding.blockStatus.setOnClickListener(this);
         mBinding.blockFriend.setOnClickListener(this);
         mBinding.blockFollower.setOnClickListener(this);
         mBinding.itemFavorite.setOnClickListener(this);
         mBinding.itemTheme.setOnClickListener(this);
+        mBinding.itemSettings.setOnClickListener(this);
         initData();
     }
 
@@ -99,10 +99,6 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_setup:
-                startActivity(new Intent(getActivity(), SetupActivity.class)
-                .putExtra(SetupActivity.INTENT_SCREENN_NAME, mBinding.tvSreenName.getText().toString()));
-                break;
             case R.id.rl_header:
             case R.id.block_status:
                 startActivity(new Intent(getActivity(), UserActivity.class)
@@ -123,6 +119,10 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 break;
             case R.id.item_theme:
                 startActivity(new Intent(getActivity(), ThemeActivity.class));
+                break;
+            case R.id.item_settings:
+                startActivity(new Intent(getActivity(), SetupActivity.class)
+                        .putExtra(SetupActivity.INTENT_SCREENN_NAME, mBinding.tvSreenName.getText().toString()));
                 break;
         }
 

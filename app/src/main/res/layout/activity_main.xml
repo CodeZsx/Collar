@@ -8,10 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/statusbar_height"
-            android:background="@color/colorPrimaryDark"/>
 
         <FrameLayout
             android:id="@+id/container"
@@ -39,8 +35,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nav_btn_home"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_nav_home"/>
                     <TextView
@@ -53,7 +49,7 @@
                         android:gravity="center"
                         android:visibility="gone"
                         android:textColor="#fff"
-                        android:textSize="12sp"/>
+                        android:textSize="10sp"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -63,8 +59,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nav_btn_msg"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_nav_msg"/>
                     <TextView
@@ -87,8 +83,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nav_btn_user"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_nav_user"/>
                     <TextView

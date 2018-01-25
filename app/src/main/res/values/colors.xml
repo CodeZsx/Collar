@@ -104,13 +104,13 @@
 
     <color name="colorTextStatusLink">#507daf</color>
     
-    <color name="colorPatingLine">#cccccc</color>
+    <color name="colorPatingLine">#E5E5E5</color>
     <color name="colorPatingLine_night">#303134</color>
 
     <color name="layout_item_sel">#E4E4E4</color>
-    <color name="layout_item_nol">@color/colorItemNormal</color>
+    <color name="layout_item_nor">@color/colorItemNormal</color>
     <color name="layout_item_sel_night">#E4E4E4</color>
-    <color name="layout_item_nol_night">@color/colorItemNormal_night</color>
+    <color name="layout_item_nor_night">@color/colorItemNormal_night</color>
 
     <color name="bgExpendBtn">#33000000</color>
 

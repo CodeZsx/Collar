@@ -2,5 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true" android:drawable="@color/layout_item_sel_night"/>
-    <item android:state_pressed="false" android:drawable="@color/layout_item_nol_night"/>
+    <item android:state_pressed="false" android:drawable="@color/layout_item_nor_night"/>
 </selector>
