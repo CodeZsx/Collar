@@ -141,7 +141,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getDirectMsgService(this)
+        HttpUtils.getInstance().getDirectMsgService()
                 .getDirectMsgConversation(mUid,1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -173,7 +173,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
             return;
         }
         //发送
-        HttpUtils.getInstance().getDirectMsgService(this)
+        HttpUtils.getInstance().getDirectMsgService()
                 .createDirectMsg(AccessTokenKeeper.getInstance().getAccessToken(),mBinding.etContent.getText().toString(),mUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

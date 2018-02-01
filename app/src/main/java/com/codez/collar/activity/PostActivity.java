@@ -161,7 +161,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
             return;
         }
         //发送文字微博
-        HttpUtils.getInstance().getWeiboService(this)
+        HttpUtils.getInstance().getWeiboService()
                 .createTextStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

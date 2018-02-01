@@ -70,7 +70,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     }
 
     private void initData(){
-        HttpUtils.getInstance().getUserService(getContext())
+        HttpUtils.getInstance().getUserService()
                 .getUserInfo(AccessTokenKeeper.getInstance().getUid(), null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

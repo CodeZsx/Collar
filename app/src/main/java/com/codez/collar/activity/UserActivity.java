@@ -80,7 +80,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
             mBinding.btnFollow.setVisibility(View.GONE);
         }else{
             //获取登录用户和此用户的关系
-            HttpUtils.getInstance().getFriendshipService(this)
+            HttpUtils.getInstance().getFriendshipService()
                     .showFriendships(AccessTokenKeeper.getInstance().getUid(), uid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -115,7 +115,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         }
 
         //获取用户信息
-        HttpUtils.getInstance().getUserService(this)
+        HttpUtils.getInstance().getUserService()
                 .getUserInfo(uid, screen_name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -229,7 +229,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
             case R.id.btn_follow:
                 //following
                 if (mBinding.btnFollow.isSelected()) {
-                    HttpUtils.getInstance().getFriendshipService(this)
+                    HttpUtils.getInstance().getFriendshipService()
                             .destroyFriendships(AccessTokenKeeper.getInstance().getAccessToken(), uid)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -252,7 +252,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                                 }
                             });
                 }else{//未关注
-                    HttpUtils.getInstance().getFriendshipService(this)
+                    HttpUtils.getInstance().getFriendshipService()
                             .createFriendships(AccessTokenKeeper.getInstance().getAccessToken(), uid)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

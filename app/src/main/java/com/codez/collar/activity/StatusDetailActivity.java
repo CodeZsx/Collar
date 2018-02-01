@@ -190,7 +190,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             return;
         }
         //发送评论内容
-        HttpUtils.getInstance().getCommentService(this)
+        HttpUtils.getInstance().getCommentService()
                 .createComment(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString(), mBean.getIdstr(),0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

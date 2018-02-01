@@ -75,7 +75,7 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getWeiboService(getContext())
+        HttpUtils.getInstance().getWeiboService()
                 .getUserStatus(mUid, mScreenName, curPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

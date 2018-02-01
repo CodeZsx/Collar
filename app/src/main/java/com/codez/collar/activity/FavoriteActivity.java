@@ -94,7 +94,7 @@ public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> impleme
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getFavoriteService(this)
+        HttpUtils.getInstance().getFavoriteService()
                 .getFavorite(curPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

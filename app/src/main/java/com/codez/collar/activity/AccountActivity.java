@@ -62,7 +62,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
         final List<Token> lists = tokenList.getTokenList();
 
         for (Token token : lists) {
-            HttpUtils.getInstance().getUserService(this)
+            HttpUtils.getInstance().getUserService()
                     .getUserInfo(token.getUid(), null)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

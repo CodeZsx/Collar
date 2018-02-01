@@ -127,7 +127,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
         switch (mSource) {
             case VALUE_HOME:
-                HttpUtils.getInstance().getWeiboService(getContext())
+                HttpUtils.getInstance().getWeiboService()
                         .getHomeStatus(mUid, curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -149,7 +149,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         });
                 break;
             case VALUE_PUBLIC:
-                HttpUtils.getInstance().getWeiboService(getContext())
+                HttpUtils.getInstance().getWeiboService()
                         .getPublicStatus(curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -171,7 +171,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         });
                 break;
             case VALUE_MENTION:
-                HttpUtils.getInstance().getWeiboService(getContext())
+                HttpUtils.getInstance().getWeiboService()
                         .getStatusMention(curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -195,7 +195,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
             case VALUE_USER:
             default:
                 mStatusAdapter.setType(StatusAdapter.TYPE_OWN);
-                HttpUtils.getInstance().getWeiboService(getContext())
+                HttpUtils.getInstance().getWeiboService()
                         .getUserStatus(mUid, mScreenName,curPage++)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

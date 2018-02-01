@@ -75,7 +75,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getFriendshipService(this)
+        HttpUtils.getInstance().getFriendshipService()
                 .getFriendsIds(mUid, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -102,7 +102,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
 
     private void loadFriendship() {
         if (mType.equals(this.TYPE_FRIENDS)) {
-            HttpUtils.getInstance().getFriendshipService(this)
+            HttpUtils.getInstance().getFriendshipService()
                     .getFriends(mUid, null, 0)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -124,7 +124,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                         }
                     });
         } else if (mType.equals(TYPE_FOLLOWERS)) {
-            HttpUtils.getInstance().getFriendshipService(this)
+            HttpUtils.getInstance().getFriendshipService()
                     .getFollowers(mUid, null, 0)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

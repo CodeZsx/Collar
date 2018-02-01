@@ -71,7 +71,7 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
         switch (mType) {
             case TYPE_COMMENT_STATUS_DETAIL:
                 mAdapter.setType(CommentAdapter.TYPE_COMMENT_NO_STATUS);
-                HttpUtils.getInstance().getCommentService(getContext())
+                HttpUtils.getInstance().getCommentService()
                         .getStatusComment(mId, 1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -95,7 +95,7 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                 break;
             case TYPE_COMMENT_TO_ME:
                 mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
-                HttpUtils.getInstance().getCommentService(getContext())
+                HttpUtils.getInstance().getCommentService()
                         .getCommentToMe(1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -119,7 +119,7 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                 break;
             case TYPE_COMMENT_BY_ME:
                 mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
-                HttpUtils.getInstance().getCommentService(getContext())
+                HttpUtils.getInstance().getCommentService()
                         .getCommentByMe(1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -144,7 +144,7 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
 
             case TYPE_COMMENT_MENTION:
                 mAdapter.setType(CommentAdapter.TYPE_COMMENT_STATUS);
-                HttpUtils.getInstance().getCommentService(getContext())
+                HttpUtils.getInstance().getCommentService()
                         .getCommentMentions(1)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

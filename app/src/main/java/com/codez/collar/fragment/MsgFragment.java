@@ -45,7 +45,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getDirectMsgService(getContext())
+        HttpUtils.getInstance().getDirectMsgService()
                 .getDirectMsgUserlist("0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

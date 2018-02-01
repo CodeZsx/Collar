@@ -183,7 +183,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                         @Override
                         public void onClick(View v) {
                             if (bean.isFavorited()) {
-                                HttpUtils.getInstance().getFavoriteService(mContext)
+                                HttpUtils.getInstance().getFavoriteService()
                                         .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -213,7 +213,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             }
                                         });
                             }else{
-                                HttpUtils.getInstance().getFavoriteService(mContext)
+                                HttpUtils.getInstance().getFavoriteService()
                                         .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -250,7 +250,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                         dialog_more.findViewById(R.id.tv_destroy).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                HttpUtils.getInstance().getWeiboService(mContext)
+                                HttpUtils.getInstance().getWeiboService()
                                         .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())

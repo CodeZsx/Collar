@@ -1,7 +1,5 @@
 package com.codez.collar.net;
 
-import android.content.Context;
-
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.utils.L;
 
@@ -39,32 +37,32 @@ public class HttpUtils {
     }
 
 
-    public StatusService getWeiboService(Context context){
-        return getRetrofit(context, Constants.BASE_URL).create(StatusService.class);
+    public StatusService getWeiboService(){
+        return getRetrofit(Constants.BASE_URL).create(StatusService.class);
     }
 
-    public UserService getUserService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(UserService.class);
+    public UserService getUserService() {
+        return getRetrofit(Constants.BASE_URL).create(UserService.class);
     }
 
-    public CommentService getCommentService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(CommentService.class);
+    public CommentService getCommentService() {
+        return getRetrofit(Constants.BASE_URL).create(CommentService.class);
     }
-    public SearchService getSearchService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(SearchService.class);
+    public SearchService getSearchService() {
+        return getRetrofit(Constants.BASE_URL).create(SearchService.class);
     }
-    public FavoriteService getFavoriteService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(FavoriteService.class);
+    public FavoriteService getFavoriteService() {
+        return getRetrofit(Constants.BASE_URL).create(FavoriteService.class);
     }
-    public FriendshipService getFriendshipService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(FriendshipService.class);
+    public FriendshipService getFriendshipService() {
+        return getRetrofit(Constants.BASE_URL).create(FriendshipService.class);
     }
-    public DirectMsgService getDirectMsgService(Context context) {
-        return getRetrofit(context, Constants.BASE_URL).create(DirectMsgService.class);
+    public DirectMsgService getDirectMsgService() {
+        return getRetrofit(Constants.BASE_URL).create(DirectMsgService.class);
     }
 
 
-    private Retrofit getRetrofit(final Context context, String baseUrl) {
+    private Retrofit getRetrofit(String baseUrl) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(new Interceptor() {

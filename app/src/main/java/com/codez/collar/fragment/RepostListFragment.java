@@ -59,7 +59,7 @@ public class RepostListFragment extends BaseFragment<FragmentCommentListBinding>
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getWeiboService(getContext())
+        HttpUtils.getInstance().getWeiboService()
                 .getRepostStatus(mId, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
