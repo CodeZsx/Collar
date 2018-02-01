@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
@@ -20,8 +19,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{
-
-    boolean isNight = false;
 
     private Fragment fragments[];
     private int curIndex;
@@ -130,18 +127,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         super.onStop();
     }
 
-    //记录退出时间
-    private long exitTime = 0l;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(this, "再按一次退出"+getString(R.string.app_name), Toast.LENGTH_SHORT).show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                System.exit(0);
-            }
+            moveTaskToBack(true);
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -2,6 +2,7 @@ package com.codez.collar.activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -18,6 +19,16 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     private int countdown = 1;
     private static final int SKIP_COUNTDOWN = 1;
     private static boolean isFinished = false;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        if (!isTaskRoot()) {
+            finish();
+            return;
+        }
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public int setContent() {
         return R.layout.activity_splash;
