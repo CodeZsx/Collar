@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     public void initView() {
 
-        L.e("MainActivity:"+ AccessTokenKeeper.readAccessToken(this).toString());
+        L.e("MainActivity:"+ AccessTokenKeeper.getInstance().readAccessToken().toString());
 
         //MainActivity不需要滑动后退
         setSwipeBackEnable(false);

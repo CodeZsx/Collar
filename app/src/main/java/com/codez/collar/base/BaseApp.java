@@ -1,6 +1,9 @@
 package com.codez.collar.base;
 
 import android.app.Application;
+import android.content.Context;
+
+import com.codez.collar.manager.ApplicationContext;
 
 import skin.support.SkinCompatManager;
 import skin.support.constraint.app.SkinConstraintViewInflater;
@@ -23,5 +26,11 @@ public class BaseApp extends Application {
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        ApplicationContext.getInstance().init(this);
     }
 }

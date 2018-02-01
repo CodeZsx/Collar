@@ -55,12 +55,12 @@ public class AccessTokenManager {
         if (tokenList.getTokenList().size() == 0) {
             SDCardUtil.put(context,SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR,
                     TOKENLIST_CACHE_NAME,gson.toJson(tokenList));
-            AccessTokenKeeper.clear(context);//移除当前使用账户
+            AccessTokenKeeper.getInstance().clear();//移除当前使用账户
             return;
         }
         //当前登录账户为删除账户
-        if (AccessTokenKeeper.readAccessToken(context).getUid().equals(uid)) {
-            AccessTokenKeeper.clear(context);
+        if (AccessTokenKeeper.getInstance().readAccessToken().getUid().equals(uid)) {
+            AccessTokenKeeper.getInstance().clear();
             //当前登录账户被删除后，使用list中的第一个账户
             Token token = tokenList.getTokenList().get(0);
             tokenList.setCurrUid(tokenList.getTokenList().get(0).getUid());
@@ -104,7 +104,7 @@ public class AccessTokenManager {
     }
 
     public void updateAccessToken(Context context, String accessToken, String expiresIn, String refreshToken, String uid) {
-        AccessTokenKeeper.writeAccessToken(context, new Oauth2AccessToken(accessToken,
+        AccessTokenKeeper.getInstance().writeAccessToken(new Oauth2AccessToken(accessToken,
                 Oauth2AccessToken.getExpiresInTime(expiresIn), refreshToken, uid));
     }
     public interface OnTokenSwitchListener{

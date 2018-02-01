@@ -76,12 +76,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         L.e("uid:"+uid+" screen_name:"+screen_name);
 
 
-        if (uid != null && uid.equals(AccessTokenKeeper.getUid(this))) {
+        if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
             mBinding.btnFollow.setVisibility(View.GONE);
         }else{
             //获取登录用户和此用户的关系
             HttpUtils.getInstance().getFriendshipService(this)
-                    .showFriendships(AccessTokenKeeper.getUid(this), uid)
+                    .showFriendships(AccessTokenKeeper.getInstance().getUid(), uid)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<FriendshipsShowResultBean>() {
@@ -188,7 +188,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //若查看用户即为当前用户，则不需加载menu
-        if (uid != null && uid.equals(AccessTokenKeeper.getUid(this))) {
+        if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
             return false;
         }
         getMenuInflater().inflate(R.menu.menu_user, menu);
@@ -230,7 +230,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                 //following
                 if (mBinding.btnFollow.isSelected()) {
                     HttpUtils.getInstance().getFriendshipService(this)
-                            .destroyFriendships(AccessTokenKeeper.getAccessToken(this), uid)
+                            .destroyFriendships(AccessTokenKeeper.getInstance().getAccessToken(), uid)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<FavoriteBean>() {
@@ -253,7 +253,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                             });
                 }else{//未关注
                     HttpUtils.getInstance().getFriendshipService(this)
-                            .createFriendships(AccessTokenKeeper.getAccessToken(this), uid)
+                            .createFriendships(AccessTokenKeeper.getInstance().getAccessToken(), uid)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<FavoriteBean>() {

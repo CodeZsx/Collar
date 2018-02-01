@@ -81,7 +81,7 @@ public class HttpUtils {
                         }
                         HttpUrl.Builder builder = oldRequest.url()
                                 .newBuilder()
-                                .setEncodedQueryParameter("access_token", AccessTokenKeeper.getAccessToken(context));
+                                .setEncodedQueryParameter("access_token", AccessTokenKeeper.getInstance().getAccessToken());
                         return oldRequest.newBuilder()
                                 .method(oldRequest.method(), oldRequest.body())
                                 .url(builder.build())

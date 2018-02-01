@@ -71,7 +71,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
 
     private void initData(){
         HttpUtils.getInstance().getUserService(getContext())
-                .getUserInfo(AccessTokenKeeper.getUid(getContext()), null)
+                .getUserInfo(AccessTokenKeeper.getInstance().getUid(), null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserBean>() {
@@ -102,17 +102,17 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             case R.id.rl_header:
             case R.id.block_status:
                 startActivity(new Intent(getActivity(), UserActivity.class)
-                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())));
+                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getInstance().getUid()));
                 break;
             case R.id.block_friend:
                 startActivity(new Intent(getActivity(), FriendshipActivity.class)
                         .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FRIENDS)
-                .putExtra(FriendshipActivity.INTENT_UID,AccessTokenKeeper.getUid(getContext())));
+                .putExtra(FriendshipActivity.INTENT_UID, AccessTokenKeeper.getInstance().getUid()));
                 break;
             case R.id.block_follower:
                 startActivity(new Intent(getActivity(), FriendshipActivity.class)
                         .putExtra(FriendshipActivity.INTENT_TYPE, FriendshipActivity.TYPE_FOLLOWERS)
-                        .putExtra(FriendshipActivity.INTENT_UID,AccessTokenKeeper.getUid(getContext())));
+                        .putExtra(FriendshipActivity.INTENT_UID, AccessTokenKeeper.getInstance().getUid()));
                 break;
             case R.id.item_favorite:
                 startActivity(new Intent(getActivity(), FavoriteActivity.class));

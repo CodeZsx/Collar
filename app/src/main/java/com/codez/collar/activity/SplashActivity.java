@@ -55,7 +55,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
                     if (countdown < 1||isFinished) {
                         mBinding.btnSkip.setText("跳过"+countdown--+"s");
                         Intent intent = null;
-                        if (AccessTokenKeeper.readAccessToken(SplashActivity.this).isSessionsValid()) {
+                        if (AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);
                         }else {
                             intent = new Intent(SplashActivity.this, LoginActivity.class);

@@ -106,7 +106,7 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
                 public void onClick(View v) {
                     if (mBinding.btnFollow.isSelected()) {
                         HttpUtils.getInstance().getFriendshipService(mContext)
-                                .destroyFriendships(AccessTokenKeeper.getAccessToken(mContext), bean.getIdstr())
+                                .destroyFriendships(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Observer<FavoriteBean>() {
@@ -129,7 +129,7 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
                                 });
                     }else{//未关注
                         HttpUtils.getInstance().getFriendshipService(mContext)
-                                .createFriendships(AccessTokenKeeper.getAccessToken(mContext), bean.getIdstr())
+                                .createFriendships(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Observer<FavoriteBean>() {

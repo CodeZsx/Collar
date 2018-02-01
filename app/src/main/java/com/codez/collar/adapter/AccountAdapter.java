@@ -65,7 +65,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.BindingV
                 mBinding.rlAdd.setVisibility(View.VISIBLE);
             }
             //若当前加载的账号即为登录账号，则设置选中状态
-            if (AccessTokenKeeper.getUid(mContext).equals(bean.getId())){
+            if (AccessTokenKeeper.getInstance().getUid().equals(bean.getId())){
                 mBinding.ivAccountChecked.setSelected(true);
             }
             mBinding.executePendingBindings();

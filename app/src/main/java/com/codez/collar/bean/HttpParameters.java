@@ -1,6 +1,5 @@
 package com.codez.collar.bean;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 
@@ -26,8 +25,8 @@ public class HttpParameters {
     public HttpParameters() {
     }
 
-    public void setTextStatusParams(Context context, String status){
-        this.put("access_token", AccessTokenKeeper.getAccessToken(context));
+    public void setTextStatusParams(String status){
+        this.put("access_token", AccessTokenKeeper.getInstance().getAccessToken());
         this.put("status", status);
     }
 

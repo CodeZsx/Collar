@@ -52,7 +52,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
     }
 
     private void loadData() {
-        if (!AccessTokenKeeper.readAccessToken(this).isSessionsValid()) {
+        if (!AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -92,7 +92,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_logout:
-                AccessTokenKeeper.clear(this);
+                AccessTokenKeeper.getInstance().clear();
                 loadData();
                 break;
         }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.codez.collar.Config;
+import com.codez.collar.manager.ApplicationContext;
 
 /**
  * Created by codez on 2017/11/19.
@@ -18,13 +19,31 @@ public class AccessTokenKeeper {
     private static final String KEY_REFRESH_TOKEN = "refresh_token";
     private static final String KEY_UID = "uid";
 
+    private Context mContext;
+    private SharedPreferences mAccountPref;
+
+    public AccessTokenKeeper() {
+        mContext = ApplicationContext.get();
+        init();
+    }
+
+    private void init() {
+        mAccountPref = mContext.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+    }
+    private static class Loader {
+        static AccessTokenKeeper INSTANCE = new AccessTokenKeeper();
+    }
+
+    public static AccessTokenKeeper getInstance() {
+        return Loader.INSTANCE;
+    }
+
     //将token信息写入SharedPreferences
-    public static void writeAccessToken(Context context, Oauth2AccessToken token) {
-        if (context == null || token == null) {
+    public void writeAccessToken(Oauth2AccessToken token) {
+        if (mAccountPref == null || token == null) {
             return;
         }
-        SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME,
-                Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = mAccountPref.edit();
         editor.putString(KEY_ACCESS_TOKEN, token.getAccessToken());
         editor.putLong(KEY_EXPIRES_IN, token.getExpiresIn());
         editor.putString(KEY_REFRESH_TOKEN, token.getRefreshToken());
@@ -33,40 +52,36 @@ public class AccessTokenKeeper {
     }
 
     //从SharedPreferences读取token信息
-    public static Oauth2AccessToken readAccessToken(Context context) {
-        if (context == null) {
+    public Oauth2AccessToken readAccessToken() {
+        if (mAccountPref == null) {
             return null;
         }
-        SharedPreferences pref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return new Oauth2AccessToken(pref.getString(KEY_ACCESS_TOKEN,""),
-                pref.getLong(KEY_EXPIRES_IN, 0L),
-                pref.getString(KEY_REFRESH_TOKEN, ""),
-                pref.getString(KEY_UID, ""));
+        return new Oauth2AccessToken(mAccountPref.getString(KEY_ACCESS_TOKEN,""),
+                mAccountPref.getLong(KEY_EXPIRES_IN, 0L),
+                mAccountPref.getString(KEY_REFRESH_TOKEN, ""),
+                mAccountPref.getString(KEY_UID, ""));
     }
 
-    public static String getAccessToken(Context context) {
-        if (context == null) {
+    public String getAccessToken() {
+        if (mAccountPref == null) {
             return null;
         }
-        return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-                .getString(KEY_ACCESS_TOKEN, "");
+        return mAccountPref.getString(KEY_ACCESS_TOKEN, "");
     }
 
-    public static String getUid(Context context) {
-        if (context == null) {
+    public String getUid() {
+        if (mAccountPref == null) {
             return null;
         }
-        return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-                .getString(KEY_UID, "");
+        return mAccountPref.getString(KEY_UID, "");
     }
     //清除SharedPreferences中的token信息
-    public static void clear(Context context) {
-        if (context == null) {
+    public void clear() {
+        if (mAccountPref == null) {
             return;
         }
 
-        SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME,
-                Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = mAccountPref.edit();
         editor.clear();
         editor.commit();
 

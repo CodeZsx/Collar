@@ -49,7 +49,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
 
 
         mAdapter = new DirectMsgConversationAdapter(this);
-        mAdapter.setUid(AccessTokenKeeper.getUid(this));
+        mAdapter.setUid(AccessTokenKeeper.getInstance().getUid());
         mBinding.recyclerView.setAdapter(mAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mBinding.recyclerView.setLayoutManager(linearLayoutManager);
@@ -174,7 +174,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         }
         //发送
         HttpUtils.getInstance().getDirectMsgService(this)
-                .createDirectMsg(AccessTokenKeeper.getAccessToken(this),mBinding.etContent.getText().toString(),mUid)
+                .createDirectMsg(AccessTokenKeeper.getInstance().getAccessToken(),mBinding.etContent.getText().toString(),mUid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DirectMsgBean>() {

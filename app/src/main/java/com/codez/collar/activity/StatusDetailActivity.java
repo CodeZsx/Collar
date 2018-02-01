@@ -191,7 +191,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
         }
         //发送评论内容
         HttpUtils.getInstance().getCommentService(this)
-                .createComment(AccessTokenKeeper.getAccessToken(this), mBinding.etContent.getText().toString(), mBean.getIdstr(),0)
+                .createComment(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString(), mBean.getIdstr(),0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentBean>() {

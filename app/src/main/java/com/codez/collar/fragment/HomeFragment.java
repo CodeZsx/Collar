@@ -58,7 +58,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.btnAdd.setLength(250);
 
 
-        fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getUid(getContext()),null, StatusListFragment.VALUE_HOME),
+        fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getInstance().getUid(),null, StatusListFragment.VALUE_HOME),
         new StatusListFragment().newInstance(null,null, StatusListFragment.VALUE_PUBLIC)};
 
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_statuses,fragments[0])
@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 break;
             case R.id.iv_user:
                 startActivity(new Intent(getActivity(), UserActivity.class)
-                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getUid(getContext())),
+                        .putExtra(UserActivity.INTENT_KEY_UID, AccessTokenKeeper.getInstance().getUid()),
                         ActivityOptions.makeSceneTransitionAnimation(getActivity(),mBinding.ivUser,"shareAvatar").toBundle());
                 break;
             case R.id.iv_search:
