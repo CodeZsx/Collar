@@ -15,7 +15,6 @@ import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.L;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -122,7 +121,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
         EventBusUtils.register(this);
     }
 
