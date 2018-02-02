@@ -12,6 +12,7 @@ import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.L;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,8 +37,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         //MainActivity不需要滑动后退
         setSwipeBackEnable(false);
         fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new MineFragment()};
-        getSupportFragmentManager().beginTransaction().add(R.id.container,fragments[0])
-                .show(fragments[0]).commit();
+        FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+        for (Fragment fragment: fragments){
+            trx.add(R.id.container,fragment).hide(fragment);
+        }
+        trx.show(fragments[0]).commit();
         mBinding.navBtnHome.setSelected(true);
 
         mBinding.navBtnHome.setOnClickListener(this);
@@ -119,12 +123,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        EventBusUtils.register(this);
     }
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
         super.onStop();
+        EventBusUtils.unregister(this);
     }
 
     @Override
