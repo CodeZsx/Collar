@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -112,7 +112,6 @@
             android:id="@+id/container_statuses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="68dp"
             android:background="@color/colorBgNormal">
 
         </FrameLayout>
@@ -138,5 +137,5 @@
         <!--android:src="@drawable/ic_add_white"-->
         <!--app:backgroundTint="@color/colorPrimary"-->
         <!--app:fabSize="normal" />-->
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 </layout>
