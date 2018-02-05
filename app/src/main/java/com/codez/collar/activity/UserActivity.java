@@ -61,6 +61,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
+            mBinding.toolbar.setNavigationIcon(R.drawable.ic_toolbar_back);
             mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
