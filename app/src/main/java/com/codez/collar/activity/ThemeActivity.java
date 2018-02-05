@@ -23,7 +23,7 @@ public class ThemeActivity extends BaseActivity<ActivityThemeBinding> {
 
 
     //已在colors.xml配置了的theme颜色
-    String[] array = {"a", "b", "c", "d",
+    public static final String[] THEME_LIST = {"a", "b", "c", "d",
             "e", "f", "g", "h",
             "i", "j", "k",
             "m", "n", "o", "p"};
@@ -79,8 +79,8 @@ public class ThemeActivity extends BaseActivity<ActivityThemeBinding> {
     private void loadData() {
         mList = new ArrayList<>();
         String curTheme = Config.getCachedTheme(this);
-        for (int i = 0; i < array.length; i++) {
-            mList.add(new ThemeBean(array[i], curTheme.equals(array[i])));
+        for (int i = 0; i < THEME_LIST.length; i++) {
+            mList.add(new ThemeBean(THEME_LIST[i], curTheme.equals(THEME_LIST[i])));
         }
         mAdapter.addAll(mList);
     }

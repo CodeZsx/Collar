@@ -34,6 +34,15 @@
                 android:layout_marginTop="8dp"
                 android:paddingLeft="@dimen/fab_margin"
                 android:paddingRight="@dimen/fab_margin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/fab_margin"
+                android:gravity="center_horizontal"
+                android:text="注：白色主题在Android6.0以下系统版本的某些手机上，状态栏处显示可能有问题"
+                android:textColor="@color/colorTextLevel3"
+                android:textSize="11sp"/>
 
         </LinearLayout>
 
