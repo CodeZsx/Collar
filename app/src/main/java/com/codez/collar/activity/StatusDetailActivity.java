@@ -10,11 +10,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.codez.collar.R;
-import com.codez.collar.adapter.CommentAdapter;
 import com.codez.collar.adapter.UserAlbumAdapter;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
@@ -37,6 +37,7 @@ import rx.schedulers.Schedulers;
 
 public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBinding> implements View.OnClickListener{
 
+    private static final String TAG = "StatusDetailActivity";
     public static String INTENT_FROM_COMMENT = "from_comment";
     private static final int COMMENT_MAX_LENGTH = 140;
     private boolean isFromComment;
@@ -99,8 +100,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
-
-                    return new CommentListFragment().newInstance(mBean.getId(), CommentAdapter.TYPE_COMMENT_NO_STATUS);
+                    return new CommentListFragment().newInstance(mBean.getId(), CommentListFragment.TYPE_COMMENT_STATUS_DETAIL);
                 }else{
                     return new RepostListFragment().newInstance(mBean.getId());
                 }
@@ -152,6 +152,31 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
 
         mBinding.ivCommit.setOnClickListener(this);
 
+        reloadData();
+    }
+
+    private void reloadData() {
+        HttpUtils.getInstance().getWeiboService()
+                .getStatusInfo(mBean.getIdstr())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<StatusBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError:" + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(StatusBean statusBean) {
+                        mBinding.tabLayout.getTabAt(0).setText("评论 " + statusBean.getComments_count());
+                        mBinding.tabLayout.getTabAt(1).setText("转发 " + statusBean.getReposts_count());
+                    }
+                });
     }
 
     private void setStatusImage(RecyclerView recyclerView, ArrayList<StatusBean.PicUrlsBean> pic_urls) {
@@ -229,6 +254,5 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                 break;
         }
     }
-
 
 }

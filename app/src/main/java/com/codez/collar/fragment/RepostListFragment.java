@@ -3,6 +3,7 @@ package com.codez.collar.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -11,7 +12,6 @@ import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.RepostResultBean;
 import com.codez.collar.databinding.FragmentCommentListBinding;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,6 +20,7 @@ import rx.schedulers.Schedulers;
 
 public class RepostListFragment extends BaseFragment<FragmentCommentListBinding> implements View.OnClickListener {
 
+    private static final String TAG = "RepostListFragment";
     private static final String KEY_ID = "id";
 
 
@@ -65,13 +66,11 @@ public class RepostListFragment extends BaseFragment<FragmentCommentListBinding>
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RepostResultBean>() {
                     @Override
-                    public void onCompleted() {
-                        L.e("onCompleted");
-                    }
+                    public void onCompleted() {}
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
+                        Log.w(TAG, "onError:"+e.toString());
                     }
 
                     @Override

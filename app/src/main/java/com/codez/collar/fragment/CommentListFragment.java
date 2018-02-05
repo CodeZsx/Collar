@@ -3,6 +3,7 @@ package com.codez.collar.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -20,6 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class CommentListFragment extends BaseFragment<FragmentCommentListBinding> implements View.OnClickListener {
 
+    private static final String TAG = "CommentListFragment";
     private static final String KEY_ID = "id";
     private static final String KEY_TYPE = "type";
 
@@ -77,13 +79,11 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<CommentResultBean>() {
                             @Override
-                            public void onCompleted() {
-                                L.e("onCompleted");
-                            }
+                            public void onCompleted() {}
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                Log.w(TAG, "onError:"+e.toString());
                             }
 
                             @Override
@@ -101,13 +101,11 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<CommentResultBean>() {
                             @Override
-                            public void onCompleted() {
-                                L.e("onCompleted");
-                            }
+                            public void onCompleted() {}
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                Log.w(TAG, "onError:"+e.toString());
                             }
 
                             @Override
@@ -125,13 +123,11 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<CommentResultBean>() {
                             @Override
-                            public void onCompleted() {
-                                L.e("onCompleted");
-                            }
+                            public void onCompleted() {}
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                Log.w(TAG, "onError:"+e.toString());
                             }
 
                             @Override
