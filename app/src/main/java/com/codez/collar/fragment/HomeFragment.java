@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,8 +15,10 @@ import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.databinding.FragmentHomeBinding;
+import com.codez.collar.event.UpdateUserInfoEvent;
 import com.codez.collar.ui.HomeTitleTextView;
 import com.codez.collar.ui.zxing.CaptureActivity;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -24,6 +27,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements View.OnClickListener {
 
+    private static final String TAG = "HomeFragment";
     private boolean isLeft;
 
     private Fragment[] fragments;

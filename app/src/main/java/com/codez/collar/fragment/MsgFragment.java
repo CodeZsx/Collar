@@ -22,6 +22,7 @@ import rx.schedulers.Schedulers;
 
 public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements View.OnClickListener {
 
+    private static final String TAG = "MsgFragment";
     private DirectMsgUserListAdapter mAdapter;
     private int curPage = 1;
 

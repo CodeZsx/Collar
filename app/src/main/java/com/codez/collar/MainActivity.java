@@ -20,6 +20,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{
 
+    private static final String TAG = "MainActivity";
     private Fragment fragments[];
     private int curIndex;
 
