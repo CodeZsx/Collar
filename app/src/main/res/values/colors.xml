@@ -63,42 +63,12 @@
     <color name="colorTextLevel4">#CCCCCC</color>
     <color name="colorTextLevel4_night">#303134</color>
 
-    <color name="colorToolbarText">#ff333333</color>
+    <color name="colorToolbarText">#ffffffff</color>
     <color name="colorToolbarText_a">#ff333333</color>
-    <color name="colorToolbarText_b">#ffffffff</color>
-    <color name="colorToolbarText_c">#ffffffff</color>
-    <color name="colorToolbarText_d">#ffffffff</color>
-    <color name="colorToolbarText_e">#ffffffff</color>
-    <color name="colorToolbarText_f">#ffffffff</color>
-    <color name="colorToolbarText_g">#ffffffff</color>
-    <color name="colorToolbarText_h">#ffffffff</color>
-    <color name="colorToolbarText_i">#ffffffff</color>
-    <color name="colorToolbarText_j">#ffffffff</color>
-    <color name="colorToolbarText_k">#ffffffff</color>
-    <color name="colorToolbarText_l">#ffffffff</color>
-    <color name="colorToolbarText_m">#ffffffff</color>
-    <color name="colorToolbarText_n">#ffffffff</color>
-    <color name="colorToolbarText_o">#ffffffff</color>
-    <color name="colorToolbarText_p">#ffffffff</color>
     <color name="colorToolbarText_night">#ff999999</color>
 
-    <color name="colorToolbarHint">#ff737373</color>
+    <color name="colorToolbarHint">#99ffffff</color>
     <color name="colorToolbarHint_a">#ff737373</color>
-    <color name="colorToolbarHint_b">#99ffffff</color>
-    <color name="colorToolbarHint_c">#99ffffff</color>
-    <color name="colorToolbarHint_d">#99ffffff</color>
-    <color name="colorToolbarHint_e">#99ffffff</color>
-    <color name="colorToolbarHint_f">#99ffffff</color>
-    <color name="colorToolbarHint_g">#99ffffff</color>
-    <color name="colorToolbarHint_h">#99ffffff</color>
-    <color name="colorToolbarHint_i">#99ffffff</color>
-    <color name="colorToolbarHint_j">#99ffffff</color>
-    <color name="colorToolbarHint_k">#99ffffff</color>
-    <color name="colorToolbarHint_l">#99ffffff</color>
-    <color name="colorToolbarHint_m">#99ffffff</color>
-    <color name="colorToolbarHint_n">#99ffffff</color>
-    <color name="colorToolbarHint_o">#99ffffff</color>
-    <color name="colorToolbarHint_p">#99ffffff</color>
     <color name="colorToolbarHint_night">#ff6b6c74</color>
 
 
