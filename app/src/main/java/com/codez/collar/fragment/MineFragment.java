@@ -1,6 +1,7 @@
 package com.codez.collar.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -13,22 +14,22 @@ import com.codez.collar.activity.ThemeActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
-import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentMineBinding;
 import com.codez.collar.event.RefreshStatusBarEvent;
-import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
+import com.codez.collar.event.UpdateUserInfoEvent;
+import com.codez.collar.manager.UserManager;
+import com.codez.collar.utils.EventBusUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import skin.support.SkinCompatManager;
 
 
 public class MineFragment extends BaseFragment<FragmentMineBinding> implements View.OnClickListener {
 
+    private static final String TAG = "MineFragment";
 
     @Override
     public int setContent() {
@@ -38,6 +39,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     @Override
     public void initView(View root) {
 
+        EventBusUtils.register(this);
         mBinding.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -69,33 +71,23 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.switchButton.setChecked(Config.getCachedNight(getContext()));
     }
 
-    private void initData(){
-        HttpUtils.getInstance().getUserService()
-                .getUserInfo(AccessTokenKeeper.getInstance().getUid(), null)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserBean>() {
-                    @Override
-                    public void onCompleted() {
-                        L.e("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
-                    }
-
-                    @Override
-                    public void onNext(UserBean userBean) {
-                        L.e("onNext");
-                        mBinding.setUser(userBean);
-                    }
-                });
+    private void initData() {
+        if (UserManager.getInstance().getUserMe() != null) {
+            mBinding.setUser(UserManager.getInstance().getUserMe());
+        }
 
     }
+
     private void refreshNews() {
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateUserInfoEvent(UpdateUserInfoEvent event) {
+        Log.i(TAG, "onUpdateUserInfoEvent");
+        mBinding.setUser(UserManager.getInstance().getUserMe());
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -126,5 +118,11 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 break;
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
     }
 }

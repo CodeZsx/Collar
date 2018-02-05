@@ -14,7 +14,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codez.collar.base.BaseApp;
+import com.codez.collar.event.LoginSuccessEvent;
 import com.codez.collar.event.ToastEvent;
+import com.codez.collar.event.UpdateUserInfoEvent;
+import com.codez.collar.manager.UserManager;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
 
@@ -58,7 +61,7 @@ public class CoreService extends Service{
         super.onDestroy();
         unregisterReceiver(mCoreServiceReceiver);
         EventBusUtils.unregister(this);
-        startService(new Intent(this, CoreService.class));
+//        startService(new Intent(this, CoreService.class));
     }
     private BroadcastReceiver mCoreServiceReceiver = new BroadcastReceiver() {
         @Override
@@ -123,6 +126,12 @@ public class CoreService extends Service{
                 showToast(getString(event.resId));
             }
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginSuccessEvent(LoginSuccessEvent event) {
+        Log.i(TAG, "login success event");
+        UserManager.getInstance().initUserInfo();
+        EventBusUtils.sendEvent(new UpdateUserInfoEvent());
     }
 
     private void showToast(String content) {

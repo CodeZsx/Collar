@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.MainActivity;
@@ -12,10 +13,13 @@ import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivitySplashBinding;
+import com.codez.collar.event.LoginSuccessEvent;
+import com.codez.collar.utils.EventBusUtils;
 
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
+    private static final String TAG = "SplashActivity";
     private int countdown = 1;
     private static final int SKIP_COUNTDOWN = 1;
     private static boolean isFinished = false;
@@ -34,8 +38,17 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
         return R.layout.activity_splash;
     }
 
+    private Intent intent = null;
     @Override
     public void initView() {
+        EventBusUtils.register(this);
+        if (AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
+            intent = new Intent(SplashActivity.this, MainActivity.class);
+            Log.i(TAG, "LoginSuccess");
+            EventBusUtils.sendEvent(new LoginSuccessEvent());
+        }else {
+            intent = new Intent(SplashActivity.this, LoginActivity.class);
+        }
         hideBottomUIMenu();
         setSwipeBackEnable(false);
         mBinding.btnSkip.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +100,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
     }
 
 }
