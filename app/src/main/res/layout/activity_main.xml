@@ -41,15 +41,15 @@
                         android:src="@drawable/ic_nav_home"/>
                     <TextView
                         android:id="@+id/tv_notice_home"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="@dimen/size_notice_bubble"
+                        android:layout_height="@dimen/size_notice_bubble"
                         android:layout_toRightOf="@id/nav_btn_home"
                         android:layout_marginLeft="-8dp"
                         android:background="@drawable/tv_notice_num"
                         android:gravity="center"
                         android:visibility="gone"
                         android:textColor="#fff"
-                        android:textSize="10sp"/>
+                        android:textSize="@dimen/text_notice_bubble"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -65,15 +65,15 @@
                         android:src="@drawable/ic_nav_msg"/>
                     <TextView
                         android:id="@+id/tv_notice_msg"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="@dimen/size_notice_bubble"
+                        android:layout_height="@dimen/size_notice_bubble"
                         android:layout_toRightOf="@id/nav_btn_msg"
                         android:layout_marginLeft="-8dp"
                         android:background="@drawable/tv_notice_num"
                         android:gravity="center"
                         android:visibility="gone"
                         android:textColor="#fff"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/text_notice_bubble"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -89,15 +89,15 @@
                         android:src="@drawable/ic_nav_user"/>
                     <TextView
                         android:id="@+id/tv_notice_user"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="@dimen/size_notice_bubble"
+                        android:layout_height="@dimen/size_notice_bubble"
                         android:layout_toRightOf="@id/nav_btn_user"
                         android:layout_marginLeft="-8dp"
                         android:background="@drawable/tv_notice_num"
                         android:gravity="center"
                         android:visibility="gone"
                         android:textColor="#fff"
-                        android:textSize="12sp"/>
+                        android:textSize="@dimen/text_notice_bubble"/>
                 </RelativeLayout>
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>

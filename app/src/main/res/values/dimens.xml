@@ -24,4 +24,8 @@
     <dimen name="margin_frag_mine_item">8dp</dimen>
     <dimen name="elevation_frag_mine_item">1dp</dimen>
 
+    <!-- 提示气泡的相关size -->
+    <dimen name="size_notice_bubble">14dp</dimen>
+    <dimen name="text_notice_bubble">11sp</dimen>
+
 </resources>
