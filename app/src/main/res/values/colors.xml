@@ -83,6 +83,13 @@
     <color name="layout_item_nor_night">@color/colorItemNormal_night</color>
 
     <color name="bgExpendBtn">#33000000</color>
+    
+    <!-- 记录一下项目中所使用的icon的颜色 -->
+    <!-- 白色主题下，icon颜色 -->
+    <color name="color_toolbar_white_theme">#484848</color>
+    <!-- 彩色或夜间主题下，icon颜色 -->
+    <color name="color_toolbar_other_theme">#ffffff</color>
+    <!--  -->
 
 
 </resources>
