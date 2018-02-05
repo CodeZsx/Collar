@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -38,6 +39,7 @@ import java.util.List;
  */
 
 public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompatActivity {
+    private static final String TAG = "BaseActivity";
     protected VD mBinding;
     private SwipeBackActivityHelper mHelper;
 
@@ -83,8 +85,8 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         //仅当当前主题色为白色时，修改状态栏字体颜色
         if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
             //api23以上，调用系统方法
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                L.e(">=23");
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                Log.i(TAG, "cur SDK > 23");
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
@@ -93,8 +95,8 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
             }
         }else{
             //api23以上，调用系统方法
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                L.e(">=23");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Log.i(TAG, "cur SDK > 23");
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//设置状态栏白色字体
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
