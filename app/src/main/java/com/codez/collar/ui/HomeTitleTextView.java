@@ -2,28 +2,28 @@ package com.codez.collar.ui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 
+import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.utils.DensityUtil;
 
-import skin.support.widget.SkinCompatBackgroundHelper;
-import skin.support.widget.SkinCompatSupportable;
 import skin.support.widget.SkinCompatTextHelper;
+import skin.support.widget.SkinCompatTextView;
+
+import static skin.support.widget.SkinCompatHelper.INVALID_ID;
 
 /**
  * Created by codez on 2017/11/20.
  * Description:
  */
 
-public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextView implements SkinCompatSupportable{
+public class HomeTitleTextView extends SkinCompatTextView {
 
     //skin
     private SkinCompatTextHelper mTextHelper;
-    private SkinCompatBackgroundHelper mBackgroundTintHelper;
+    private int mArrowResId = INVALID_ID;
 
     private Context mContext;
     private int mState;
@@ -39,8 +39,6 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
 
     public HomeTitleTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
-        mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
         mTextHelper = SkinCompatTextHelper.create(this);
         mTextHelper.loadFromAttributes(attrs, defStyleAttr);
 
@@ -54,23 +52,34 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
     public static final int STATE_UNSELECTED = 3;
 
     public void changeState(int state) {
-        Drawable arrow;
         switch (state) {
             case STATE_SELECTED_CLOSE:
                 mState = STATE_SELECTED_CLOSE;
                 setTextAppearance(R.style.HomeTitleColorSel);
-                arrow = mContext.getResources().getDrawable(R.drawable.ic_arrow_fill_down);
+                if (Config.getCachedTheme(getContext()).equals("a")){
+                    mArrowResId = R.drawable.ic_arrow_fill_down_a;
+                }else{
+                    mArrowResId = R.drawable.ic_arrow_fill_down;
+                }
+                Drawable arrow = mContext.getResources().getDrawable(mArrowResId);
                 arrow.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
                         DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE));
                 setCompoundDrawables(null, null, arrow, null);
+//                applyArrowResource();
                 break;
             case STATE_SELECTED_OPEN:
                 mState = STATE_SELECTED_OPEN;
                 setTextAppearance(R.style.HomeTitleColorSel);
-                arrow = mContext.getResources().getDrawable(R.drawable.ic_arrow_fill_up);
-                arrow.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
+                if (Config.getCachedTheme(getContext()).equals("a")){
+                    mArrowResId = R.drawable.ic_arrow_fill_up_a;
+                }else{
+                    mArrowResId = R.drawable.ic_arrow_fill_up;
+                }
+                Drawable arrow1 = mContext.getResources().getDrawable(mArrowResId);
+                arrow1.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
                         DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE));
-                setCompoundDrawables(null, null, arrow, null);
+                setCompoundDrawables(null, null, arrow1, null);
+//                applyArrowResource();
                 break;
             case STATE_UNSELECTED:
                 mState = STATE_UNSELECTED;
@@ -84,34 +93,21 @@ public class HomeTitleTextView extends android.support.v7.widget.AppCompatTextVi
         return mState;
     }
 
-    @Override
-    public void applySkin() {
-        if (mBackgroundTintHelper != null) {
-            mBackgroundTintHelper.applySkin();
-        }
-        if (mTextHelper != null) {
-            mTextHelper.applySkin();
-        }
+    private void applyArrowResource() {
+//        Log.i("codez", "before:" + mArrowResId);
+//        mArrowResId = SkinCompatHelper.checkResourceId(mArrowResId);
+//        Log.i("codez", "after:" + mArrowResId);
+//        if (mArrowResId != INVALID_ID) {
+//            Drawable arrow = mContext.getResources().getDrawable(mArrowResId);
+//            arrow.setBounds(0, 0, DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE),
+//                    DensityUtil.dp2px(mContext, DRAWABLE_RIGHT_SIZE));
+//            setCompoundDrawables(null, null, arrow, null);
+//        }
     }
 
-    @Override
-    public void setTextAppearance(@StyleRes int resId) {
-        setTextAppearance(getContext(), resId);
-    }
-
-    @Override
-    public void setTextAppearance(Context context, @StyleRes int resId) {
-        super.setTextAppearance(context, resId);
-        if (mTextHelper != null) {
-            mTextHelper.onSetTextAppearance(context, resId);
-        }
-    }
-
-    @Override
-    public void setBackgroundResource(@DrawableRes int resid) {
-        super.setBackgroundResource(resid);
-        if (mBackgroundTintHelper != null) {
-            mBackgroundTintHelper.onSetBackgroundResource(resid);
-        }
-    }
+//    @Override
+//    public void applySkin() {
+//        super.applySkin();
+//        applyArrowResource();
+//    }
 }
