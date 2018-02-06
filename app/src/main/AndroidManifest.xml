@@ -73,6 +73,7 @@
         <activity android:name=".activity.ThemeActivity" />
         <activity android:name=".ui.zxing.CaptureActivity"/>
         <service android:name=".service.CoreService"/>
+        <activity android:name=".activity.AboutActivity"/>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.codez.collar.Config;
 import com.codez.collar.R;
+import com.codez.collar.activity.AboutActivity;
 import com.codez.collar.activity.FavoriteActivity;
 import com.codez.collar.activity.FriendshipActivity;
 import com.codez.collar.activity.SetupActivity;
@@ -74,6 +75,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.itemFavorite.setOnClickListener(this);
         mBinding.itemTheme.setOnClickListener(this);
         mBinding.itemSettings.setOnClickListener(this);
+        mBinding.itemAbout.setOnClickListener(this);
         initData();
     }
 
@@ -160,6 +162,9 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             case R.id.item_settings:
                 startActivity(new Intent(getActivity(), SetupActivity.class)
                         .putExtra(SetupActivity.INTENT_SCREENN_NAME, mBinding.tvSreenName.getText().toString()));
+                break;
+            case R.id.item_about:
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
         }
 

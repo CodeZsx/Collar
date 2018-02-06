@@ -1,7 +1,11 @@
 package com.codez.collar.utils;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.view.inputmethod.InputMethodManager;
+
+import com.codez.collar.manager.ApplicationContext;
 
 /**
  * Created by codez on 2017/12/10.
@@ -22,5 +26,15 @@ public class Tools {
         //得到InputMethodManager的实例
         InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public static String getAppVersion() {
+        try {
+            PackageInfo info = ApplicationContext.get().getPackageManager().getPackageInfo(ApplicationContext.get().getPackageName(), 0);
+            return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
