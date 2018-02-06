@@ -168,191 +168,199 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fab_margin"
-                android:layout_marginLeft="@dimen/margin_frag_mine_item"
-                android:layout_marginRight="@dimen/margin_frag_mine_item"
-                android:background="@drawable/layout_item_radius"
-                android:divider="@drawable/line_gray"
-                android:showDividers="middle"
-                android:dividerPadding="@dimen/fab_margin"
-                android:elevation="@dimen/elevation_frag_mine_item"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:id="@+id/item_favorite"
+                android:layout_height="match_parent">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
-
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_favorite" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="我的收藏"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-                </RelativeLayout>
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/margin_frag_mine_item"
+                        android:layout_marginRight="@dimen/margin_frag_mine_item"
+                        android:background="@drawable/layout_item_radius"
+                        android:divider="@drawable/line_gray"
+                        android:showDividers="middle"
+                        android:dividerPadding="@dimen/fab_margin"
+                        android:elevation="@dimen/elevation_frag_mine_item"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:id="@+id/item_favorite"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
 
-                <RelativeLayout
-                    android:id="@+id/item_like"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_favorite" />
 
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_like" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="我的收藏"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:id="@+id/item_like"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
+
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_like" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="我的赞"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/item_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
+
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_group" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="我的分组"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="我的赞"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-                </RelativeLayout>
+                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_marginBottom="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/margin_frag_mine_item"
+                        android:layout_marginRight="@dimen/margin_frag_mine_item"
+                        android:background="@drawable/layout_item_radius"
+                        android:divider="@drawable/line_gray"
+                        android:showDividers="middle"
+                        android:dividerPadding="@dimen/fab_margin"
+                        android:elevation="@dimen/elevation_frag_mine_item"
+                        android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/item_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
+                        <RelativeLayout
+                            android:id="@+id/item_theme"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
 
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_group" />
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_theme" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="我的分组"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="主题"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fab_margin"
-                android:layout_marginBottom="@dimen/fab_margin"
-                android:layout_marginLeft="@dimen/margin_frag_mine_item"
-                android:layout_marginRight="@dimen/margin_frag_mine_item"
-                android:background="@drawable/layout_item_radius"
-                android:divider="@drawable/line_gray"
-                android:showDividers="middle"
-                android:dividerPadding="@dimen/fab_margin"
-                android:elevation="@dimen/elevation_frag_mine_item"
-                android:orientation="vertical">
+                            <com.kyleduo.switchbutton.SwitchButton
+                                android:id="@+id/switchButton"
+                                style="@style/SwitchButtonStyleMD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                app:kswBackColor="@color/colorHighlight" />
 
-                <RelativeLayout
-                    android:id="@+id/item_theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@id/switchButton"
+                                android:text="夜间模式"
+                                android:textColor="@color/colorTextLevel2"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/item_settings"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_settings" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="设置"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/item_about"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_frag_mine_item"
+                            android:background="@drawable/layout_item_radius"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin">
+                            <ImageView
+                                android:layout_width="@dimen/item_icon_size"
+                                android:layout_height="@dimen/item_icon_size"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_mine_about" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="42dp"
+                                android:text="关于"
+                                android:textColor="@color/colorTextLevel1"
+                                android:textSize="14sp" />
+                        </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_theme" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="主题"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-
-                    <com.kyleduo.switchbutton.SwitchButton
-                        android:id="@+id/switchButton"
-                        style="@style/SwitchButtonStyleMD"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        app:kswBackColor="@color/colorHighlight" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/switchButton"
-                        android:text="夜间模式"
-                        android:textColor="@color/colorTextLevel2"
-                        android:textSize="12sp" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/item_settings"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_settings" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="设置"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/item_about"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_frag_mine_item"
-                    android:background="@drawable/layout_item_radius"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin">
-                    <ImageView
-                        android:layout_width="@dimen/item_icon_size"
-                        android:layout_height="@dimen/item_icon_size"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_mine_about" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="42dp"
-                        android:text="关于"
-                        android:textColor="@color/colorTextLevel1"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
     </RelativeLayout>
 </layout>
