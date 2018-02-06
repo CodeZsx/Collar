@@ -1,10 +1,14 @@
 package com.codez.collar.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.activity.FavoriteActivity;
@@ -14,16 +18,24 @@ import com.codez.collar.activity.ThemeActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentMineBinding;
 import com.codez.collar.event.RefreshStatusBarEvent;
 import com.codez.collar.event.UpdateUserInfoEvent;
 import com.codez.collar.manager.UserManager;
 import com.codez.collar.utils.EventBusUtils;
+import com.codez.collar.utils.FastBlurUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import skin.support.SkinCompatManager;
 
 
@@ -72,9 +84,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     }
 
     private void initData() {
-        if (UserManager.getInstance().getUserMe() != null) {
-            mBinding.setUser(UserManager.getInstance().getUserMe());
-        }
+        refreshUserInfo(UserManager.getInstance().getUserMe());
 
     }
 
@@ -82,10 +92,45 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
 
     }
 
+    private void refreshUserInfo(final UserBean user) {
+        if (user == null) {
+            return;
+        }
+        mBinding.setUser(user);
+        Observable.timer(0, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w(TAG, "onError:" + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        Glide.with(getContext())
+                                .load(user.getProfile_image_url())
+                                .asBitmap()
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        Bitmap bitmap = FastBlurUtil.toBlur(resource, 10, 1);
+                                        mBinding.ivTopBg.setImageBitmap(bitmap);
+                                    }
+                                });
+                    }
+                });
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateUserInfoEvent(UpdateUserInfoEvent event) {
         Log.i(TAG, "onUpdateUserInfoEvent");
-        mBinding.setUser(UserManager.getInstance().getUserMe());
+        refreshUserInfo(UserManager.getInstance().getUserMe());
     }
 
     @Override
