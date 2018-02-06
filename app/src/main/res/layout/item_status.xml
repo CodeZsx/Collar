@@ -34,7 +34,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:imageUrl="@{status.user.avatar_large}"
-                android:transitionName="shareAvatar"
                 android:src="@drawable/pic_head_test" />
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_vip"
