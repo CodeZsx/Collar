@@ -43,9 +43,12 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     protected VD mBinding;
     private SwipeBackActivityHelper mHelper;
 
+    protected Bundle savedInstanceState;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         mHelper = new SwipeBackActivityHelper(this);
         mHelper.onActivityCreate();
         mBinding = DataBindingUtil.setContentView(this, setContent());

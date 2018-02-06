@@ -51,7 +51,8 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.ImageDetailActivity" />
+        <activity android:name=".activity.ImageDetailActivity"
+            android:theme="@style/TranslucentBgTheme"/>
         <activity
             android:name=".activity.StatusDetailActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>

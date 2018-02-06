@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.ImageDetailActivity;
+import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemUserAlbumBinding;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class UserAlbumAdapter extends RecyclerView.Adapter<UserAlbumAdapter.BindingViewHolder> {
 
+    private static final String TAG = "UserAlbumAdapter";
     private Context mContext;
     private List<StatusBean.PicUrlsBean> list;
     private ItemUserAlbumBinding imgSize;
@@ -71,15 +73,19 @@ public class UserAlbumAdapter extends RecyclerView.Adapter<UserAlbumAdapter.Bind
             mBinding.ivPic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int[] location = new int[2];
+                    mBinding.ivPic.getLocationInWindow(location);
                     Bundle bundle = new Bundle();
-
                     AlbumsBean bean = new AlbumsBean();
                     bean.setPic_urls(list);
                     bean.setCurPosition(postition);
-
                     bundle.putSerializable(AlbumsBean.INTENT_SERIALIZABLE, bean);
                     mContext.startActivity(new Intent(mContext, ImageDetailActivity.class)
-                    .putExtras(bundle));
+                            .putExtras(bundle)
+                            .putExtra("locationX", location[0])
+                            .putExtra("locationY", location[1]));
+
+                    ((BaseActivity) mContext).overridePendingTransition(0, 0);
                 }
             });
 
