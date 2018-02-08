@@ -53,10 +53,13 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                     @Override
                     public void onCompleted() {
                         mBinding.swipeRefreshLayout.setRefreshing(false);
+                        mBinding.swipeRefreshLayout.setEnabled(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        mBinding.swipeRefreshLayout.setRefreshing(false);
+                        mBinding.swipeRefreshLayout.setEnabled(false);
                         T.s(getContext(),"数据加载失败");
                         L.e(e.toString());
                     }
