@@ -105,9 +105,25 @@ public class StatusContentTextUtil {
                     }
 
                 };
-                offset += url.length() - 4;
-                spannableStringBuilder.replace(start, end > 226 ? 226 : end, "点击链接");
-                spannableStringBuilder.setSpan(urlClickableSpan, start, start+4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                //微博内容过长，服务器端会删除多余内容，变成文本尾部是"...全文： "的形式
+                //对于这样的情况，需要处理成："全文"变色且可点击
+                boolean isDisplayFull = true;
+                if (start > 6) {
+                    CharSequence c = spannableStringBuilder.subSequence(start - 7, start);
+                    if ("...全文： ".equals(c.toString())) {
+                        isDisplayFull = false;
+                    }
+                }
+                if (isDisplayFull) {
+                    offset += url.length() - 4;
+                    spannableStringBuilder.replace(start, end > 226 ? 226 : end, "点击链接");
+                    spannableStringBuilder.setSpan(urlClickableSpan, start, start+4, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                }else{
+                    offset += url.length() + 2;
+                    spannableStringBuilder.delete(start - 2, end > 226 ? 226 : end);
+                    spannableStringBuilder.setSpan(urlClickableSpan, start - 4, start - 2, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                }
+
             }
             //emoji
             if (emoji != null) {
