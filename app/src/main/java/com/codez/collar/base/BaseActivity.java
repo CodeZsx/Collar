@@ -242,9 +242,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
      */
     public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
-        L.e("start");
         if (window != null) {
-            L.e("in");
             Class clazz = window.getClass();
             try {
                 int darkModeFlag = 0;
@@ -262,7 +260,6 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
                 L.e(e.toString());
             }
         }
-        L.e("end");
         return result;
     }
     @Subscribe(threadMode = ThreadMode.MAIN)

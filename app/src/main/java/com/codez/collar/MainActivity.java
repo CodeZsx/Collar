@@ -2,6 +2,7 @@ package com.codez.collar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -13,7 +14,6 @@ import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     public void initView() {
 
-        L.e("MainActivity:"+ AccessTokenKeeper.getInstance().readAccessToken().toString());
+        Log.i(TAG, AccessTokenKeeper.getInstance().readAccessToken().toString());
 
         //MainActivity不需要滑动后退
         setSwipeBackEnable(false);
