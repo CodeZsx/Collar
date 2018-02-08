@@ -16,6 +16,7 @@ import com.codez.collar.databinding.ActivityDirectMsgBinding;
 import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
@@ -42,6 +43,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
     @Override
     public void initView() {
 
+        EventBusUtils.register(this);
         //获取intent传递过来的uid,screen_name
         mUid = getIntent().getStringExtra(INTENT_UID);
         mScreenName = getIntent().getStringExtra(INTENT_SCREEN_NAME);
@@ -218,5 +220,11 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
     }
 }

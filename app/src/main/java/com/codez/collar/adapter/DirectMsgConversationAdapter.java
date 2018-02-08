@@ -1,5 +1,7 @@
 package com.codez.collar.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +13,9 @@ import com.codez.collar.R;
 import com.codez.collar.bean.DirectMsgBean;
 import com.codez.collar.databinding.ItemMsgLeftBinding;
 import com.codez.collar.databinding.ItemMsgRightBinding;
+import com.codez.collar.event.ToastEvent;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.TimeUtil;
 
 import java.text.ParseException;
@@ -105,6 +109,15 @@ public class DirectMsgConversationAdapter extends RecyclerView.Adapter<RecyclerV
             }
             mBinding.tvText.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
                     mContext, mBinding.tvText));
+            mBinding.tvText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ClipboardManager cm =(ClipboardManager)mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setPrimaryClip(ClipData.newPlainText("text", bean.getText()));
+                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("已复制到剪切板"));
+                    return false;
+                }
+            });
             mBinding.executePendingBindings();
         }
     }
@@ -129,6 +142,15 @@ public class DirectMsgConversationAdapter extends RecyclerView.Adapter<RecyclerV
 
             mBinding.tvText.setText(StatusContentTextUtil.getWeiBoContent(bean.getText(),
                     mContext, mBinding.tvText));
+            mBinding.tvText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ClipboardManager cm =(ClipboardManager)mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setPrimaryClip(ClipData.newPlainText("text", bean.getText()));
+                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("已复制到剪切板"));
+                    return false;
+                }
+            });
             mBinding.executePendingBindings();
         }
     }
