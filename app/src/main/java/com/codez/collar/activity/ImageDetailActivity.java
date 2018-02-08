@@ -3,7 +3,6 @@ package com.codez.collar.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -15,6 +14,7 @@ import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AlbumsBean;
 import com.codez.collar.databinding.ActivityImageDetailBinding;
 import com.codez.collar.fragment.ImageDetailFragment;
+import com.codez.collar.ui.IndicatorView;
 import com.codez.collar.utils.ScreenUtil;
 
 public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding> {
@@ -36,12 +36,11 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
 
         final int size = bean.getPic_urls().size();
 
-        if (size == 1) {
-            mBinding.tabLayout.setVisibility(View.GONE);
+        if (size == 1 || size > 9) {
+            mBinding.indicatorView.setVisibility(View.GONE);
+        }else{
+            mBinding.indicatorView.init(bean.getPic_urls().size(), bean.getCurPosition(), IndicatorView.THEME_DARK);
         }
-        mBinding.indicatorView.init(bean.getPic_urls().size());
-        Log.i(TAG, "pos:"+bean.getCurPosition());
-        mBinding.indicatorView.playTo(bean.getCurPosition());
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -61,7 +60,6 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
             }
         });
         mBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            int oldPos = bean.getCurPosition();
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -69,8 +67,7 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
 
             @Override
             public void onPageSelected(int position) {
-                mBinding.indicatorView.playBy(oldPos, position);
-                oldPos = position;
+                mBinding.indicatorView.playTo(position);
             }
 
             @Override

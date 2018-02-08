@@ -69,7 +69,7 @@ public class EmojiFragment extends BaseFragment<FragmentEmojiBinding> {
 
     private void initViewPager() {
         //初始化圆点指示器
-        mBinding.emojiIndicator.init(getPagerCount(mEmojiList));
+        mBinding.emojiIndicator.init(getPagerCount(mEmojiList), 0, IndicatorView.THEME_LIGHT);
         mBinding.tvDefault.setSelected(true);
 
         mPagerList.clear();
@@ -79,7 +79,6 @@ public class EmojiFragment extends BaseFragment<FragmentEmojiBinding> {
         EmojiPagerAdapter mEmojiPagerAdapter = new EmojiPagerAdapter(mPagerList);
         mBinding.viewPager.setAdapter(mEmojiPagerAdapter);
         mBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            int oldPos = 0;
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -87,8 +86,7 @@ public class EmojiFragment extends BaseFragment<FragmentEmojiBinding> {
 
             @Override
             public void onPageSelected(int position) {
-                mBinding.emojiIndicator.playBy(oldPos, position);
-                oldPos = position;
+                mBinding.emojiIndicator.playTo(position);
             }
 
             @Override

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +16,6 @@ import android.widget.RelativeLayout;
 
 import com.codez.collar.R;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,9 @@ public class IndicatorView extends LinearLayout{
     private AnimatorSet mPlayToAnimatorSet;
     private AnimatorSet mPlayByInAnimatorSet;
     private AnimatorSet mPlayByOutAnimatorSet;
+    private int orginPos = -1;
+    public static final int THEME_DARK = 1;
+    public static final int THEME_LIGHT = 2;
 
 
     public IndicatorView(Context context) {
@@ -45,11 +48,19 @@ public class IndicatorView extends LinearLayout{
         mContext = context;
         setOrientation(HORIZONTAL);
         mMaxHeight = DensityUtil.dp2px(mContext, HEIGHT);
-        bmpSelect = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_select);
-        bmpNomal = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_nomal);
     }
-
-    public void init(int count) {
+    public void init(int count, int pos, int theme) {
+        Log.i("IndicatorView", "\tinit");
+        switch (theme){
+            case THEME_DARK:
+                bmpSelect = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_light);
+                bmpNomal = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_dark);
+                break;
+            case THEME_LIGHT:
+                bmpSelect = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_dark);
+                bmpNomal = BitmapFactory.decodeResource(getResources(), R.drawable.ic_indicator_point_light);
+                break;
+        }
         mImageViews = new ArrayList<>();
         removeAllViews();
         for (int i = 0; i < count; i++) {
@@ -58,7 +69,7 @@ public class IndicatorView extends LinearLayout{
             RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             rlParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             ImageView iv = new ImageView(mContext);
-            if (i == 0) {
+            if (i == pos){
                 iv.setImageBitmap(bmpSelect);
                 rl.addView(iv, rlParams);
             }else{
@@ -68,6 +79,7 @@ public class IndicatorView extends LinearLayout{
             addView(rl, llParams);
             mImageViews.add(iv);
         }
+        orginPos = pos;
     }
 
     public void setIndicatorCount(int count) {
@@ -84,30 +96,103 @@ public class IndicatorView extends LinearLayout{
             }
         }
     }
+    //指示器圆点从start位置滑动到next位置时，圆点选中状态设置以及动画设置
+    public void playTo(int nextPosition) {
+        if (orginPos == -1) {
+            return;
+        }
+        Log.i("IndicatorView", "\tplayBy:"+orginPos+"\t"+nextPosition);
+        boolean isShowInAnimOnly = false;
+        if (nextPosition < 0 || nextPosition == orginPos) {
+            nextPosition = orginPos;
+            isShowInAnimOnly = true;
+        }
+        final ImageView ivStart = mImageViews.get(orginPos);
+        final ImageView ivNext = mImageViews.get(nextPosition);
 
-    //指示器圆点滑动到对应position时，圆点选中状态设置以及动画设置
-    public void playTo(int position) {
-        //取消上一次的选中
-        for (ImageView iv : mImageViews) {
-            iv.setImageBitmap(bmpNomal);
-        }
-        mImageViews.get(position).setImageBitmap(bmpSelect);
-        ImageView ivTarget = mImageViews.get(position);
-        ObjectAnimator animX = ObjectAnimator.ofFloat(ivTarget, "scaleX", 0.25f, 1.0f);
-        ObjectAnimator animY = ObjectAnimator.ofFloat(ivTarget, "scaleY", 0.25f, 1.0f);
+        ObjectAnimator animX = ObjectAnimator.ofFloat(ivStart, "scaleX", 1.0f, 0.25f);
+        ObjectAnimator animY = ObjectAnimator.ofFloat(ivNext, "scaleY", 1.0f, 0.25f);
+
         //若正在执行该动画，则停止重置
-        if (mPlayToAnimatorSet != null && mPlayToAnimatorSet.isRunning()) {
-            mPlayToAnimatorSet.cancel();
-            mPlayToAnimatorSet = null;
+        if (mPlayByInAnimatorSet != null && mPlayByInAnimatorSet.isRunning()) {
+            mPlayByInAnimatorSet.cancel();
+            mPlayByInAnimatorSet = null;
         }
-        mPlayToAnimatorSet = new AnimatorSet();
-        mPlayToAnimatorSet.play(animX).with(animY);
-        mPlayToAnimatorSet.setDuration(100);
-        mPlayToAnimatorSet.start();
+        mPlayByOutAnimatorSet = new AnimatorSet();
+        mPlayByOutAnimatorSet.play(animX).with(animY);
+        mPlayByOutAnimatorSet.setDuration(100);
+
+        ObjectAnimator animInX = ObjectAnimator.ofFloat(ivNext, "scaleX", 0.25f, 1.0f);
+        ObjectAnimator animInY = ObjectAnimator.ofFloat(ivNext, "scaleY", 0.25f, 1.0f);
+        mPlayByInAnimatorSet = new AnimatorSet();
+        mPlayByInAnimatorSet.play(animInX).with(animInY);
+
+        if (isShowInAnimOnly) {
+            mPlayByInAnimatorSet.start();
+            return;
+        }
+        animX.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ivStart.setImageBitmap(bmpNomal);
+                ObjectAnimator animFillX = ObjectAnimator.ofFloat(ivStart, "scaleX", 1.0f);
+                ObjectAnimator animFillY = ObjectAnimator.ofFloat(ivStart, "scaleY", 1.0f);
+                AnimatorSet mFillAnimatorSet = new AnimatorSet();
+                mFillAnimatorSet.play(animFillX).with(animFillY);
+                mFillAnimatorSet.start();
+                ivNext.setImageBitmap(bmpSelect);
+                mPlayByInAnimatorSet.start();
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        mPlayByOutAnimatorSet.start();
+        orginPos = nextPosition;
+
     }
+
+//    //指示器圆点滑动到对应position时，圆点选中状态设置以及动画设置
+//    public void playTo(int position) {
+//        Log.i("IndicatorView", "\tplayTo:"+position);
+//        //取消上一次的选中
+//        for (ImageView iv : mImageViews) {
+//            iv.setImageBitmap(bmpNomal);
+//        }
+//        mImageViews.get(position).setImageBitmap(bmpSelect);
+//        ImageView ivTarget = mImageViews.get(position);
+//        ObjectAnimator animX = ObjectAnimator.ofFloat(ivTarget, "scaleX", 0.25f, 1.0f);
+//        ObjectAnimator animY = ObjectAnimator.ofFloat(ivTarget, "scaleY", 0.25f, 1.0f);
+//        //若正在执行该动画，则停止重置
+//        if (mPlayToAnimatorSet != null && mPlayToAnimatorSet.isRunning()) {
+//            mPlayToAnimatorSet.cancel();
+//            mPlayToAnimatorSet = null;
+//        }
+//        mPlayToAnimatorSet = new AnimatorSet();
+//        mPlayToAnimatorSet.play(animX).with(animY);
+//        mPlayToAnimatorSet.setDuration(100);
+//        mPlayToAnimatorSet.start();
+//    }
 
     //指示器圆点从start位置滑动到next位置时，圆点选中状态设置以及动画设置
     public void playBy(int startPosition, int nextPosition) {
+        if (orginPos == -1) {
+            return;
+        }
+        Log.i("IndicatorView", "\tplayBy:"+startPosition+"\t"+nextPosition);
         boolean isShowInAnimOnly = false;
         if (startPosition < 0 || nextPosition < 0 || nextPosition == startPosition) {
             startPosition = nextPosition = 0;
