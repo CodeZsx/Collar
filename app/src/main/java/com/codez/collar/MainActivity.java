@@ -5,10 +5,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityMainBinding;
+import com.codez.collar.event.TranslucentMaskDisplayEvent;
 import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
@@ -43,6 +45,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         }
         trx.show(fragments[0]).commit();
         mBinding.navBtnHome.setSelected(true);
+
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mBinding.translucentMask.getLayoutParams();
+        int marginTop = (int) (getResources().getDimension(R.dimen.statusbar_height) + getResources().getDimension(R.dimen.toolbar_height));
+        lp.setMargins(0,marginTop,0,0);
+        mBinding.translucentMask.setLayoutParams(lp);
 
         mBinding.navBtnHome.setOnClickListener(this);
         mBinding.navBtnMsg.setOnClickListener(this);
@@ -117,6 +124,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 }
                 break;
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTranslucentMaskDisplayEvent(TranslucentMaskDisplayEvent event) {
+        Log.i(TAG, "onTranslucentMaskDisplayEvent:" + event.isDisplay());
+        mBinding.translucentMask.setVisibility(event.isDisplay() ? View.VISIBLE : View.GONE);
     }
 
     @Override

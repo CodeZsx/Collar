@@ -142,6 +142,7 @@ public class CoreService extends Service{
     public void onLoginSuccessEvent(LoginSuccessEvent event) {
         Log.i(TAG, "login success event");
         UserManager.getInstance().initUserInfo();
+        GroupManager.getInstance().initGroups();
     }
 
     private void showToast(String content) {

@@ -41,6 +41,11 @@
         <item name="@android:windowEnterAnimation">@anim/dialog_selectpic_enter</item>//进入时的动画
         <item name="@android:windowExitAnimation">@anim/dialog_selectpic_exit</item>//退出时的动画
     </style>
+    <style name="GroupChooseWindowStyle" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/anim_group_choose_in</item>//进入时的动画
+        <item name="@android:windowExitAnimation">@anim/anim_group_choose_out</item>//退出时的动画
+    </style>
+
     <style name="Dialog"/>
     <style name="DialogStatement">
         <item name="android:windowBackground">@android:color/transparent</item>

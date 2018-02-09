@@ -91,7 +91,6 @@ public class Worker {
                 Log.d(name, "run handler " + handler + " end");
             }
             Log.d(name, "WorkRunnable run exist !");
-            super.run();
         }
     }
 }

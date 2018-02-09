@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -102,4 +105,11 @@
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
+        <View
+            android:id="@+id/translucent_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="#66000000"/>
+    </RelativeLayout>
 </layout>

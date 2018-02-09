@@ -4,6 +4,7 @@ import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.FriendsIdsResultBean;
 import com.codez.collar.bean.FriendshipsResultBean;
 import com.codez.collar.bean.FriendshipsShowResultBean;
+import com.codez.collar.bean.GroupsResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,6 +28,9 @@ public interface FriendshipService {
 
     @GET("friendships/friends/ids.json")
     Observable<FriendsIdsResultBean> getFriendsIds(@Query("uid") String uid, @Query("screen_name") String screen_name);
+
+    @GET("friendships/groups.json")
+    Observable<GroupsResult> getGroups();
 
     @GET("friendships/show.json")
     Observable<FriendshipsShowResultBean> showFriendships(@Query("source_id") String source_id, @Query("target_id") String target_id);

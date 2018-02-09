@@ -4,8 +4,10 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.codez.collar.R;
@@ -15,7 +17,8 @@ import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.databinding.FragmentHomeBinding;
-import com.codez.collar.event.UpdateUserInfoEvent;
+import com.codez.collar.event.TranslucentMaskDisplayEvent;
+import com.codez.collar.ui.GroupPopupWindow;
 import com.codez.collar.ui.HomeTitleTextView;
 import com.codez.collar.ui.zxing.CaptureActivity;
 import com.codez.collar.utils.EventBusUtils;
@@ -88,14 +91,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         switch (v.getId()) {
             case R.id.tv_left:
                 if (isLeft){
+                    GroupPopupWindow window = new GroupPopupWindow(getContext(), ViewGroup.LayoutParams.MATCH_PARENT, 600);
+                    window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
+                            EventBusUtils.sendEvent(new TranslucentMaskDisplayEvent(false));
+                        }
+                    });
+                    int[] location = new int[2];
+                    mBinding.appbar.getLocationInWindow(location);
                     if (mBinding.tvLeft.getState() == HomeTitleTextView.STATE_SELECTED_CLOSE) {
                         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_OPEN);
-                        //TODO:popupWindow open
-                        T.s(getContext(),"left open");
+                        EventBusUtils.sendEvent(new TranslucentMaskDisplayEvent(true));
+                        window.showAtLocation(mBinding.appbar, Gravity.NO_GRAVITY, 0, location[1]+mBinding.appbar.getHeight());
                     }else{
                         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
-                        //TODO:popWindow close
-                        T.s(getContext(),"left close");
+                        window.dismiss();
                     }
                 } else {
                     mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
