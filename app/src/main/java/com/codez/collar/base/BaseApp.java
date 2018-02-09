@@ -31,6 +31,8 @@ public class BaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i(TAG, "oncreate");
+        startCoreService();
         SkinCompatManager.withoutActivity(this)
                 .addInflater(new SkinMaterialViewInflater())
                 .addInflater(new SkinConstraintViewInflater())
@@ -38,7 +40,6 @@ public class BaseApp extends Application {
                 .setSkinStatusBarColorEnable(false)
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
-        startCoreService();
 
     }
 
