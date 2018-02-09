@@ -13,10 +13,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseApp;
 import com.codez.collar.event.LoginSuccessEvent;
 import com.codez.collar.event.ToastEvent;
-import com.codez.collar.event.UpdateUserInfoEvent;
+import com.codez.collar.manager.GroupManager;
 import com.codez.collar.manager.UserManager;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
@@ -53,6 +54,15 @@ public class CoreService extends Service{
         filter.addAction(NET_CHANGED);
         registerReceiver(mCoreServiceReceiver, filter);
         EventBusUtils.register(this);
+        checkIsLogged();
+
+    }
+
+    private void checkIsLogged() {
+        if (AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
+            Log.i(TAG, "LoginSuccess");
+            EventBusUtils.sendEvent(new LoginSuccessEvent());
+        }
     }
 
     @Override
@@ -127,11 +137,11 @@ public class CoreService extends Service{
             }
         }
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    //异步执行登录成功后的操作
+    @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onLoginSuccessEvent(LoginSuccessEvent event) {
         Log.i(TAG, "login success event");
         UserManager.getInstance().initUserInfo();
-        EventBusUtils.sendEvent(new UpdateUserInfoEvent());
     }
 
     private void showToast(String content) {

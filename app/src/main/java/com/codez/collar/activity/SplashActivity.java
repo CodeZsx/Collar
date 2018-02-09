@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.MainActivity;
@@ -13,7 +12,6 @@ import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivitySplashBinding;
-import com.codez.collar.event.LoginSuccessEvent;
 import com.codez.collar.utils.EventBusUtils;
 
 
@@ -42,13 +40,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
     @Override
     public void initView() {
         EventBusUtils.register(this);
-        if (AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
-            intent = new Intent(SplashActivity.this, MainActivity.class);
-            Log.i(TAG, "LoginSuccess");
-            EventBusUtils.sendEvent(new LoginSuccessEvent());
-        }else {
-            intent = new Intent(SplashActivity.this, LoginActivity.class);
-        }
         hideBottomUIMenu();
         setSwipeBackEnable(false);
         mBinding.btnSkip.setOnClickListener(new View.OnClickListener() {
