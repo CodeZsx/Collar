@@ -69,8 +69,9 @@
                 android:textSize="12sp" />
             <TextView
                 android:id="@+id/tv_notice_num"
-                android:layout_width="@dimen/size_notice_bubble"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_notice_bubble"
+                android:minWidth="@dimen/size_notice_bubble"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/tv_notice_num"

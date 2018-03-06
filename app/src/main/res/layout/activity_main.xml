@@ -68,8 +68,9 @@
                         android:src="@drawable/ic_nav_msg"/>
                     <TextView
                         android:id="@+id/tv_notice_msg"
-                        android:layout_width="@dimen/size_notice_bubble"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/size_notice_bubble"
+                        android:minWidth="@dimen/size_notice_bubble"
                         android:layout_toRightOf="@id/nav_btn_msg"
                         android:layout_marginLeft="-8dp"
                         android:background="@drawable/tv_notice_num"

@@ -26,6 +26,6 @@
 
     <!-- 提示气泡的相关size -->
     <dimen name="size_notice_bubble">14dp</dimen>
-    <dimen name="text_notice_bubble">11sp</dimen>
+    <dimen name="text_notice_bubble">10sp</dimen>
 
 </resources>
