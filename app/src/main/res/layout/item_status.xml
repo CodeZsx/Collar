@@ -131,21 +131,18 @@
         android:layout_width="match_parent"
         android:layout_height="22dp"
         android:layout_marginTop="10dp"
+        android:gravity="right"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"/>
 
         <LinearLayout
             android:id="@+id/block_like"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical|right"
+            android:minWidth="70dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -165,10 +162,10 @@
 
         <LinearLayout
             android:id="@+id/block_comment"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical|right"
+            android:minWidth="70dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -188,10 +185,10 @@
 
         <LinearLayout
             android:id="@+id/block_repost"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical|right"
+            android:minWidth="70dp"
             android:orientation="horizontal">
 
             <ImageView
