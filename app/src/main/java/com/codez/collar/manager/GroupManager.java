@@ -77,5 +77,16 @@ public class GroupManager {
         }
         return mGroups;
     }
+    public Group getGroupsByName(String groupName){
+        if (groupName==null){
+            return null;
+        }
+        for (Group group : mGroups) {
+            if (groupName.equals(group.getName())) {
+                return group;
+            }
+        }
+        return null;
+    }
 
 }

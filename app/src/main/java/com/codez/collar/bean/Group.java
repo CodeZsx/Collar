@@ -33,7 +33,7 @@ public class Group implements Serializable {
     /**
      * 微博分组字符串ID
      **/
-    public String idStr;
+    public String idstr;
     /**
      * 分组名称
      **/
@@ -83,12 +83,12 @@ public class Group implements Serializable {
         this.id = id;
     }
 
-    public String getIdStr() {
-        return idStr;
+    public String getIdstr() {
+        return idstr;
     }
 
-    public void setIdStr(String idStr) {
-        this.idStr = idStr;
+    public void setIdstr(String idstr) {
+        this.idstr = idstr;
     }
 
     public String getName() {

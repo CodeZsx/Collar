@@ -37,24 +37,28 @@
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:transitionName="shareAvatar"
                         android:src="@drawable/pic_head_test" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true">
 
+                        <View
+                            android:id="@+id/center_point"
+                            android:layout_width="20dp"
+                            android:layout_height="1px"
+                            android:layout_centerInParent="true"/>
                         <com.codez.collar.ui.HomeTitleTextView
                             android:id="@+id/tv_left"
-                            android:layout_width="55dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="left"
+                            android:layout_toLeftOf="@id/center_point"
                             android:text="全部"
                             android:textSize="18sp" />
                         <com.codez.collar.ui.HomeTitleTextView
                             android:id="@+id/tv_right"
-                            android:layout_width="55dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:gravity="left"
+                            android:layout_toRightOf="@id/center_point"
                             android:text="热门"
                             android:textSize="18sp" />
                         <!--<TextView-->
@@ -77,7 +81,7 @@
                             <!--android:text="热门"-->
                             <!--android:textColor="@drawable/sel_home_title"-->
                             <!--android:textSize="18sp" />-->
-                    </LinearLayout>
+                    </RelativeLayout>
                     <ImageView
                         android:id="@+id/iv_scan"
                         android:layout_width="@dimen/toolbar_icon_size"

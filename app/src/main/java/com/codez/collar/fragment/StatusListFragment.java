@@ -6,20 +6,28 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.Group;
 import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
 import com.codez.collar.databinding.ItemRvFooterBinding;
+import com.codez.collar.event.GroupChangedEvent;
+import com.codez.collar.event.ToastEvent;
 import com.codez.collar.listener.EndlessRecyclerViewOnScrollListener;
+import com.codez.collar.manager.GroupManager;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.recyclerview.HeaderAndFooterWrapper;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.L;
-import com.codez.collar.utils.T;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -28,6 +36,7 @@ import rx.schedulers.Schedulers;
 
 public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> implements View.OnClickListener {
 
+    private static final String TAG = "StatusListFragment";
     private static final String KEY_UID = "uid";
     private static final String KEY_SCREEN_NAME = "screen_name";
     private static final String KEY_SOURCE = "source";
@@ -38,9 +47,11 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
 
     private String mUid;
+    //既代表User的screenName,又代表首页的分组名（全部、特别关注等）
     private String mScreenName;
     private int mSource;
     private int curPage;
+    private Group mGroup;
     private StatusAdapter mStatusAdapter;
     private HeaderAndFooterWrapper mWrapper;
     private ItemRvFooterBinding mFooterBinding;
@@ -60,6 +71,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     }
     @Override
     public void initView(View root) {
+        EventBusUtils.register(this);
         if (getArguments() != null) {
             mUid = getArguments().getString(KEY_UID);
             mScreenName = getArguments().getString(KEY_SCREEN_NAME);
@@ -112,11 +124,9 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
             @Override
             public void onRefresh() {
                 curPage = 1;
-                mStatusAdapter.clearList();
                 loadData();
             }
         });
-        mBinding.swipeRefreshLayout.setRefreshing(true);
 
         loadData();
 
@@ -124,29 +134,67 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
 
     private void loadData() {
+        if (curPage == 1) {
+            mStatusAdapter.clearList();
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+        }
 
         switch (mSource) {
             case VALUE_HOME:
-                HttpUtils.getInstance().getWeiboService()
-                        .getHomeStatus(mUid, curPage++)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<StatusResultBean>() {
-                            @Override
-                            public void onCompleted() {
-                                L.e("onCompleted");
-                            }
+                if (HomeFragment.STATUS_GROUP_ALL.equals(mScreenName)) {
+                    HttpUtils.getInstance().getWeiboService()
+                            .getHomeStatus(mUid, curPage++)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<StatusResultBean>() {
+                                @Override
+                                public void onCompleted() {
+                                    L.e("onCompleted");
+                                }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                handleError(e);
-                            }
+                                @Override
+                                public void onError(Throwable e) {
+                                    handleError(e);
+                                }
 
-                            @Override
-                            public void onNext(StatusResultBean statusResultBean) {
-                                handleData(statusResultBean);
-                            }
-                        });
+                                @Override
+                                public void onNext(StatusResultBean statusResultBean) {
+                                    handleData(statusResultBean);
+                                }
+                            });
+                }else{
+                    if (mGroup == null) {
+                        Log.i(TAG, "group first null");
+                        mGroup = GroupManager.getInstance().getGroupsByName(mScreenName);
+                    }
+                    if (mGroup == null) {
+                        Log.i(TAG, "group second null");
+                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("不存在此分组"));
+                        return;
+                    }
+                    Log.i(TAG, "group id:" + mGroup.getIdstr());
+                    HttpUtils.getInstance().getFriendshipService()
+                            .getGroupsStatus(mGroup.getIdstr(), curPage++)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<StatusResultBean>() {
+                                @Override
+                                public void onCompleted() {
+                                    L.e("onCompleted");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    handleError(e);
+                                }
+
+                                @Override
+                                public void onNext(StatusResultBean statusResultBean) {
+                                    handleData(statusResultBean);
+                                }
+                            });
+                }
+
                 break;
             case VALUE_PUBLIC:
                 HttpUtils.getInstance().getWeiboService()
@@ -251,12 +299,33 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
     private void handleError(Throwable e) {
         L.e(e.toString());
-        T.s(getContext(), "请求数据失败");
+        EventBusUtils.sendEvent(ToastEvent.newToastEvent("请求数据失败"));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGroupChangedEvent(GroupChangedEvent event) {
+        Log.i(TAG, "onGroupChangedEvent");
+        if (event == null) {
+            return;
+        }
+        if (mSource == VALUE_HOME) {
+            if (!mScreenName.equals(event.getName())) {
+                Log.i(TAG, "name:" + event.getName());
+                mScreenName = event.getName();
+                mGroup = GroupManager.getInstance().getGroupsByName(mScreenName);
+                curPage = 1;
+            }
+            loadData();
+        }
+    }
 
     @Override
     public void onClick(View v) {
 
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
     }
 }

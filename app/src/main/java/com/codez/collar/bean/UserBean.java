@@ -510,7 +510,7 @@ public class UserBean extends BaseObservable implements Serializable{
     public String toString() {
         return "UserBean{" +
                 "id='" + id + '\'' +
-                ", idStr='" + idstr + '\'' +
+                ", idstr='" + idstr + '\'' +
                 ", screen_name='" + screen_name + '\'' +
                 ", name='" + name + '\'' +
                 ", province=" + province +

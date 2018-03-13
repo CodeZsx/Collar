@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.databinding.FragmentHomeBinding;
+import com.codez.collar.event.GroupChangedEvent;
 import com.codez.collar.event.TranslucentMaskDisplayEvent;
 import com.codez.collar.ui.GroupPopupWindow;
 import com.codez.collar.ui.HomeTitleTextView;
@@ -27,11 +29,18 @@ import com.codez.collar.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements View.OnClickListener {
 
     private static final String TAG = "HomeFragment";
     private boolean isLeft;
+    private GroupPopupWindow groupWindow = null;
+    private GroupChangedEvent mGroupChangedEvent = null;
+    private String mCurGroupName;
+    public static final String STATUS_GROUP_ALL = "全部";
 
     private Fragment[] fragments;
     @Override
@@ -42,6 +51,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
 
     @Override
     public void initView(View root) {
+        EventBusUtils.register(this);
         mBinding.btnAdd.addElement(R.drawable.ic_add_text, R.color.colorHighlight, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,9 +73,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.btnAdd.setAngle(80);
         mBinding.btnAdd.setmScale(0.8f);
         mBinding.btnAdd.setLength(250);
+        mCurGroupName = STATUS_GROUP_ALL;
 
-
-        fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getInstance().getUid(),null, StatusListFragment.VALUE_HOME),
+        fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getInstance().getUid(),STATUS_GROUP_ALL, StatusListFragment.VALUE_HOME),
         new StatusListFragment().newInstance(null,null, StatusListFragment.VALUE_PUBLIC)};
 
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_statuses,fragments[0])
@@ -91,8 +101,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         switch (v.getId()) {
             case R.id.tv_left:
                 if (isLeft){
-                    GroupPopupWindow window = new GroupPopupWindow(getContext(), ViewGroup.LayoutParams.MATCH_PARENT, 600);
-                    window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    if (groupWindow == null){
+                        groupWindow = new GroupPopupWindow(getContext(), ViewGroup.LayoutParams.MATCH_PARENT, 600);
+                    }
+                    groupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                         @Override
                         public void onDismiss() {
                             mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
@@ -104,10 +116,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                     if (mBinding.tvLeft.getState() == HomeTitleTextView.STATE_SELECTED_CLOSE) {
                         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_OPEN);
                         EventBusUtils.sendEvent(new TranslucentMaskDisplayEvent(true));
-                        window.showAtLocation(mBinding.appbar, Gravity.NO_GRAVITY, 0, location[1]+mBinding.appbar.getHeight());
+                        groupWindow.showAtLocation(mBinding.appbar, Gravity.NO_GRAVITY, 0, location[1]+mBinding.appbar.getHeight());
                     }else{
                         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
-                        window.dismiss();
+                        groupWindow.dismiss();
                     }
                 } else {
                     mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
@@ -165,6 +177,20 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusUtils.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGroupChangedEvent(GroupChangedEvent event) {
+        Log.i(TAG, "onGroupChangedEvent");
+        mGroupChangedEvent = event;
+        mBinding.tvLeft.setText(event.getName());
+        mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
+        groupWindow.dismiss();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);

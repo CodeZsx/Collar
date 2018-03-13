@@ -1,7 +1,8 @@
 package com.codez.collar.net;
 
+import android.util.Log;
+
 import com.codez.collar.auth.AccessTokenKeeper;
-import com.codez.collar.utils.L;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class HttpUtils {
+    private static final String TAG = "HttpUtils";
 
     private static final int DEFAULT_TIMEOUT = 10;
 
@@ -69,11 +71,10 @@ public class HttpUtils {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request r = addParam(chain.request());
-                        L.e(r.method()+" "+r.url().toString());
+                        Log.i(TAG, r.method()+" "+r.url().toString());
                         return chain.proceed(r);
                     }
                     private Request addParam(Request oldRequest){
-                        L.e("header:"+oldRequest.headers().toString());
                         if (oldRequest.method().equals("POST")){
                             return oldRequest;
                         }

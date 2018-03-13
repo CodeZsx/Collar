@@ -3,6 +3,7 @@ package com.codez.collar.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.view.ViewGroup;
 import com.codez.collar.R;
 import com.codez.collar.bean.Group;
 import com.codez.collar.databinding.ItemGroupsBinding;
+import com.codez.collar.event.GroupChangedEvent;
+import com.codez.collar.fragment.HomeFragment;
+import com.codez.collar.utils.EventBusUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +25,10 @@ import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final String TAG = "GroupAdapter";
     private Context mContext;
     private List<Group> list;
+    private String selectId = null;
     private static final int VIEW_TYPE_GROUP = 0;
     private static final int VIEW_TYPE_CREATE = 1;
 
@@ -46,9 +52,10 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ((BindingViewHolder) holder).bindItem(position);
     }
 
+    //长度加2的原因是：队头增加一个"全部"、队尾增加一个"新建分组"
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size()+2;
     }
 
     class BindingViewHolder extends RecyclerView.ViewHolder{
@@ -60,8 +67,11 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             mBinding = binding;
         }
 
-        private void bindItem(int pos) {
-            if (pos == list.size()) {
+        private void bindItem(final int pos) {
+            if (pos == list.size()+1) {
+                Group group = new Group();
+                group.setName("新建分组");
+                mBinding.setGroup(group);
                 mBinding.tvContent.setBackgroundResource(R.drawable.tv_groups_item_create);
                 mBinding.tvContent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -69,12 +79,29 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         //TODO:popup a edittext,and create a new group
                     }
                 });
-            }else{
-                mBinding.setGroup(list.get(pos));
+            } else if (pos == 0) {
+                Group group = new Group();
+                group.setName(HomeFragment.STATUS_GROUP_ALL);
+                mBinding.setGroup(group);
+                mBinding.tvContent.setSelected(selectId == null);
+                mBinding.tvContent.setBackgroundResource(R.drawable.tv_groups_item);
                 mBinding.tvContent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO
+                        EventBusUtils.sendEvent(new GroupChangedEvent(GroupChangedEvent.TYPE_ALL, HomeFragment.STATUS_GROUP_ALL, null));
+                    }
+                });
+            } else {
+                final Group group = list.get(pos-1);
+                mBinding.setGroup(group);
+                mBinding.tvContent.setSelected(group.getId().equals(selectId));
+                mBinding.tvContent.setBackgroundResource(R.drawable.tv_groups_item);
+                mBinding.tvContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectId = group.getId();
+                        GroupAdapter.this.notifyDataSetChanged();
+                        EventBusUtils.sendEvent(new GroupChangedEvent(GroupChangedEvent.TYPE_GROUP, group.getName(), group.getId()));
                     }
                 });
             }
