@@ -64,15 +64,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 T.s(getContext(), "add album");
             }
         });
-        mBinding.btnAdd.addElement(R.drawable.ic_add_camera, R.color.colorHighlight, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                T.s(getContext(), "add camera");
-            }
-        });
-        mBinding.btnAdd.setAngle(80);
+//        mBinding.btnAdd.addElement(R.drawable.ic_add_camera, R.color.colorHighlight, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                T.s(getContext(), "add camera");
+//            }
+//        });
+        mBinding.btnAdd.setAngle(70);
         mBinding.btnAdd.setmScale(0.8f);
-        mBinding.btnAdd.setLength(250);
+        mBinding.btnAdd.setLength(200);
         mCurGroupName = STATUS_GROUP_ALL;
 
         fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getInstance().getUid(),STATUS_GROUP_ALL, StatusListFragment.VALUE_HOME),
