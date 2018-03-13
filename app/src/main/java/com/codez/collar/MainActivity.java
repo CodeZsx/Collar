@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     }
 
     private void changeFragment(int index){
-        FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction trx = getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         trx.hide(fragments[curIndex]);
         if (!fragments[index].isAdded()) {
             trx.add(R.id.container, fragments[index]);
