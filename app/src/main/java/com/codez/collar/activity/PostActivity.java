@@ -19,11 +19,13 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityPostBinding;
+import com.codez.collar.event.ToastEvent;
 import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
 import com.codez.collar.ui.emoji.EmojiUtil;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
@@ -42,6 +44,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
     private static final int STATUS_MAX_LENGTH = 140;
 
     private boolean isRepost;
+    private StatusBean mRetweetedStatus;
 
     @Override
     public int setContent() {
@@ -50,11 +53,12 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
 
     @Override
     public void initView(){
+        EventBusUtils.register(this);
         isRepost = getIntent().getBooleanExtra(INTENT_REPOST, false);
         if (isRepost) {
             setToolbarTitle(mBinding.toolbar, "转发微博");
-            StatusBean statusBean = (StatusBean) getIntent().getSerializableExtra(StatusBean.INTENT_SERIALIZABLE);
-            initRetweeted(statusBean);
+            mRetweetedStatus = (StatusBean) getIntent().getSerializableExtra(StatusBean.INTENT_SERIALIZABLE);
+            initRetweeted();
         }else{
             setToolbarTitle(mBinding.toolbar, "发布微博");
         }
@@ -131,24 +135,27 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
 
     }
 
-    private void initRetweeted(StatusBean status) {
+    private void initRetweeted() {
+        if (mRetweetedStatus == null) {
+            return;
+        }
         //显示转发体
         mBinding.llRetweeted.setVisibility(View.VISIBLE);
 
         //转发内容是原创微博
-        if (status.getRetweeted_status() == null) {
-            String text = "@" + status.getUser().getScreen_name() + ":" + status.getText().toString();
+        if (mRetweetedStatus.getRetweeted_status() == null) {
+            String text = "@" + mRetweetedStatus.getUser().getScreen_name() + ":" + mRetweetedStatus.getText().toString();
             mBinding.tvRetweeted.setText(StatusContentTextUtil.translateEmoji(text, this, mBinding.tvRetweeted));
         }
         //转发内容是转发微博
         else{
             //转发内容
-            String text = "@" + status.getRetweeted_status().getUser().getScreen_name() + ":" + status.getRetweeted_status().getText().toString();
+            String text = "@" + mRetweetedStatus.getRetweeted_status().getUser().getScreen_name() + ":" + mRetweetedStatus.getRetweeted_status().getText().toString();
             mBinding.tvRetweeted.setText(StatusContentTextUtil.translateEmoji(text, this, mBinding.tvRetweeted));
             //填写内容（//@user:text）
 //            mBinding.etContent.setText(StatusContentTextUtil.getWeiBoContent("//@" + status.getUser().getScreen_name() + ":" + status.getText(),
 //                    this, mBinding.etContent));//若内容进行处理，则出现不可编辑状态，TODO:待改进
-            mBinding.etContent.setText("//@" + status.getUser().getScreen_name() + ":" + status.getText());
+            mBinding.etContent.setText("//@" + mRetweetedStatus.getUser().getScreen_name() + ":" + mRetweetedStatus.getText());
             mBinding.etContent.setSelection(0);
         }
 
@@ -160,28 +167,53 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
             T.s(this,"微博无法发送，内容长度超过140个字符！");
             return;
         }
-        //发送文字微博
-        HttpUtils.getInstance().getWeiboService()
-                .createTextStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<StatusBean>() {
-                    @Override
-                    public void onCompleted() {
-                        L.e("onCompleted");
-                    }
+        if (isRepost){
+            //转发微博
+            HttpUtils.getInstance().getWeiboService()
+                    .repostStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString(),mRetweetedStatus.getIdstr(),0)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<StatusBean>() {
+                        @Override
+                        public void onCompleted() {
+                            L.e("onCompleted");
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            L.e("onError:"+e.toString());
+                        }
 
-                    @Override
-                    public void onNext(StatusBean bean) {
-                        T.s(PostActivity.this, "微博发送成功");
-                        PostActivity.this.finish();
-                    }
-                });
+                        @Override
+                        public void onNext(StatusBean bean) {
+                            EventBusUtils.sendEvent(ToastEvent.newToastEvent("转发微博成功"));
+                            PostActivity.this.finish();
+                        }
+                    });
+        }else {
+            //发送文字微博
+            HttpUtils.getInstance().getWeiboService()
+                    .createTextStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBinding.etContent.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<StatusBean>() {
+                        @Override
+                        public void onCompleted() {
+                            L.e("onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            L.e("onError:"+e.toString());
+                        }
+
+                        @Override
+                        public void onNext(StatusBean bean) {
+                            EventBusUtils.sendEvent(ToastEvent.newToastEvent("微博发送成功"));
+                            PostActivity.this.finish();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -308,6 +340,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBusUtils.unregister(this);
         if (mLocationClient != null) {
             mLocationClient.onDestroy();
         }
