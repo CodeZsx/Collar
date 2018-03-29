@@ -94,7 +94,7 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
     }
 
     private void loadData() {
-        HttpUtils.getInstance().getSearchService()
+        HttpUtils.getInstance().getTopicSearchService()
                 .getSearchTopics(mTopic, curPage++)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

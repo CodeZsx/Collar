@@ -75,6 +75,7 @@
         <activity android:name=".ui.zxing.CaptureActivity"/>
         <service android:name=".service.CoreService"/>
         <activity android:name=".activity.AboutActivity"/>
+        <activity android:name=".activity.UserListActivity"/>
     </application>
 
 </manifest>

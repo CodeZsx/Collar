@@ -10,6 +10,9 @@ import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.worker.IBaseHandler;
 import com.codez.collar.worker.Worker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -77,6 +80,16 @@ public class UserManager {
         EventBusUtils.sendEvent(new UpdateUserInfoEvent());
     }
 
+    private List<UserBean> mSearchUserTempList = new ArrayList<>();
+    private String mSearchWord = null;
+
+    public List<UserBean> getSearchUserResult(String queryWord) {
+        if (mSearchWord != null && mSearchWord.equals(queryWord)) {
+            return mSearchUserTempList;
+        }else{
+            return null;
+        }
+    }
     public UserBean getUserMe() {
         if (userMe == null){
             Log.w(TAG,"userme is null");

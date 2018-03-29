@@ -2,6 +2,7 @@ package com.codez.collar.net;
 
 import android.util.Log;
 
+import com.codez.collar.Config;
 import com.codez.collar.auth.AccessTokenKeeper;
 
 import java.io.IOException;
@@ -50,8 +51,8 @@ public class HttpUtils {
     public CommentService getCommentService() {
         return getRetrofit(Constants.BASE_URL).create(CommentService.class);
     }
-    public SearchService getSearchService() {
-        return getRetrofit(Constants.BASE_URL).create(SearchService.class);
+    public TopicSearchService getTopicSearchService() {
+        return getRetrofit(Constants.BASE_URL).create(TopicSearchService.class);
     }
     public FavoriteService getFavoriteService() {
         return getRetrofit(Constants.BASE_URL).create(FavoriteService.class);
@@ -63,6 +64,9 @@ public class HttpUtils {
         return getRetrofit(Constants.BASE_URL).create(DirectMsgService.class);
     }
 
+    public SearchService getSearchService() {
+        return getRetrofitWithAppKey(Constants.OLD_URL).create(SearchService.class);
+    }
 
     private Retrofit getRetrofit(String baseUrl) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -81,6 +85,38 @@ public class HttpUtils {
                         HttpUrl.Builder builder = oldRequest.url()
                                 .newBuilder()
                                 .setEncodedQueryParameter("access_token", AccessTokenKeeper.getInstance().getAccessToken());
+                        return oldRequest.newBuilder()
+                                .method(oldRequest.method(), oldRequest.body())
+                                .url(builder.build())
+                                .build();
+                    }
+
+                })
+                .build();
+        return new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build();
+    }
+    private Retrofit getRetrofitWithAppKey(String baseUrl) {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request r = addParam(chain.request());
+                        Log.i(TAG, r.method()+" "+r.url().toString());
+                        return chain.proceed(r);
+                    }
+                    private Request addParam(Request oldRequest){
+                        if (oldRequest.method().equals("POST")){
+                            return oldRequest;
+                        }
+                        HttpUrl.Builder builder = oldRequest.url()
+                                .newBuilder()
+                                .setEncodedQueryParameter("source", Config.APP_KEY);
                         return oldRequest.newBuilder()
                                 .method(oldRequest.method(), oldRequest.body())
                                 .url(builder.build())
