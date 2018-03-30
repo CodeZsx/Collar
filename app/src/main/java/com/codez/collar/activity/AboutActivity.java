@@ -7,8 +7,8 @@ import android.view.View;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.base.BaseApp;
 import com.codez.collar.databinding.ActivityAboutBinding;
-import com.codez.collar.utils.Tools;
 
 public class AboutActivity extends BaseActivity<ActivityAboutBinding> implements View.OnClickListener{
 
@@ -23,7 +23,13 @@ public class AboutActivity extends BaseActivity<ActivityAboutBinding> implements
     public void initView() {
         setToolbarTitle(mBinding.toolbar, "关于");
 
-        mBinding.tvName.setText(getResources().getString(R.string.app_name) + " v" + Tools.getAppVersion());
+        String postFix = "";
+        if (BaseApp.isAppDebug()){
+            postFix = "-D";
+        }
+        String versionName = BaseApp.getAppVersionName();
+        int versionCode = BaseApp.getAppVersionCode();
+        mBinding.tvVersion.setText("v" + versionName + "-" + versionCode + postFix);
         Spanned text = Html.fromHtml("<a href=\"http://blog.csdn.net/qq_28484355\" style=\"color:#E22930\">萌鼠喝酸奶的博客</a>");
         mBinding.tvBlog.setText(text);
         mBinding.tvBlog.setOnClickListener(this);

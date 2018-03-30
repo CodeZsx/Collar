@@ -21,3 +21,14 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+def retrofitVersion = "2.1.0"
+def glideVersion = "3.7.0"
+def androidSupportVersion = "25.3.1"
+ext.compileSdkVersion = 25
+ext.buildToolsVersion = "25.0.0"
+ext.minSdkVersion = 16
+ext.targetSdkVersion = 25
+//App版本名
+ext.appVersionName = "0.0.1.180216"
+//通过当前分支的提交次数生成App的数字版本号
+ext.gitVersionCode = "git rev-list HEAD --count".execute().text.trim().toInteger()

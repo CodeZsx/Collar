@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    def COLLAR_PKG_NAME = "com.codez.collar"
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "com.codez.collar"
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        applicationId COLLAR_PKG_NAME
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.gitVersionCode
+        versionName rootProject.ext.appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.codez.collar.BuildConfig;
 import com.codez.collar.MainActivity;
 import com.codez.collar.manager.ApplicationContext;
 import com.codez.collar.service.CoreService;
@@ -14,7 +17,11 @@ import com.codez.collar.service.CoreService;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import rx.Observable;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import skin.support.SkinCompatManager;
 import skin.support.constraint.app.SkinConstraintViewInflater;
 import skin.support.design.app.SkinMaterialViewInflater;
@@ -28,6 +35,25 @@ public class BaseApp extends Application {
     private static final String TAG = "BaseApp";
     public static volatile boolean isAppRunBackground = true;
     private static List<Activity> sActivityList = new LinkedList<>();
+
+    public static Context sContext;
+
+    public BaseApp() {
+        super();
+        sContext = this;
+    }
+
+    //默认是release
+    private static boolean appDebug = false;
+
+    public static boolean isAppDebug() {
+        return appDebug;
+    }
+
+    private void initAppDebug() {
+        appDebug = BuildConfig.DEBUG;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -40,6 +66,13 @@ public class BaseApp extends Application {
                 .setSkinStatusBarColorEnable(false)
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
+        Observable.timer(0, TimeUnit.SECONDS, Schedulers.newThread())
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        initAppDebug();
+                    }
+                });
 
     }
 
@@ -52,6 +85,57 @@ public class BaseApp extends Application {
         super.attachBaseContext(base);
         ApplicationContext.getInstance().init(this);
         registerActivityLifecycleListener();
+    }
+
+    /**
+     * 获取APP的数字版本号
+     * @return
+     */
+    public static int getAppVersionCode() {
+        try {
+            PackageInfo info = sContext.getPackageManager()
+                    .getPackageInfo(getAppPackageName(), PackageManager.GET_ACTIVITIES);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * 获取APP的版本名
+     * @return
+     */
+    public static String getAppVersionName() {
+        try {
+            PackageInfo info = sContext.getPackageManager()
+                    .getPackageInfo(getAppPackageName(), 0);
+            return info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * APP的渠道号
+     *
+     */
+    private static String appChannel = null;
+
+    /**
+     * APP的包名
+     */
+    private static String packageName = null;
+    public static String getAppPackageName() {
+        if (packageName == null) {
+            try {
+                packageName = sContext.getApplicationInfo().packageName;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return packageName;
     }
 
     private void registerActivityLifecycleListener() {
