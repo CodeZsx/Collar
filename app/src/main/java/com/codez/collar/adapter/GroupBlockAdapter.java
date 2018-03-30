@@ -3,7 +3,6 @@ package com.codez.collar.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,16 @@ import java.util.List;
  * Description:
  */
 
-public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GroupBlockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "GroupAdapter";
+    private static final String TAG = "GroupBlockAdapter";
     private Context mContext;
     private List<Group> list;
     private String selectId = null;
     private static final int VIEW_TYPE_GROUP = 0;
     private static final int VIEW_TYPE_CREATE = 1;
 
-    public GroupAdapter(Context mContext) {
+    public GroupBlockAdapter(Context mContext) {
         this.mContext = mContext;
         this.list = new ArrayList<>();
     }
@@ -100,7 +99,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     @Override
                     public void onClick(View v) {
                         selectId = group.getId();
-                        GroupAdapter.this.notifyDataSetChanged();
+                        GroupBlockAdapter.this.notifyDataSetChanged();
                         EventBusUtils.sendEvent(new GroupChangedEvent(GroupChangedEvent.TYPE_GROUP, group.getName(), group.getId()));
                     }
                 });

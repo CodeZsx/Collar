@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 
 import com.codez.collar.R;
-import com.codez.collar.adapter.GroupAdapter;
+import com.codez.collar.adapter.GroupBlockAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.Group;
 import com.codez.collar.event.GroupsUpdateEvent;
@@ -31,7 +31,7 @@ public class GroupPopupWindow extends PopupWindow{
     private Context mContext;
     private GroupPopupWindow mWindow;
     private View mView;
-    private GroupAdapter mAdapter;
+    private GroupBlockAdapter mAdapter;
 
     public GroupPopupWindow(Context context, int width, int height) {
         super(context);
@@ -47,7 +47,7 @@ public class GroupPopupWindow extends PopupWindow{
         RecyclerView recyclerView = (RecyclerView) mView.findViewById(R.id.recyclerView);
         GridLayoutManager manager = new GridLayoutManager(context, 4);
         recyclerView.setLayoutManager(manager);
-        mAdapter = new GroupAdapter(context);
+        mAdapter = new GroupBlockAdapter(context);
         recyclerView.setAdapter(mAdapter);
         initData();
     }
