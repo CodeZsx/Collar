@@ -1,0 +1,6 @@
+{
+  "version_code":"0.0.1.180216",
+  "version_name":"0.0.1.180216",
+  "firmware_url":"https://github.com/CodeZsx/Collar/blob/master/upgrade/0.0.1.180216.apk",
+  "description":"1.xxxx;\n2.xxxx\n"
+}
