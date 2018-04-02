@@ -18,6 +18,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.each{ output ->
+                def outputFile = output.outputFile
+                output.outputFile = new File(outputFile.getParent(), "${variant.versionName}.apk")
+            }
+        }
+    }
     dataBinding {
         enabled true
     }
