@@ -69,6 +69,31 @@
                     android:textColor="@color/colorTextLevel3"/>
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_upgrade"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/layout_item"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/fab_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="检查更新"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorTextLevel1"/>
+                <TextView
+                    android:id="@+id/tv_app_ver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="v0.0.1"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextLevel3"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

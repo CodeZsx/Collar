@@ -68,6 +68,10 @@ public class HttpUtils {
         return getRetrofitWithAppKey(Constants.OLD_URL).create(SearchService.class);
     }
 
+    public UpgradeService getUpgradeService() {
+        return getBaseRetrofit(Constants.UPGRADE_URL).create(UpgradeService.class);
+    }
+
     private Retrofit getRetrofit(String baseUrl) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
@@ -123,6 +127,25 @@ public class HttpUtils {
                                 .build();
                     }
 
+                })
+                .build();
+        return new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(baseUrl)
+                .build();
+    }
+    private Retrofit getBaseRetrofit(String baseUrl) {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request r = chain.request();
+                        Log.i(TAG, r.method()+" "+r.url().toString());
+                        return chain.proceed(r);
+                    }
                 })
                 .build();
         return new Retrofit.Builder()
