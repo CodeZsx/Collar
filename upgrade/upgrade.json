@@ -1,7 +1,8 @@
 {
-  "version_code":"0.0.1.180216",
-  "version_name":"0.0.1.180216",
+  "version_code":"0.0.1",
+  "version_name":"0.0.1",
   "firmware_url":"https://github.com/CodeZsx/Collar/blob/master/upgrade/0.0.1.180216.apk",
   "description":"1.测试版本;\n\n2.测试更新模块",
-  "file_size":"4.7M"
+  "file_size":"4.7MB",
+  "release_time":"1522728026000"
 }
