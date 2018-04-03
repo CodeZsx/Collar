@@ -11,6 +11,7 @@ public class UpgradeInfoBean {
     private String firmware_url;
     private String description;
     private String file_size;
+    private String release_time;
 
     public UpgradeInfoBean() {
     }
@@ -55,6 +56,14 @@ public class UpgradeInfoBean {
         this.file_size = file_size;
     }
 
+    public String getRelease_time() {
+        return release_time;
+    }
+
+    public void setRelease_time(String release_time) {
+        this.release_time = release_time;
+    }
+
     @Override
     public String toString() {
         return "UpgradeInfoBean{" +
@@ -63,6 +72,7 @@ public class UpgradeInfoBean {
                 ", firmware_url='" + firmware_url + '\'' +
                 ", description='" + description + '\'' +
                 ", file_size='" + file_size + '\'' +
+                ", release_time='" + release_time + '\'' +
                 '}';
     }
 }

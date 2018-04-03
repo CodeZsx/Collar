@@ -14,12 +14,14 @@ import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.UpgradeInfoBean;
 import com.codez.collar.databinding.ActivitySetupBinding;
+import com.codez.collar.databinding.DialogLoadingBinding;
 import com.codez.collar.databinding.DialogNewVersionBinding;
 import com.codez.collar.event.NewAppVersionEvent;
 import com.codez.collar.event.ToastEvent;
 import com.codez.collar.manager.UpgradeManager;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.EventBusUtils;
+import com.codez.collar.utils.TimeUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -34,6 +36,7 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
     public static final String INTENT_SCREENN_NAME = "screen_name";
 
     private AlertDialog mVersionDialog;
+    private AlertDialog mLoadingDialog;
 
     @Override
     public int setContent() {
@@ -53,27 +56,57 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
 
     }
 
-
-    private void showVersionDialog(UpgradeInfoBean info) {
-        mVersionDialog = new AlertDialog.Builder(this).create();
-        mVersionDialog.show();
-        mVersionDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        mVersionDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
-
-        Window window = mVersionDialog.getWindow();
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        DialogNewVersionBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_new_version, null, false);
-        dialogBinding.tvTitle.setText("发现新版本：v" + info.getVersion_name());
-        dialogBinding.tvInfo.setText("文件大小：");
-        dialogBinding.tvContent.setText(info.getDescription());
-
+    private void showLoadingDialog() {
+        if (mVersionDialog != null) {
+            mVersionDialog.dismiss();
+        }
+        mLoadingDialog = new AlertDialog.Builder(this).create();
+        mLoadingDialog.show();
+        DialogLoadingBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_loading, null, false);
         View contentView = dialogBinding.getRoot();
-//        contentView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         contentView.setFocusable(true);
         contentView.setFocusableInTouchMode(true);
+
+        Window window = mLoadingDialog.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setContentView(contentView);
+    }
+
+    private void showVersionDialog(UpgradeInfoBean info) {
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
+        }
+        mVersionDialog = new AlertDialog.Builder(this).create();
+        mVersionDialog.show();
+        DialogNewVersionBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_new_version, null, false);
+        View contentView = dialogBinding.getRoot();
+        contentView.setFocusable(true);
+        contentView.setFocusableInTouchMode(true);
+
+        Window window = mVersionDialog.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setContentView(contentView);
+
+        dialogBinding.tvTitle.setText("发现新版本：v" + info.getVersion_name());
+        dialogBinding.tvInfo.setText("文件信息：" + info.getFile_size()+" [ "+ TimeUtil.getYMDXie(info.getRelease_time())+" ]");
+        dialogBinding.tvContent.setText(info.getDescription());
+        dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVersionDialog.dismiss();
+            }
+        });
+        dialogBinding.btnUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
@@ -85,6 +118,7 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
                 break;
 
             case R.id.rl_upgrade:
+                showLoadingDialog();
                 HttpUtils.getInstance().getUpgradeService()
                         .getUpgradeInfo()
                         .subscribeOn(Schedulers.io())
@@ -97,6 +131,9 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
 
                             @Override
                             public void onError(Throwable e) {
+                                if (mLoadingDialog != null) {
+                                    mLoadingDialog.dismiss();
+                                }
                                 Log.i(TAG, "onError:" + e.toString());
                                 EventBusUtils.sendEvent(ToastEvent.newToastEvent("未知错误，操作失败"));
                             }
@@ -124,7 +161,6 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewAppVersionEvent(NewAppVersionEvent event) {
         showVersionDialog(event.getInfo());
-        Log.i(TAG, "onNewAppVersionEvent:" + event.getInfo().toString());
         //TODO:load local file or download from server
     }
 

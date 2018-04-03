@@ -29,6 +29,6 @@ ext.buildToolsVersion = "25.0.0"
 ext.minSdkVersion = 16
 ext.targetSdkVersion = 25
 //App版本名
-ext.appVersionName = "0.0.1.180216"
+ext.appVersionName = "0.0.1"
 //通过当前分支的提交次数生成App的数字版本号
 ext.gitVersionCode = "git rev-list HEAD --count".execute().text.trim().toInteger()

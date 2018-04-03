@@ -10,13 +10,13 @@
         <LinearLayout
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/lin_round_bg_dialog"
+            android:background="@drawable/lin_dialog_bg_version"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/lin_round_bg_dialog"
+                android:background="@drawable/lin_dialog_bg_version"
                 android:paddingBottom="18dp">
 
                 <TextView
@@ -37,7 +37,7 @@
                     android:layout_height="16dp"
                     android:layout_below="@id/tv_title"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/fab_margin"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:text="文件信息:20M"
                     android:textColor="@color/colorTextLevel1"
@@ -46,7 +46,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.6sp"
+                android:layout_height="0.6dp"
                 android:background="@color/colorPatingLine" />
 
             <TextView
@@ -71,6 +71,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btn_cancel"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_weight="1"
@@ -80,6 +81,7 @@
                     android:textSize="11sp" />
 
                 <Button
+                    android:id="@+id/btn_upgrade"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_marginLeft="28dp"

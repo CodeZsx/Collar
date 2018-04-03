@@ -126,9 +126,14 @@ public class TimeUtil {
 		return format.format(new Date(time));
 	}
 
-	public static String getTimeXie(String str) {
+	/**
+	 * 获取年/月/日
+	 * @param str
+	 * @return
+	 */
+	public static String getYMDXie(String str) {
 		long time = Long.parseLong(str);
-		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
 		return format.format(new Date(time));
 	}
 
