@@ -1,6 +1,7 @@
 package com.codez.collar.net;
 
 import com.codez.collar.bean.UpgradeInfoBean;
+import com.codez.collar.utils.Constants;
 
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

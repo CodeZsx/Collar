@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.codez.collar.Config;
 import com.codez.collar.auth.AccessTokenKeeper;
+import com.codez.collar.utils.Constants;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
