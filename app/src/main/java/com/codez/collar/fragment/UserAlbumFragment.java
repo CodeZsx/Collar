@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -15,7 +16,6 @@ import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentUserAlbumBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 
 
 public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> implements View.OnClickListener {
-
+    private static final String TAG = "UserAlbumFragment";
     private static final String KEY_UID = "uid";
     private static final String KEY_SCREEN_NAME = "screen_name";
     private String mUid;
@@ -82,12 +82,12 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
                 .subscribe(new Observer<StatusResultBean>() {
                     @Override
                     public void onCompleted() {
-                        L.e("onCompleted");
+                        Log.i(TAG, "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
+                        Log.e(TAG, "onError:" + e.toString());
                     }
 
                     @Override

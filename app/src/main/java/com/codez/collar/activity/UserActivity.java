@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class UserActivity extends BaseActivity<ActivityUserBinding> implements View.OnClickListener{
+    public static final String TAG = "UserActivity";
     public static final String INTENT_KEY_UID = "uid";
     public static final String INTENT_KEY_SCREEN_NAME = "screen_name";
     public static final String INTENT_KEY_TYPE = "type";
@@ -123,12 +125,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                 .subscribe(new Observer<UserBean>() {
                     @Override
                     public void onCompleted() {
-                        L.e("onCompleted");
+                        Log.i(TAG, "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError");
+                        Log.e(TAG, "onError:" + e.toString());
                     }
 
                     @Override

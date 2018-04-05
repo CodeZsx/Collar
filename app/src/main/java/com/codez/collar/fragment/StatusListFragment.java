@@ -24,7 +24,6 @@ import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.recyclerview.HeaderAndFooterWrapper;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -149,7 +148,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             .subscribe(new Observer<StatusResultBean>() {
                                 @Override
                                 public void onCompleted() {
-                                    L.e("onCompleted");
+                                    Log.i(TAG, "onCompleted");
                                 }
 
                                 @Override
@@ -180,7 +179,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                             .subscribe(new Observer<StatusResultBean>() {
                                 @Override
                                 public void onCompleted() {
-                                    L.e("onCompleted");
+                                    Log.i(TAG, "onCompleted");
                                 }
 
                                 @Override
@@ -204,7 +203,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         .subscribe(new Observer<StatusResultBean>() {
                             @Override
                             public void onCompleted() {
-                                L.e("onCompleted");
+                                Log.i(TAG, "onCompleted");
                             }
 
                             @Override
@@ -226,7 +225,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         .subscribe(new Observer<StatusResultBean>() {
                             @Override
                             public void onCompleted() {
-                                L.e("onCompleted");
+                                Log.i(TAG, "onCompleted");
                             }
 
                             @Override
@@ -250,7 +249,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                         .subscribe(new Observer<StatusResultBean>() {
                             @Override
                             public void onCompleted() {
-                                L.e("onCompleted");
+                                Log.i(TAG, "onCompleted");
                             }
 
                             @Override
@@ -298,7 +297,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     }
 
     private void handleError(Throwable e) {
-        L.e(e.toString());
+        Log.e(TAG, "onError:" + e.toString());
         EventBusUtils.sendEvent(ToastEvent.newToastEvent("请求数据失败"));
     }
 
