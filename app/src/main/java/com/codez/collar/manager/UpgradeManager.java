@@ -21,7 +21,7 @@ public enum  UpgradeManager {
 
     public String getAppVersionName() {
         if (BuildConfig.DEBUG) {
-            return "0.0.0";
+            return "0.0.0.001";
         }
         if (mAppVersionName == null) {
             mAppVersionName = BaseApp.getAppVersionName();
