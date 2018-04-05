@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
+import com.codez.collar.base.BaseApp;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +82,13 @@ public class SDCardUtil {
      */
     public static String getRootDirectoryPath(Context context) {
         return Environment.getRootDirectory().getAbsolutePath();
+    }
+
+    public static String getAppPackagePath() {
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + BaseApp.getAppPackageName();
+    }
+    public static String getAppCachePath() {
+        return getAppPackagePath()+"/cache";
     }
 
     public static void put(Context context, String fileDir, String fileName, String content) {

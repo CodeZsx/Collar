@@ -20,11 +20,14 @@ import com.codez.collar.event.NewAppVersionEvent;
 import com.codez.collar.event.ToastEvent;
 import com.codez.collar.manager.UpgradeManager;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.service.UpgradeDownloadService;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.TimeUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -74,7 +77,7 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
         window.setContentView(contentView);
     }
 
-    private void showVersionDialog(UpgradeInfoBean info) {
+    private void showVersionDialog(final UpgradeInfoBean info) {
         if (mLoadingDialog != null) {
             mLoadingDialog.dismiss();
         }
@@ -104,7 +107,18 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
         dialogBinding.btnUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mVersionDialog.dismiss();
+                String path = UpgradeManager.getInstance().getApkPath(info.getVersion_name());
+                File file = new File(path);
+                //安装包存在，直接安装
+                if (file.exists()) {
+                    Log.i(TAG, "the apk is exists");
+                    UpgradeManager.getInstance().installApk(SetupActivity.this, path);
+                }else{
+                    //启动apk下载服务
+                    startService(new Intent(SetupActivity.this, UpgradeDownloadService.class)
+                            .putExtra(UpgradeDownloadService.INTENT_UPGRADE_INFO, info));
+                }
             }
         });
     }

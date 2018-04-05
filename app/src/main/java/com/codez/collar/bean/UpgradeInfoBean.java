@@ -1,11 +1,13 @@
 package com.codez.collar.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by codez on 2018/4/2.
  * Description:更新信息
  */
 
-public class UpgradeInfoBean {
+public class UpgradeInfoBean implements Serializable{
     private String version_code;
     private String version_name;
     private String firmware_url;

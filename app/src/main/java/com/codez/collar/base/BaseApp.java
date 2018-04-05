@@ -13,6 +13,7 @@ import com.codez.collar.BuildConfig;
 import com.codez.collar.MainActivity;
 import com.codez.collar.manager.ApplicationContext;
 import com.codez.collar.service.CoreService;
+import com.liulishuo.filedownloader.FileDownloader;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -58,7 +59,9 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "oncreate");
+        //开启核心服务
         startCoreService();
+        //初始化换肤组件
         SkinCompatManager.withoutActivity(this)
                 .addInflater(new SkinMaterialViewInflater())
                 .addInflater(new SkinConstraintViewInflater())
@@ -66,6 +69,8 @@ public class BaseApp extends Application {
                 .setSkinStatusBarColorEnable(false)
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
+        //初始化文件下载组件
+        FileDownloader.setup(this);
         Observable.timer(0, TimeUnit.SECONDS, Schedulers.newThread())
                 .subscribe(new Action1<Long>() {
                     @Override
