@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.base.BaseApp;
 import com.codez.collar.bean.UpgradeInfoBean;
 import com.codez.collar.databinding.ActivitySetupBinding;
 import com.codez.collar.databinding.DialogLoadingBinding;
@@ -52,6 +53,7 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
         setToolbarTitle(mBinding.toolbar, "设置");
 
         mBinding.tvHint.setText(getIntent().getStringExtra(INTENT_SCREENN_NAME));
+        mBinding.tvAppVer.setText("v" + BaseApp.getAppVersionName());
 
         mBinding.rlAccount.setOnClickListener(this);
         mBinding.rlUpgrade.setOnClickListener(this);
