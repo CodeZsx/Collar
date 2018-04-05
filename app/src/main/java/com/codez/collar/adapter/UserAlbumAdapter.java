@@ -99,7 +99,7 @@ public class UserAlbumAdapter extends RecyclerView.Adapter<UserAlbumAdapter.Bind
 
         if (list.size() == 1) {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) mBinding.llRoot.getLayoutParams();
-            params.width = (int) (ScreenUtil.getScreenWidth(mContext) * 0.5);
+            params.width = (int) (ScreenUtil.getScreenWidth(mContext) * 0.8);
             params.height = (int) (ScreenUtil.getScreenWidth(mContext) * 0.5);
             mBinding.llRoot.setLayoutParams(params);
         }else{
