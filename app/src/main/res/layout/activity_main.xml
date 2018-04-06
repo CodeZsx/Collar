@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout >
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -21,6 +23,7 @@
 
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/layout_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -106,6 +109,43 @@
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
     </LinearLayout>
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu_floating"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:paddingRight="@dimen/fab_margin"
+            android:paddingBottom="48dp"
+            android:src="@drawable/ic_add_white"
+            app:menu_fab_size="normal"
+            app:menu_showShadow="true"
+            app:menu_shadowColor="#66000000"
+            app:menu_shadowRadius="1dp"
+            app:menu_colorNormal="@color/colorHighlight"
+            app:menu_colorPressed="@color/colorHighlight"
+            app:menu_backgroundColor="#99000000">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_post_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_post_image_18dp"
+                app:fab_colorNormal="@color/colorHighlight"
+                app:fab_colorPressed="@color/colorHighlight"
+                app:fab_size="mini"
+                app:fab_label="发图片"/>
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_post_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_post_text_18dp"
+                app:fab_colorNormal="@color/colorHighlight"
+                app:fab_colorPressed="@color/colorHighlight"
+                app:fab_size="mini"
+                app:fab_label="发文字"/>
+        </com.github.clans.fab.FloatingActionMenu>
+
         <View
             android:id="@+id/translucent_mask"
             android:layout_width="match_parent"

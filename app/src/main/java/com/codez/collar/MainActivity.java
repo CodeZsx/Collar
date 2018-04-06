@@ -1,12 +1,16 @@
 package com.codez.collar;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
+import com.codez.collar.activity.PostActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityMainBinding;
@@ -51,20 +55,44 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         lp.setMargins(0,marginTop,0,0);
         mBinding.translucentMask.setLayoutParams(lp);
 
+        mBinding.menuFloating.setVisibility(View.VISIBLE);
+        mBinding.menuFloating.setClosedOnTouchOutside(true);
+
         mBinding.navBtnHome.setOnClickListener(this);
         mBinding.navBtnMsg.setOnClickListener(this);
         mBinding.navBtnUser.setOnClickListener(this);
+        mBinding.btnPostText.setOnClickListener(this);
+        mBinding.btnPostImage.setOnClickListener(this);
 
 
     }
 
     private void changeFragment(int index){
+        if (index==curIndex) return;
+
         FragmentTransaction trx = getSupportFragmentManager().beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         trx.hide(fragments[curIndex]);
         if (!fragments[index].isAdded()) {
             trx.add(R.id.container, fragments[index]);
         }
         trx.show(fragments[index]).commit();
+        if (index == 0) {
+            TranslateAnimation showAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            showAnim.setDuration(500);
+            mBinding.menuFloating.startAnimation(showAnim);
+            mBinding.menuFloating.setVisibility(View.VISIBLE);
+        } else if (curIndex == 0) {
+            TranslateAnimation hideAnim = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            hideAnim.setDuration(500);
+            mBinding.menuFloating.startAnimation(hideAnim);
+            mBinding.menuFloating.setVisibility(View.GONE);
+        }
         curIndex = index;
     }
 
@@ -88,6 +116,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 mBinding.navBtnMsg.setSelected(false);
                 mBinding.navBtnUser.setSelected(true);
                 changeFragment(2);
+                break;
+            case R.id.btn_post_text:
+                startActivity(new Intent(this, PostActivity.class));
+                break;
+            case R.id.btn_post_image:
                 break;
         }
     }

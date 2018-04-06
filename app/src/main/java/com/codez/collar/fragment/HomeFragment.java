@@ -52,27 +52,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
     @Override
     public void initView(View root) {
         EventBusUtils.register(this);
-        mBinding.btnAdd.addElement(R.drawable.ic_add_text, R.color.colorHighlight, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PostActivity.class));
-            }
-        });
-        mBinding.btnAdd.addElement(R.drawable.ic_add_album, R.color.colorHighlight, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                T.s(getContext(), "add album");
-            }
-        });
-//        mBinding.btnAdd.addElement(R.drawable.ic_add_camera, R.color.colorHighlight, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                T.s(getContext(), "add camera");
-//            }
-//        });
-        mBinding.btnAdd.setAngle(70);
-        mBinding.btnAdd.setmScale(0.8f);
-        mBinding.btnAdd.setLength(200);
+
         mCurGroupName = STATUS_GROUP_ALL;
 
         fragments = new Fragment[]{new StatusListFragment().newInstance(AccessTokenKeeper.getInstance().getUid(),STATUS_GROUP_ALL, StatusListFragment.VALUE_HOME),
@@ -91,7 +71,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         mBinding.ivUser.setOnClickListener(this);
         initData();
 
-        TimeUtil.getMsgTime("Mon Dec 25 15:42:32 +0800 2017");
     }
 
     private void initData(){
