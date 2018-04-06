@@ -25,7 +25,8 @@
     <color name="colorPrimaryDark_night">@color/colorPrimary_night</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="colorHighlight">#ff3F51B5</color>
+    <!--<color name="colorHighlight">#ff3F51B5</color>-->
+    <color name="colorHighlight">#ff146ef5</color>
     <color name="colorHighlight_a">#ff3F51B5</color>
     <color name="colorHighlight_b">#ff00bcd4</color>
     <color name="colorHighlight_c">#ffffa000</color>
