@@ -12,12 +12,12 @@
         android:id="@+id/tv_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_item"
+        android:background="@drawable/lin_round_bg_dialog"
         android:gravity="center_vertical"
-        android:padding="20dp"
+        android:padding="@dimen/fab_margin"
         android:text="收藏"
         android:textColor="@color/colorTextLevel1"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
@@ -30,23 +30,23 @@
         android:id="@+id/tv_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_item"
+        android:background="@drawable/lin_round_bg_dialog"
         android:gravity="center_vertical"
-        android:padding="20dp"
+        android:padding="@dimen/fab_margin"
         android:text="关注"
         android:textColor="@color/colorTextLevel1"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
     <TextView
         android:id="@+id/tv_destroy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_item"
+        android:background="@drawable/lin_round_bg_dialog"
         android:visibility="gone"
         android:gravity="center_vertical"
-        android:padding="20dp"
+        android:padding="@dimen/fab_margin"
         android:text="删除"
         android:textColor="@color/colorTextLevel1"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
