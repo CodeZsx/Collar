@@ -18,7 +18,6 @@ import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
-import com.codez.collar.utils.EventBusUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -166,13 +165,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     protected void onStart() {
         super.onStart();
-        EventBusUtils.register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBusUtils.unregister(this);
     }
 
 //    @Override
