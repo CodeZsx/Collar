@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
+import com.codez.collar.BuildConfig;
 import com.codez.collar.MainActivity;
 import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenKeeper;
@@ -48,6 +49,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
                 isFinished = true;
             }
         });
+        if (BuildConfig.DEBUG){
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            this.finish();
+            return;
+        }
         mHandler.sendEmptyMessage(SKIP_COUNTDOWN);
     }
 
