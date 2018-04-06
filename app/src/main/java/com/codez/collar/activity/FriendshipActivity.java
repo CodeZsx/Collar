@@ -2,6 +2,7 @@ package com.codez.collar.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -11,7 +12,6 @@ import com.codez.collar.bean.FriendsIdsResultBean;
 import com.codez.collar.bean.FriendshipsResultBean;
 import com.codez.collar.databinding.ActivityBaseListBinding;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import rx.Observer;
@@ -19,7 +19,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> implements View.OnClickListener{
-
+    private static final String TAG = "FriendshipActivity";
     public static final String INTENT_TYPE = "type";
     public static final String INTENT_UID = "uid";
     public static final String TYPE_FRIENDS = "关注";
@@ -41,7 +41,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
         mType = getIntent().getStringExtra(INTENT_TYPE);
         mUid = getIntent().getStringExtra(INTENT_UID);
         setToolbarTitle(mBinding.toolbar, mType);
-        L.e(mType);
+        Log.i(TAG, "type："+mType);
 
         mAdapter = new FriendshipAdapter(this);
         mAdapter.setType(mType);
@@ -82,18 +82,17 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                 .subscribe(new Observer<FriendsIdsResultBean>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(TAG, "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError"+e.toString());
+                        Log.e(TAG, "onError"+e.toString());
                         mBinding.swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
                     public void onNext(FriendsIdsResultBean friendsIdsResultBean) {
-                        L.e(friendsIdsResultBean.toString());
                         mAdapter.setFriendsIds(friendsIdsResultBean.getIds());
                         loadFriendship();
                     }

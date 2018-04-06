@@ -34,7 +34,6 @@ import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.JsonUtil;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.ScreenUtil;
 import com.codez.collar.utils.T;
 
@@ -236,7 +235,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             @Override
                                             public void onError(Throwable e) {
                                                 T.s(mContext,"操作失败");
-                                                L.e("onError:"+e.toString());
+                                                Log.e(TAG, "onError:"+e.toString());
                                             }
 
                                             @Override
@@ -266,7 +265,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             @Override
                                             public void onError(Throwable e) {
                                                 T.s(mContext,"操作失败");
-                                                L.e("onError:"+e.toString());
+                                                Log.e(TAG, "onError:"+e.toString());
                                             }
 
                                             @Override

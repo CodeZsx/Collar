@@ -26,7 +26,6 @@ import com.codez.collar.ui.emoji.Emoji;
 import com.codez.collar.ui.emoji.EmojiUtil;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
 
@@ -39,7 +38,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class PostActivity extends BaseActivity<ActivityPostBinding> implements View.OnClickListener{
-
+    private static final String TAG = "PostActivity";
     public static final String INTENT_REPOST = "repost";
     private static final int STATUS_MAX_LENGTH = 140;
 
@@ -90,12 +89,12 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         emojiFragment.addOnEmojiClickListener(new EmojiFragment.OnEmojiClickListener() {
             @Override
             public void onEmojiDelete() {
-                L.e("delete");
+                Log.e(TAG, "onEmojiDelete");
             }
 
             @Override
             public void onEmojiClick(Emoji emoji) {
-                L.e(emoji.getContent());
+                Log.e(TAG, "onEmojiClick:"+emoji.getContent());
                 mBinding.etContent.setText(EmojiUtil.transEmoji(mBinding.etContent.getText().toString() + emoji.getContent(), PostActivity.this));
                 mBinding.etContent.setSelection(mBinding.etContent.getText().length());
             }
@@ -176,12 +175,12 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                     .subscribe(new Observer<StatusBean>() {
                         @Override
                         public void onCompleted() {
-                            L.e("onCompleted");
+                            Log.i(TAG, "onCompleted");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            L.e("onError:"+e.toString());
+                            Log.e(TAG, "onError:"+e.toString());
                         }
 
                         @Override
@@ -199,12 +198,12 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                     .subscribe(new Observer<StatusBean>() {
                         @Override
                         public void onCompleted() {
-                            L.e("onCompleted");
+                            Log.i(TAG, "onCompleted");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            L.e("onError:"+e.toString());
+                            Log.e(TAG, "onError:"+e.toString());
                         }
 
                         @Override
@@ -270,7 +269,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             List<String> result = data.getStringArrayListExtra(INTENT_ALBUM_RESULT);
-            L.e("result:"+result.toString());
+            Log.i(TAG, "scan code result:"+result.toString());
         }
     }
 

@@ -2,6 +2,7 @@ package com.codez.collar.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -12,7 +13,6 @@ import com.codez.collar.databinding.FragmentBaseListBinding;
 import com.codez.collar.event.SearchWordChangedEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -58,12 +58,13 @@ public class UserListFragment extends BaseFragment<FragmentBaseListBinding> impl
                     .subscribe(new Observer<List<UserBean>>() {
                         @Override
                         public void onCompleted() {
+                            Log.i(TAG, "onCompleted");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            T.s(getContext(), "数据加载失败");
-                            L.e(e.toString());
+                            T.s(getContext(),"数据加载失败");
+                            Log.e(TAG, "onError:"+e.toString());
                         }
 
                         @Override

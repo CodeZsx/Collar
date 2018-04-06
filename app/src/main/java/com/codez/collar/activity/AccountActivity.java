@@ -3,6 +3,7 @@ package com.codez.collar.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -15,7 +16,6 @@ import com.codez.collar.bean.TokenList;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityAccountBinding;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class AccountActivity extends BaseActivity<ActivityAccountBinding> implements View.OnClickListener {
-
+    private static final String TAG = "AccountActivity";
     private AccountAdapter mAdapter;
 
     @Override
@@ -69,12 +69,12 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
                     .subscribe(new Observer<UserBean>() {
                         @Override
                         public void onCompleted() {
-                            L.e("onCompleted");
+                           Log.i(TAG, "onCompleted");
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            L.e("onError");
+                            Log.e(TAG, "onError");
                         }
 
                         @Override

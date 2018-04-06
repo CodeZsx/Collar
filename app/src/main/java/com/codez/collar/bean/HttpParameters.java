@@ -2,9 +2,9 @@ package com.codez.collar.bean;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.codez.collar.auth.AccessTokenKeeper;
-import com.codez.collar.utils.L;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
  */
 
 public class HttpParameters {
-
+    private static final String TAG = "HttpParameters";
     private static final String DEFAULT_CHARSET = "UTF-8";
     private LinkedHashMap<String, Object> mParams = new LinkedHashMap<>();
 
@@ -69,10 +69,10 @@ public class HttpParameters {
                         sb.append(URLEncoder.encode(key, DEFAULT_CHARSET) + "=" + URLEncoder.encode(param, DEFAULT_CHARSET));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
-                        L.e(e.toString());
+                        Log.e(TAG, e.toString());
                     }
                 }
-                L.e("urlencode:" + sb.toString());
+                Log.i(TAG, "urlencode:" + sb.toString());
             }
         }
         return sb.toString();

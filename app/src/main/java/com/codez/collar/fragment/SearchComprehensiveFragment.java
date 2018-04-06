@@ -16,7 +16,6 @@ import com.codez.collar.databinding.FragmentComprehensiveSearchBinding;
 import com.codez.collar.event.SearchWordChangedEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -75,12 +74,13 @@ public class SearchComprehensiveFragment extends BaseFragment<FragmentComprehens
                     .subscribe(new Observer<List<UserBean>>() {
                         @Override
                         public void onCompleted() {
+                            Log.i(TAG, "onCompleted");
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             T.s(getContext(),"数据加载失败");
-                            L.e(e.toString());
+                            Log.e(TAG, "onError:"+e.toString());
                         }
 
                         @Override
@@ -96,7 +96,7 @@ public class SearchComprehensiveFragment extends BaseFragment<FragmentComprehens
                     .subscribe(new Observer<StatusResultBean>() {
                         @Override
                         public void onCompleted() {
-                            L.e("onCompleted");
+                            Log.i(TAG, "onCompleted");
                         }
 
                         @Override

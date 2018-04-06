@@ -20,7 +20,6 @@ import com.codez.collar.databinding.ActivityUserBinding;
 import com.codez.collar.fragment.StatusListFragment;
 import com.codez.collar.fragment.UserAlbumFragment;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import rx.Observer;
@@ -76,7 +75,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
 
         uid = getIntent().getStringExtra(INTENT_KEY_UID);
         screen_name = getIntent().getStringExtra(INTENT_KEY_SCREEN_NAME);
-        L.e("uid:"+uid+" screen_name:"+screen_name);
+        Log.i(TAG, "uid:"+uid+" screen_name:"+screen_name);
 
 
         if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
@@ -135,7 +134,6 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
 
                     @Override
                     public void onNext(UserBean userBean) {
-                        L.e("onNext");
                         mUserBean = userBean;
                         mBinding.setUser(userBean);
                     }

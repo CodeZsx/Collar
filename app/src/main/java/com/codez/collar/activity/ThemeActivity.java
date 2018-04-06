@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.Config;
@@ -12,7 +13,6 @@ import com.codez.collar.adapter.ThemeAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityThemeBinding;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 import skin.support.SkinCompatManager;
 
 public class ThemeActivity extends BaseActivity<ActivityThemeBinding> {
-
+    private static final String TAG = "ThemeActivity";
 
     //已在colors.xml配置了的theme颜色
     public static final String[] THEME_LIST = {"a", "b", "c", "d",
@@ -64,7 +64,7 @@ public class ThemeActivity extends BaseActivity<ActivityThemeBinding> {
         mBinding.btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                L.e("theme:" + mAdapter.getCurTheme());
+                Log.i(TAG, "theme:" + mAdapter.getCurTheme());
                 if (!Config.getCachedTheme(ThemeActivity.this).equals(mAdapter.getCurTheme())) {
                     SkinCompatManager.getInstance().loadSkin(mAdapter.getCurTheme(), SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                     Config.cacheTheme(ThemeActivity.this, mAdapter.getCurTheme());

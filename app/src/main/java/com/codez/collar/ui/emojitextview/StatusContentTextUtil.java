@@ -11,6 +11,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ import com.codez.collar.activity.TopicActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.activity.WebviewActivity;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * Created by codez on 17/11/24.
  */
 public class StatusContentTextUtil {
-
+    private static final String TAG = "StatusContentTextUtil";
     private static final String AT = "@[\\w\\p{InCJKUnifiedIdeographs}-]{1,26}";// @人
     private static final String TOPIC = "#[\\p{Print}\\p{InCJKUnifiedIdeographs}&&[^#]]+#";// ##话题
     private static final String URL = "http://[a-zA-Z0-9+&@#/%?=~_\\-|!:,\\.;]*[a-zA-Z0-9+&@#/%=~_|]";// url
@@ -136,7 +136,7 @@ public class StatusContentTextUtil {
                     try {
                         emojiDrawable = context.getResources().getDrawable(resId);
                     } catch (Resources.NotFoundException e) {
-                        L.e("not found:" + resId + " name:" + imgName);
+                        Log.e(TAG, "not found:" + resId + " name:" + imgName);
                         e.printStackTrace();
                     }
                     if (emojiDrawable != null) {
@@ -243,7 +243,7 @@ public class StatusContentTextUtil {
                     try {
                         emojiDrawable = context.getResources().getDrawable(resId);
                     } catch (Resources.NotFoundException e) {
-                        L.e("not found:" + resId + " name:" + imgName);
+                        Log.e(TAG, "not found:" + resId + " name:" + imgName);
                         e.printStackTrace();
                     }
                     if (emojiDrawable != null) {
@@ -296,7 +296,7 @@ public class StatusContentTextUtil {
                     try {
                         emojiDrawable = context.getResources().getDrawable(resId);
                     } catch (Resources.NotFoundException e) {
-                        L.e("not found:" + resId + " name:" + imgName);
+                        Log.e(TAG, "not found:" + resId + " name:" + imgName);
                         e.printStackTrace();
                     }
                     if (emojiDrawable != null) {

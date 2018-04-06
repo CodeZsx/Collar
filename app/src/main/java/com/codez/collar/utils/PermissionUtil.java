@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 /**
  * Created by codez on 2017/11/27.
@@ -15,7 +16,7 @@ import android.support.v7.app.AlertDialog;
  */
 
 public class PermissionUtil {
-
+    private static final String TAG = "PermissionUtil";
     private static final String defaultTitle = "帮助";
     private static final String defaultContent = "当前应用缺少必要权限。\n \n 请点击 \"设置\"-\"权限\"-打开所需权限。";
     private static final String defaultCancel = "取消";
@@ -43,7 +44,7 @@ public class PermissionUtil {
             } else {
                 listener.permissionDenied(permission);
             }
-            L.e("API level : " + Build.VERSION.SDK_INT + "不需要申请动态权限!");
+            Log.i(TAG, "API level : " + Build.VERSION.SDK_INT + "不需要申请动态权限!");
             return;
         }
 

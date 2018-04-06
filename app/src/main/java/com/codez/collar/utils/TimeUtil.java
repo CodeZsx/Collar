@@ -101,18 +101,15 @@ public class TimeUtil {
 		return format.format(cur);
 	}
 	public static String getTime(long time) {
-		L.e("time : "+time);
 		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm");
 		return format.format(new Date(time));
 	}
 	public static String getDay(long time) {
-		L.e("time : "+time);
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd");
 		return format.format(new Date(time));
 	}
 	public static String getTimeXie(long time) {
 		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
-		L.e("time : "+time);
 		return format.format(new Date(time));
 	}
 	public static String getTime(String str) {

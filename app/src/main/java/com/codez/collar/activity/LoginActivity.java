@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -16,13 +17,12 @@ import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityLoginBinding;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.RomUtils;
 
 import skin.support.SkinCompatManager;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
-
+    private static final String TAG = "LoginActivity";
     private String authurl = "https://open.weibo.cn/oauth2/authorize" + "?" + "client_id=" + Config.APP_KEY
             + "&response_type=token&redirect_uri=" + Config.REDIRECT_URL
             + "&key_hash=" + Config.AppSecret + "&packagename=com.eico.weico"
@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                L.e("loading url:"+url);
+                Log.i(TAG, "loading url:" + url);
                 if (url.startsWith(Config.REDIRECT_URL)) {
                     view.stopLoading();
                     handleRedirectedUrl(url);
@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                L.e("page url:"+url);
+                Log.i(TAG, "page url:"+url);
                 if (!url.equals("about:blank") && url.startsWith(Config.REDIRECT_URL)) {
                     view.stopLoading();
                     handleRedirectedUrl(url);

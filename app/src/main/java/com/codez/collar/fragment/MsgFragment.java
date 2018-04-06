@@ -1,6 +1,7 @@
 package com.codez.collar.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -12,7 +13,6 @@ import com.codez.collar.databinding.FragmentMsgBinding;
 import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import rx.Observer;
@@ -52,6 +52,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                 .subscribe(new Observer<DirectMsgUserlistResultBean>() {
                     @Override
                     public void onCompleted() {
+                        Log.i(TAG, "onCompleted");
                         mBinding.swipeRefreshLayout.setRefreshing(false);
                         mBinding.swipeRefreshLayout.setEnabled(false);
                     }
@@ -61,7 +62,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                         mBinding.swipeRefreshLayout.setRefreshing(false);
                         mBinding.swipeRefreshLayout.setEnabled(false);
                         T.s(getContext(),"数据加载失败");
-                        L.e(e.toString());
+                        Log.e(TAG,"onError:"+e.toString());
                     }
 
                     @Override

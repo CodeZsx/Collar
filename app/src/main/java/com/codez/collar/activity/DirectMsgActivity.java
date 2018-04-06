@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -17,7 +18,6 @@ import com.codez.collar.fragment.EmojiFragment;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
 
@@ -26,7 +26,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> implements View.OnClickListener{
-
+    private static final String TAG = "DirectMsgActivity";
     public static String INTENT_UID = "uid";
     public static String INTENT_SCREEN_NAME = "screen_name";
     private String mScreenName;
@@ -84,7 +84,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
         emojiFragment.addOnEmojiClickListener(new EmojiFragment.OnEmojiClickListener() {
             @Override
             public void onEmojiDelete() {
-                L.e("delete");
+                Log.i(TAG, "delete");
             }
 
             @Override
@@ -150,13 +150,13 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
                 .subscribe(new Observer<DirectMsgConversationResultBean>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(TAG, "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         T.s(DirectMsgActivity.this, "数据加载失败");
-                        L.e(e.toString());
+                        Log.e(TAG, "onError"+e.toString());
                     }
 
                     @Override
@@ -187,7 +187,7 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
 
                     @Override
                     public void onError(Throwable e) {
-                        L.e("onError:"+e.toString());
+                        Log.e(TAG, "onError:"+e.toString());
                     }
 
                     @Override

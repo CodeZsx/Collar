@@ -21,7 +21,6 @@ import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.base.swipeback.SwipeBackActivityHelper;
 import com.codez.collar.event.RefreshStatusBarEvent;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.PermissionUtil;
 import com.codez.collar.utils.RomUtils;
 
@@ -257,7 +256,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
                 }
                 result=true;
             }catch (Exception e){
-                L.e(e.toString());
+                Log.e(TAG, "MIUISetStatusBarLightMode:"+e.toString());
             }
         }
         return result;

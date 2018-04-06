@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.codez.collar.R;
@@ -14,7 +15,6 @@ import com.codez.collar.bean.TopicResultBean;
 import com.codez.collar.databinding.ActivityTopicBinding;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 import com.codez.collar.utils.T;
 
 import rx.Observer;
@@ -22,7 +22,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements View.OnClickListener{
-
+    private static final String TAG = "TopicActivity";
     public static final String INTENT_TOPIC = "topic";
     private String mTopic;
     private int curPage = 1;
@@ -38,7 +38,7 @@ public class TopicActivity extends BaseActivity<ActivityTopicBinding> implements
         mTopic = getIntent().getStringExtra(INTENT_TOPIC);
         setToolbarTitle(mBinding.toolbar, mTopic);
         mTopic = mTopic.substring(1, mTopic.length()-1);
-        L.e(mTopic);
+        Log.i(TAG, "topic:"+mTopic);
 
         mAdapter = new StatusAdapter(this, new StatusAdapter.OnChangeAlphaListener() {
             @Override

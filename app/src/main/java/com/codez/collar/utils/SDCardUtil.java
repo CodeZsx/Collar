@@ -3,6 +3,7 @@ package com.codez.collar.utils;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
+import android.util.Log;
 
 import com.codez.collar.base.BaseApp;
 
@@ -16,6 +17,7 @@ import java.io.FileReader;
  * Created by codez on 17/11/17.
  */
 public class SDCardUtil {
+    private static final String TAG = "SDCardUtil";
     private SDCardUtil() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -117,7 +119,6 @@ public class SDCardUtil {
         StringBuffer sb = null;
         try {
             File file = new File(fileDir, fileName);
-            L.e(file.getPath());
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             sb = new StringBuffer();
@@ -130,7 +131,7 @@ public class SDCardUtil {
             //Toast.makeText(context, fileName + "文件读取成功", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            L.e(e.toString());
+            Log.e(TAG, e.toString());
             //Toast.makeText(context, fileName + "文件读取失败", Toast.LENGTH_SHORT).show();
         }
         return null;

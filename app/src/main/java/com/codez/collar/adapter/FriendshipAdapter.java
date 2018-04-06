@@ -96,7 +96,6 @@ public class FriendshipAdapter extends RecyclerView.Adapter<FriendshipAdapter.Bi
         }
         private void bindItem(final UserBean bean, int position){
             mBinding.setUser(bean);
-            L.e(bean.getIdstr());
             if (mFriendsIds.contains(bean.getIdstr())){
                 if (bean.isFollow_me()) {
                     mBinding.btnFollow.setText("互相关注");

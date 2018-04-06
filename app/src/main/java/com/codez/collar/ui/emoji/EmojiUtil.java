@@ -11,12 +11,12 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.codez.collar.R;
 import com.codez.collar.ui.emojitextview.Emoticons;
 import com.codez.collar.utils.DensityUtil;
-import com.codez.collar.utils.L;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 
 
 public class EmojiUtil {
+    private static final String TAG = "EmojiUtil";
     private static ArrayList<Emoji> emojiList;
 
     public static ArrayList<Emoji> getEmojiList() {
@@ -283,7 +284,7 @@ public class EmojiUtil {
                     try {
                         emojiDrawable = context.getResources().getDrawable(resId);
                     } catch (Resources.NotFoundException e) {
-                        L.e("not found:" + resId + " name:" + imgName);
+                        Log.e(TAG, "not found:" + resId + " name:" + imgName);
                         e.printStackTrace();
                     }
                     if (emojiDrawable != null) {

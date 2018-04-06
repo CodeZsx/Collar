@@ -12,7 +12,6 @@ import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.CommentResultBean;
 import com.codez.collar.databinding.FragmentCommentListBinding;
 import com.codez.collar.net.HttpUtils;
-import com.codez.collar.utils.L;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -147,12 +146,12 @@ public class CommentListFragment extends BaseFragment<FragmentCommentListBinding
                         .subscribe(new Observer<CommentResultBean>() {
                             @Override
                             public void onCompleted() {
-                                L.e("onCompleted");
+                                Log.i(TAG, "onCompleted");
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                L.e("onError:"+e.toString());
+                                Log.e(TAG, "onError:"+e.toString());
                             }
 
                             @Override
