@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_direct_msg_height"
         android:background="@drawable/layout_item"
+        android:foreground="?android:attr/selectableItemBackground"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin">
         <ImageView
@@ -52,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_direct_msg_height"
         android:background="@drawable/layout_item"
+        android:foreground="?android:attr/selectableItemBackground"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin">
         <ImageView
@@ -85,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_direct_msg_height"
         android:background="@drawable/layout_item"
+        android:foreground="?android:attr/selectableItemBackground"
         android:paddingLeft="@dimen/fab_margin"
         android:paddingRight="@dimen/fab_margin">
         <ImageView

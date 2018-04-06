@@ -57,9 +57,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         mBinding.menuFloating.setVisibility(View.VISIBLE);
         mBinding.menuFloating.setClosedOnTouchOutside(true);
 
-        mBinding.navBtnHome.setOnClickListener(this);
-        mBinding.navBtnMsg.setOnClickListener(this);
-        mBinding.navBtnUser.setOnClickListener(this);
+        mBinding.rlHome.setOnClickListener(this);
+        mBinding.rlMsg.setOnClickListener(this);
+        mBinding.rlMine.setOnClickListener(this);
         mBinding.btnPostText.setOnClickListener(this);
         mBinding.btnPostImage.setOnClickListener(this);
 
@@ -98,22 +98,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.nav_btn_home:
+            case R.id.rl_home:
                 mBinding.navBtnHome.setSelected(true);
                 mBinding.navBtnMsg.setSelected(false);
-                mBinding.navBtnUser.setSelected(false);
+                mBinding.navBtnMine.setSelected(false);
                 changeFragment(0);
                 break;
-            case R.id.nav_btn_msg:
+            case R.id.rl_msg:
                 mBinding.navBtnHome.setSelected(false);
                 mBinding.navBtnMsg.setSelected(true);
-                mBinding.navBtnUser.setSelected(false);
+                mBinding.navBtnMine.setSelected(false);
                 changeFragment(1);
                 break;
-            case R.id.nav_btn_user:
+            case R.id.rl_mine:
                 mBinding.navBtnHome.setSelected(false);
                 mBinding.navBtnMsg.setSelected(false);
-                mBinding.navBtnUser.setSelected(true);
+                mBinding.navBtnMine.setSelected(true);
                 changeFragment(2);
                 break;
             case R.id.btn_post_text:
@@ -147,12 +147,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 }
                 break;
             case 3:
-                if (count == 0 && mBinding.tvNoticeUser.getVisibility() == View.VISIBLE) {
-                    mBinding.tvNoticeUser.setVisibility(View.GONE);
-                    mBinding.tvNoticeUser.setText(count + "");
+                if (count == 0 && mBinding.tvNoticeMine.getVisibility() == View.VISIBLE) {
+                    mBinding.tvNoticeMine.setVisibility(View.GONE);
+                    mBinding.tvNoticeMine.setText(count + "");
                 } else {
-                    mBinding.tvNoticeUser.setVisibility(View.VISIBLE);
-                    mBinding.tvNoticeUser.setText(count + "");
+                    mBinding.tvNoticeMine.setVisibility(View.VISIBLE);
+                    mBinding.tvNoticeMine.setText(count + "");
                 }
                 break;
         }

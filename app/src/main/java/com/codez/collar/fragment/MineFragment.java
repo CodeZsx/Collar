@@ -73,6 +73,8 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
         mBinding.blockFriend.setOnClickListener(this);
         mBinding.blockFollower.setOnClickListener(this);
         mBinding.itemFavorite.setOnClickListener(this);
+        mBinding.itemLike.setOnClickListener(this);
+        mBinding.itemGroup.setOnClickListener(this);
         mBinding.itemTheme.setOnClickListener(this);
         mBinding.itemSettings.setOnClickListener(this);
         mBinding.itemAbout.setOnClickListener(this);
@@ -155,6 +157,10 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                 break;
             case R.id.item_favorite:
                 startActivity(new Intent(getActivity(), FavoriteActivity.class));
+                break;
+            case R.id.item_like:
+                break;
+            case R.id.item_group:
                 break;
             case R.id.item_theme:
                 startActivity(new Intent(getActivity(), ThemeActivity.class));

@@ -34,10 +34,12 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/rl_home"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="8dp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nav_btn_home"
@@ -58,10 +60,12 @@
                         android:textSize="@dimen/text_notice_bubble"/>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/rl_msg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="8dp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nav_btn_msg"
@@ -83,22 +87,24 @@
                         android:textSize="@dimen/text_notice_bubble"/>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/rl_mine"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginTop="8dp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_weight="1">
                     <ImageView
-                        android:id="@+id/nav_btn_user"
+                        android:id="@+id/nav_btn_mine"
                         android:layout_width="26dp"
                         android:layout_height="26dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/ic_nav_user"/>
                     <TextView
-                        android:id="@+id/tv_notice_user"
+                        android:id="@+id/tv_notice_mine"
                         android:layout_width="@dimen/size_notice_bubble"
                         android:layout_height="@dimen/size_notice_bubble"
-                        android:layout_toRightOf="@id/nav_btn_user"
+                        android:layout_toRightOf="@id/nav_btn_mine"
                         android:layout_marginLeft="-8dp"
                         android:background="@drawable/tv_notice_num"
                         android:gravity="center"

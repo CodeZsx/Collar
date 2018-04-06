@@ -28,13 +28,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_top_bg"
-            android:layout_marginTop="-110dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:paddingTop="90dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_header"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="86dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -101,6 +102,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/layout_item_radius"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -125,6 +127,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/layout_item_radius"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -149,6 +152,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/layout_item_radius"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -192,6 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
 
@@ -216,6 +221,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
 
@@ -240,6 +246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
 
@@ -279,6 +286,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
 
@@ -320,6 +328,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
                             <ImageView
@@ -341,6 +350,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
                             android:background="@drawable/layout_item_radius"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin">
                             <ImageView
