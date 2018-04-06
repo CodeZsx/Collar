@@ -14,8 +14,10 @@
         android:id="@+id/ll_root"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:background="@drawable/layout_item"
+        android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center_horizontal"
         android:orientation="vertical">
         <de.hdodenhof.circleimageview.CircleImageView

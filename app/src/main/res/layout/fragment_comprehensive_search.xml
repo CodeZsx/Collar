@@ -19,7 +19,8 @@
                 android:layout_height="40dp"
                 android:paddingLeft="@dimen/fab_margin"
                 android:paddingRight="@dimen/fab_margin"
-                android:background="@drawable/layout_item">
+                android:background="@drawable/layout_item"
+                android:foreground="?android:attr/selectableItemBackground">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

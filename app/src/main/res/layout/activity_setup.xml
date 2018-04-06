@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/layout_item"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:paddingLeft="@dimen/fab_margin"
                 android:paddingRight="@dimen/fab_margin"
                 android:layout_marginTop="@dimen/fab_margin">
@@ -74,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/layout_item"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:paddingLeft="@dimen/fab_margin"
                 android:paddingRight="@dimen/fab_margin"
                 android:layout_marginTop="@dimen/fab_margin">
