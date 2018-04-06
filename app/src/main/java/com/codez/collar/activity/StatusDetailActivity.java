@@ -341,8 +341,17 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                 }
                 break;
             case R.id.block_comment:
+                mBinding.etContent.setFocusable(true);
+                mBinding.etContent.setFocusableInTouchMode(true);
+                mBinding.etContent.requestFocus();
+                mBinding.etContent.requestFocusFromTouch();
                 break;
             case R.id.block_repost:
+                Bundle mBundle = new Bundle();
+                mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, mBean);
+                startActivity(new Intent(this, PostActivity.class)
+                        .putExtras(mBundle)
+                        .putExtra(PostActivity.INTENT_REPOST, true));
                 break;
             case R.id.iv_commit:
                 if (mBinding.ivCommit.isSelected()) {

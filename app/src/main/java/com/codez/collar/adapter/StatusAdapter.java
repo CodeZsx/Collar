@@ -187,6 +187,15 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtras(mBundle));
                 }
             });
+            mBinding.recyclerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, bean);
+                    mContext.startActivity(new Intent(mContext, StatusDetailActivity.class)
+                            .putExtras(mBundle));
+                }
+            });
 
             //status更多操作按钮 点击事件
             mBinding.ivMoreOption.setOnClickListener(new View.OnClickListener() {
