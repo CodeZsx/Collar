@@ -325,10 +325,10 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     public void onNightModeChanged(NightModeChangedEvent event) {
         if (event.isNight()) {
             mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal_night);
-            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorItemNormal);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
         } else {
             mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal);
-            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorBgNormal_night);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
         }
     }
 
