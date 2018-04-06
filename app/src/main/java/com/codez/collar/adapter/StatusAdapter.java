@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,19 +23,29 @@ import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
+import com.codez.collar.bean.AttitudeResultBean;
 import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ItemStatusBinding;
+import com.codez.collar.event.ToastEvent;
+import com.codez.collar.manager.AttitudesManager;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.EventBusUtils;
+import com.codez.collar.utils.JsonUtil;
 import com.codez.collar.utils.L;
 import com.codez.collar.utils.ScreenUtil;
 import com.codez.collar.utils.T;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -45,7 +56,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingViewHolder>{
-
+    private static final String TAG = "StatusAdapter";
     private Context mContext;
     private OnChangeAlphaListener onChangeAlphaListener;
     private List<StatusBean> list;
@@ -138,11 +149,35 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             StatusContentTextUtil.getWeiBoContent(bean.getRetweeted_status().getText(),
                                     mContext, mBinding.retweetedContent));
                 }
+            }
+            //点赞按钮状态
+            int likeState = AttitudesManager.getInstance().getAttitude(bean.getIdstr());
+            if (likeState == -1) {
+                HttpUtils.getInstance().getAttitudesService()
+                        .existsLike(bean.getIdstr())
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    int state = JsonUtil.getValueByUncertainKey(response.body().bytes());
+                                    AttitudesManager.getInstance().putAttitude(bean.getIdstr(), state);
+                                    mBinding.ivLike.setSelected(state == AttitudesManager.STATE_LIKE);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Log.i(TAG, "onFailure:" + t.toString());
+                            }
+                        });
+            }else{
+                mBinding.ivLike.setSelected(likeState == AttitudesManager.STATE_LIKE);
             }
 
-
             //点击事件
+            //微博内容 点击事件
             mBinding.llRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,8 +187,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtras(mBundle));
                 }
             });
-
-
 
             //status更多操作按钮 点击事件
             mBinding.ivMoreOption.setOnClickListener(new View.OnClickListener() {
@@ -240,8 +273,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             dialog_more.dismiss();
                         }
                     });
-
-
                     if (mType == TYPE_OWN) {
                         dialog_more.findViewById(R.id.tv_follow).setVisibility(View.GONE);
                         dialog_more.findViewById(R.id.tv_destroy).setVisibility(View.VISIBLE);
@@ -272,7 +303,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                 dialog_more.dismiss();
                             }
                         });
-
                     }else{
                         dialog_more.findViewById(R.id.tv_follow).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -282,10 +312,10 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             }
                         });
                     }
-
                     dialog_more.show();
                 }
             });
+            //头像点击事件
             mBinding.ivHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -293,6 +323,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                     .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()));
                 }
             });
+            //昵称点击事件
             mBinding.tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -300,6 +331,66 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtra(UserActivity.INTENT_KEY_UID, bean.getUser().getId()));
                 }
             });
+            //点赞点击事件
+            mBinding.blockLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mBinding.ivLike.isSelected()) {
+                        HttpUtils.getInstance().getAttitudesService()
+                                .destroyLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<AttitudeResultBean>() {
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onCompleted");
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.e(TAG, "onError:" + e.toString());
+                                    }
+
+                                    @Override
+                                    public void onNext(AttitudeResultBean attitudeResultBean) {
+                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("取消点赞"));
+                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 0);
+                                        mBinding.ivLike.setSelected(false);
+                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
+                                        bean.setAttitudes_count(bean.getAttitudes_count() - 1);
+                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
+                                    }
+                                });
+                    } else {
+                        HttpUtils.getInstance().getAttitudesService()
+                                .createLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<AttitudeResultBean>() {
+                                    @Override
+                                    public void onCompleted() {
+                                        Log.i(TAG, "onCompleted");
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.e(TAG, "onError:" + e.toString());
+                                    }
+
+                                    @Override
+                                    public void onNext(AttitudeResultBean attitudeResultBean) {
+                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("点赞"));
+                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 1);
+                                        mBinding.ivLike.setSelected(true);
+                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
+                                        bean.setAttitudes_count(bean.getAttitudes_count() + 1);
+                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
+                                    }
+                                });
+                    }
+                }
+            });
+            //评论点击事件
             mBinding.blockComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -310,6 +401,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             .putExtra(StatusDetailActivity.INTENT_FROM_COMMENT, true));
                 }
             });
+            //转发点击事件
             mBinding.blockRepost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

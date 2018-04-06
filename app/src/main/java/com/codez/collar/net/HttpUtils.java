@@ -64,6 +64,9 @@ public class HttpUtils {
     public DirectMsgService getDirectMsgService() {
         return getRetrofit(Constants.BASE_URL).create(DirectMsgService.class);
     }
+    public AttitudesService getAttitudesService(){
+        return getRetrofit(Constants.BASE_URL).create(AttitudesService.class);
+    }
 
     public SearchService getSearchService() {
         return getRetrofitWithAppKey(Constants.OLD_URL).create(SearchService.class);
