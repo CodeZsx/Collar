@@ -21,6 +21,7 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentMineBinding;
+import com.codez.collar.event.NightModeChangedEvent;
 import com.codez.collar.event.RefreshStatusBarEvent;
 import com.codez.collar.event.UpdateUserInfoEvent;
 import com.codez.collar.manager.UserManager;
@@ -60,9 +61,11 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
                     //取消夜间模式后，主题恢复为之前的存储的主题
                     SkinCompatManager.getInstance().loadSkin(Config.getCachedTheme(getContext()),SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                     Config.cacheNight(getContext(), false);
+                    EventBusUtils.sendEvent(new NightModeChangedEvent(false));
                 }else {
                     SkinCompatManager.getInstance().loadSkin("night", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
                     Config.cacheNight(getContext(), true);
+                    EventBusUtils.sendEvent(new NightModeChangedEvent(true));
                 }
                 //切换夜间模式后刷新状态栏字体颜色
                 EventBus.getDefault().post(new RefreshStatusBarEvent());

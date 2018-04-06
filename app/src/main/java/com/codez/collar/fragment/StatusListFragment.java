@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseFragment;
@@ -17,6 +18,7 @@ import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
 import com.codez.collar.databinding.ItemRvFooterBinding;
 import com.codez.collar.event.GroupChangedEvent;
+import com.codez.collar.event.NightModeChangedEvent;
 import com.codez.collar.event.ToastEvent;
 import com.codez.collar.listener.EndlessRecyclerViewOnScrollListener;
 import com.codez.collar.manager.GroupManager;
@@ -119,6 +121,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 loadData();
             }
         });
+        EventBusUtils.sendEvent(new NightModeChangedEvent(Config.getCachedNight(getContext())));
         mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -315,6 +318,17 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 curPage = 1;
             }
             loadData();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNightModeChanged(NightModeChangedEvent event) {
+        if (event.isNight()) {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal_night);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorItemNormal);
+        } else {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorBgNormal_night);
         }
     }
 
