@@ -115,6 +115,8 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
 
 
         }
+        //头部背景图半透明遮罩
+        mBinding.viewMask.setAlpha(0.2f);
 
         //获取用户信息
         HttpUtils.getInstance().getUserService()

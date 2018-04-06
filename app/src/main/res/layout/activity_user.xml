@@ -56,9 +56,10 @@
                             android:background="#eee"
                             android:imageUrl="@{user.cover_image_phone}"/>
                         <View
+                            android:id="@+id/view_mask"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#44ffffff"/>
+                            android:background="@color/colorItemNormal"/>
                     </FrameLayout>
 
                     <de.hdodenhof.circleimageview.CircleImageView
