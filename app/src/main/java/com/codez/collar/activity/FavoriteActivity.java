@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.base.BaseActivity;
@@ -14,9 +15,14 @@ import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.FavoriteResultBean;
 import com.codez.collar.bean.StatusBean;
 import com.codez.collar.databinding.ActivityTopicBinding;
+import com.codez.collar.event.NightModeChangedEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.DensityUtil;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +43,7 @@ public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> impleme
 
     @Override
     public void initView() {
+        EventBusUtils.register(this);
         setToolbarTitle(mBinding.toolbar, "我的收藏");
 
         mAdapter = new StatusAdapter(this, new StatusAdapter.OnChangeAlphaListener() {
@@ -81,6 +88,7 @@ public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> impleme
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        EventBusUtils.sendEvent(new NightModeChangedEvent(Config.getCachedNight(this)));
         mBinding.swipeRefreshLayout.setRefreshing(true);
         mBinding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -121,6 +129,22 @@ public class FavoriteActivity extends BaseActivity<ActivityTopicBinding> impleme
                 });
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBusUtils.unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNightModeChanged(NightModeChangedEvent event) {
+        if (event.isNight()) {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal_night);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
+        } else {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
+        }
+    }
 
     @Override
     public void onClick(View v) {

@@ -5,14 +5,20 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.adapter.FriendshipAdapter;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.FriendsIdsResultBean;
 import com.codez.collar.bean.FriendshipsResultBean;
 import com.codez.collar.databinding.ActivityBaseListBinding;
+import com.codez.collar.event.NightModeChangedEvent;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,6 +44,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
 
     @Override
     public void initView() {
+        EventBusUtils.register(this);
         mType = getIntent().getStringExtra(INTENT_TYPE);
         mUid = getIntent().getStringExtra(INTENT_UID);
         setToolbarTitle(mBinding.toolbar, mType);
@@ -66,6 +73,7 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        EventBusUtils.sendEvent(new NightModeChangedEvent(Config.getCachedNight(this)));
         //取消下拉刷新
         mBinding.swipeRefreshLayout.setEnabled(false);
         //设置初始时加载提示
@@ -147,6 +155,22 @@ public class FriendshipActivity extends BaseActivity<ActivityBaseListBinding> im
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBusUtils.unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNightModeChanged(NightModeChangedEvent event) {
+        if (event.isNight()) {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal_night);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
+        } else {
+            mBinding.swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorItemNormal);
+            mBinding.swipeRefreshLayout.setColorSchemeResources(R.color.colorHighlight);
+        }
+    }
 
     @Override
     public void onClick(View v) {
