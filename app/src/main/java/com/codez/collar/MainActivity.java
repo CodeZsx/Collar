@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -176,12 +175,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         EventBusUtils.unregister(this);
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+//            moveTaskToBack(true);
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+    public void onBackPressed() {
+        if (mBinding.menuFloating.isOpened()) {
+            mBinding.menuFloating.close(true);
+        } else {
             moveTaskToBack(true);
-            return true;
         }
-        return super.onKeyDown(keyCode, event);
     }
 }
