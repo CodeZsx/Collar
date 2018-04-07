@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     private static final String TAG = "SplashActivity";
     private int countdown = 1;
-    private static final int SKIP_COUNTDOWN = 1;
+    private static final int SKIP_COUNTDOWN = 3;
     private static boolean isFinished = false;
 
     @Override
@@ -50,9 +50,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
             }
         });
         if (BuildConfig.DEBUG){
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            this.finish();
-            return;
+            countdown = 0;
         }
         mHandler.sendEmptyMessage(SKIP_COUNTDOWN);
     }

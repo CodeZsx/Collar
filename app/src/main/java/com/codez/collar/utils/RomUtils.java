@@ -1,12 +1,11 @@
 package com.codez.collar.utils;
 
-import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
@@ -19,10 +18,16 @@ import java.util.Set;
  */
 
 public class RomUtils {
+    private static final String TAG = "RomUtils";
     //判断是否是Miui
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
+
+    //判断是否是Flyme
+    private static final String KEY_BUILD_USER = "ro.build.user";//若系统是flyme，则此值为flyme
+    private static final String KEY_FLYME_PUBISHED = "ro.flyme.published";
+    private static final String KEY_PERSIST_SYS_USE_FLYME_ICON = "persist.sys.use.flyme.icon";
 
     public static boolean isMIUI() {
         try {
@@ -37,14 +42,35 @@ public class RomUtils {
 
     //判断是否是Flyme
     public static boolean isFlyme() {
+//        //只适用于flyme5.1以前
+//        try {
+//            // Invoke Build.hasSmartBar()
+//            final Method method = Build.class.getMethod("hasSmartBar");
+//            return method != null;
+//        } catch (final Exception e) {
+//            return false;
+//        }
         try {
-            // Invoke Build.hasSmartBar()
-            final Method method = Build.class.getMethod("hasSmartBar");
-            return method != null;
-        } catch (final Exception e) {
+            final BuildProperties prop = BuildProperties.newInstance();
+            return (prop.getProperty(KEY_BUILD_USER, null) != null && "flyme".equals(prop.getProperty(KEY_BUILD_USER)))
+                    || prop.getProperty(KEY_FLYME_PUBISHED, null) != null
+                    || prop.getProperty(KEY_PERSIST_SYS_USE_FLYME_ICON, null) != null;
+        } catch (final IOException e) {
             return false;
         }
     }
+
+    public static void printBuildProperties() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(new File(Environment.getRootDirectory(), "build.prop")));
+            Log.i(TAG, "printBuildProperties:" + properties.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.w(TAG, "printBuildProperties:" + e.toString());
+        }
+    }
+
     public static class BuildProperties {
 
         private final Properties properties;

@@ -3,7 +3,6 @@ package com.codez.collar.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,9 +16,6 @@ import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.databinding.ActivityLoginBinding;
-import com.codez.collar.utils.RomUtils;
-
-import skin.support.SkinCompatManager;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private static final String TAG = "LoginActivity";
@@ -38,25 +34,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     @Override
     public void initView() {
 
+        //状态栏不透明
+        setStatusBarUnTranslucent();
+
         isComeFromAccountAty = getIntent().getBooleanExtra("comFromAccountActivity", false);
         if (!isComeFromAccountAty){
             setSwipeBackEnable(false);
         }
-
-        //若当前手机系统无法修改状态栏黑色字体，则不选用默认白色主题
-        if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
-
-            } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
-
-            } else {
-                SkinCompatManager.getInstance().loadSkin("b", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
-                Config.cacheTheme(this, "b");
-            }
-        }
-
 
         final WebSettings webSettings = mBinding.webView.getSettings();
         webSettings.setJavaScriptEnabled(true);

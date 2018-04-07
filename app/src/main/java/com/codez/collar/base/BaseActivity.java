@@ -84,25 +84,28 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     }
 
     private void initStatusBar() {
+        Log.i(TAG, "isFlyme:" + RomUtils.isFlyme());
+        Log.i(TAG, "isMiui:" + RomUtils.isMIUI());
         //仅当当前主题色为白色时，修改状态栏字体颜色
         if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
             //api23以上，调用系统方法
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-                Log.i(TAG, "cur SDK > 23");
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
             } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
 
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                //之所以和>23的情况分开写，是为了解决：api23时的miui，无法使用SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
             }
         }else{
             //api23以上，调用系统方法
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Log.i(TAG, "cur SDK > 23");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);//设置状态栏白色字体
-            } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
+            } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), false)) {
 
-            } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
+            } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), false)) {
 
             }
         }
@@ -112,6 +115,10 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
 
     protected void setStatusBarTranslucent() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    }
+
+    protected void setStatusBarUnTranslucent() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     protected void setToolbarTitle(Toolbar toolbar, String title) {
@@ -233,7 +240,7 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     }
 
     /**
-     * 设置状态栏字体图标为深色，需要MIUIV6以上
+     * 是否为亮色状态栏，即是否设置状态栏字体图标为深色，需要MIUIV6以上
      * @param window 需要设置的窗口
      * @param dark 是否把状态栏字体及图标颜色设置为深色
      * @return  boolean 成功执行返回true
