@@ -82,6 +82,8 @@
     <color name="layout_item_nor">@color/colorItemNormal</color>
     <color name="layout_item_sel_night">#ff333333</color>
     <color name="layout_item_nor_night">@color/colorItemNormal_night</color>
+    <color name="chat_bg">#fff5f5f5</color>
+    <color name="chat_bg_night">#ff212121</color>
 
     <color name="bgExpendBtn">#33000000</color>
     
