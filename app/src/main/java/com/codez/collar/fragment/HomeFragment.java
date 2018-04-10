@@ -81,7 +81,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
             case R.id.tv_left:
                 if (isLeft){
                     if (groupWindow == null){
-                        groupWindow = new GroupPopupWindow(getContext(), ViewGroup.LayoutParams.MATCH_PARENT, 600);
+                        groupWindow = new GroupPopupWindow(getContext(), ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     }
                     groupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                         @Override
