@@ -20,7 +20,7 @@ import static skin.support.widget.SkinCompatHelper.INVALID_ID;
  */
 
 public class HomeTitleTextView extends SkinCompatTextView {
-
+    private static final String TAG = "HomeTitleTextView";
     //skin
     private SkinCompatTextHelper mTextHelper;
     private int mArrowResId = INVALID_ID;
@@ -43,7 +43,7 @@ public class HomeTitleTextView extends SkinCompatTextView {
         mTextHelper.loadFromAttributes(attrs, defStyleAttr);
 
         this.mContext = context;
-        mState = 1;
+        mState = STATE_SELECTED_CLOSE;
         changeState(mState);
 
     }
@@ -56,7 +56,7 @@ public class HomeTitleTextView extends SkinCompatTextView {
             case STATE_SELECTED_CLOSE:
                 mState = STATE_SELECTED_CLOSE;
                 setTextAppearance(R.style.HomeTitleColorSel);
-                if (Config.getCachedTheme(getContext()).equals("a")){
+                if (Config.getCachedTheme(getContext()).equals("a")&&!Config.getCachedNight(getContext())){
                     mArrowResId = R.drawable.ic_arrow_fill_down_a;
                 }else{
                     mArrowResId = R.drawable.ic_arrow_fill_down;
@@ -70,7 +70,7 @@ public class HomeTitleTextView extends SkinCompatTextView {
             case STATE_SELECTED_OPEN:
                 mState = STATE_SELECTED_OPEN;
                 setTextAppearance(R.style.HomeTitleColorSel);
-                if (Config.getCachedTheme(getContext()).equals("a")){
+                if (Config.getCachedTheme(getContext()).equals("a")&&!Config.getCachedNight(getContext())){
                     mArrowResId = R.drawable.ic_arrow_fill_up_a;
                 }else{
                     mArrowResId = R.drawable.ic_arrow_fill_up;
