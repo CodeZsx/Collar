@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners
+        android:radius="3dp"/>
+    <stroke
+        android:dashGap="4dp"
+        android:dashWidth="4dp"
+        android:width="1px"
+        android:color="@color/colorTextLevel3_night"/>
+    <solid
+        android:color="@color/colorItemNormal_night"/>
+</shape>
