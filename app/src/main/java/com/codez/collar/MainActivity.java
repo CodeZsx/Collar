@@ -18,6 +18,7 @@ import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
+import com.codez.collar.utils.EventBusUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -37,7 +38,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     public void initView() {
 
         Log.i(TAG, AccessTokenKeeper.getInstance().readAccessToken().toString());
-
+        EventBusUtils.register(this);
         //MainActivity不需要滑动后退
         setSwipeBackEnable(false);
         fragments = new Fragment[]{new HomeFragment(), new MsgFragment(), new MineFragment()};
@@ -163,16 +164,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onDestroy() {
+        EventBusUtils.unregister(this);
+        super.onDestroy();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-//    @Override
+    //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 //            moveTaskToBack(true);
