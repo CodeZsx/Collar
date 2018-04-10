@@ -1,13 +1,15 @@
 package com.codez.collar.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
@@ -99,26 +101,35 @@ public class ImageDetailActivity extends BaseActivity<ActivityImageDetailBinding
 
     @Override
     public void finish() {
-        TranslateAnimation animation = new TranslateAnimation(0, 0, 0, ScreenUtil.getScreenHeight(ImageDetailActivity.this));
-        animation.setDuration(200);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mBinding.llRoot, "alpha", 1.0f, 0f);
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(mBinding.viewPager, "translationY", 0f, ScreenUtil.getScreenHeight(ImageDetailActivity.this)*1.0f);
+        animatorSet.play(animator).with(animator1);
+        animatorSet.setDuration(200);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animator animation) {
 
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animator animation) {
                 ImageDetailActivity.super.finish();
                 overridePendingTransition(0, 0);
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         });
-        mBinding.llRoot.startAnimation(animation);
+        animatorSet.start();
 
     }
 }
