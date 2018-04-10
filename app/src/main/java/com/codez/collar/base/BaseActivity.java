@@ -84,8 +84,6 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
     }
 
     private void initStatusBar() {
-        Log.i(TAG, "isFlyme:" + RomUtils.isFlyme());
-        Log.i(TAG, "isMiui:" + RomUtils.isMIUI());
         //仅当当前主题色为白色时，修改状态栏字体颜色
         if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
             //api23以上，调用系统方法
