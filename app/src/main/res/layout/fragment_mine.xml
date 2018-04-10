@@ -90,9 +90,6 @@
                 android:background="@drawable/layout_item_radius"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:divider="@drawable/line_gray"
-                android:showDividers="middle"
-                android:dividerPadding="8dp"
                 android:elevation="@dimen/elevation_frag_mine_item"
                 android:orientation="horizontal">
 
@@ -120,6 +117,12 @@
                         android:textColor="@color/colorTextLevel2"
                         android:textSize="12sp" />
                 </LinearLayout>
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorPatingLine"/>
 
                 <LinearLayout
                     android:id="@+id/block_friend"
@@ -145,6 +148,12 @@
                         android:textColor="@color/colorTextLevel2"
                         android:textSize="12sp" />
                 </LinearLayout>
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorPatingLine"/>
 
                 <LinearLayout
                     android:id="@+id/block_follower"
@@ -186,9 +195,6 @@
                         android:layout_marginLeft="@dimen/margin_frag_mine_item"
                         android:layout_marginRight="@dimen/margin_frag_mine_item"
                         android:background="@drawable/layout_item_radius"
-                        android:divider="@drawable/line_gray"
-                        android:showDividers="middle"
-                        android:dividerPadding="@dimen/fab_margin"
                         android:elevation="@dimen/elevation_frag_mine_item"
                         android:orientation="vertical">
                         <RelativeLayout
@@ -215,7 +221,12 @@
                                 android:textColor="@color/colorTextLevel1"
                                 android:textSize="14sp" />
                         </RelativeLayout>
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/fab_margin"
+                            android:layout_marginRight="@dimen/fab_margin"
+                            android:background="@color/colorPatingLine"/>
                         <RelativeLayout
                             android:id="@+id/item_like"
                             android:layout_width="match_parent"
@@ -240,7 +251,12 @@
                                 android:textColor="@color/colorTextLevel1"
                                 android:textSize="14sp" />
                         </RelativeLayout>
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/fab_margin"
+                            android:layout_marginRight="@dimen/fab_margin"
+                            android:background="@color/colorPatingLine"/>
                         <RelativeLayout
                             android:id="@+id/item_group"
                             android:layout_width="match_parent"
@@ -266,7 +282,12 @@
                                 android:textSize="14sp" />
                         </RelativeLayout>
                     </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/fab_margin"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:background="@color/colorPatingLine"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -275,9 +296,6 @@
                         android:layout_marginLeft="@dimen/margin_frag_mine_item"
                         android:layout_marginRight="@dimen/margin_frag_mine_item"
                         android:background="@drawable/layout_item_radius"
-                        android:divider="@drawable/line_gray"
-                        android:showDividers="middle"
-                        android:dividerPadding="@dimen/fab_margin"
                         android:elevation="@dimen/elevation_frag_mine_item"
                         android:orientation="vertical">
 
@@ -323,6 +341,12 @@
                                 android:textColor="@color/colorTextLevel2"
                                 android:textSize="12sp" />
                         </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/fab_margin"
+                            android:layout_marginRight="@dimen/fab_margin"
+                            android:background="@color/colorPatingLine"/>
                         <RelativeLayout
                             android:id="@+id/item_settings"
                             android:layout_width="match_parent"
@@ -345,6 +369,12 @@
                                 android:textColor="@color/colorTextLevel1"
                                 android:textSize="14sp" />
                         </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="@dimen/fab_margin"
+                            android:layout_marginRight="@dimen/fab_margin"
+                            android:background="@color/colorPatingLine"/>
                         <RelativeLayout
                             android:id="@+id/item_about"
                             android:layout_width="match_parent"
