@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.codez.collar.BuildConfig;
+import com.codez.collar.Config;
 import com.codez.collar.MainActivity;
 import com.codez.collar.manager.ApplicationContext;
 import com.codez.collar.service.CoreService;
@@ -69,6 +70,12 @@ public class BaseApp extends Application {
                 .setSkinStatusBarColorEnable(false)
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
+        //应用初始运行
+        if (Config.getCachedFirstRun(sContext)){
+            SkinCompatManager.getInstance().loadSkin("a", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);
+            Config.cacheTheme(sContext, "a");
+            Config.cacheFirstRun(sContext, false);
+        }
         //初始化文件下载组件
         FileDownloader.setup(this);
         Observable.timer(0, TimeUnit.SECONDS, Schedulers.newThread())

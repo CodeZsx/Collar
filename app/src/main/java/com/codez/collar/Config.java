@@ -39,4 +39,14 @@ public class Config {
         e.putString("theme", theme);
         e.commit();
     }
+    //获取
+    public static boolean getCachedFirstRun(Context context) {
+        return context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).getBoolean("first_run", true);
+    }
+    //缓存
+    public static void cacheFirstRun(Context context,boolean isFirstRun) {
+        SharedPreferences.Editor e = context.getSharedPreferences(PREF_NAME_NIGHT_MODE, Context.MODE_PRIVATE).edit();
+        e.putBoolean("first_run", isFirstRun);
+        e.commit();
+    }
 }
