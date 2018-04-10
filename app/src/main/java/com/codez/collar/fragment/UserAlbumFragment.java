@@ -101,7 +101,7 @@ public class UserAlbumFragment extends BaseFragment<FragmentUserAlbumBinding> im
                                 }
                             }
                         }
-                        if (mAdapter.getList().size() < 16) {
+                        if (statusResultBean.getStatuses().size() > 0 && mAdapter.getList().size() < 16) {
                             loadData();
                         }
                         mAdapter.notifyDataSetChanged();
