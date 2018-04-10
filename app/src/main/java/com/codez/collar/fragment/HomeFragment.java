@@ -12,20 +12,21 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.codez.collar.R;
-import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.SearchActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
+import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentHomeBinding;
 import com.codez.collar.event.GroupChangedEvent;
 import com.codez.collar.event.TranslucentMaskDisplayEvent;
+import com.codez.collar.event.UpdateUserInfoEvent;
+import com.codez.collar.manager.UserManager;
 import com.codez.collar.ui.GroupPopupWindow;
 import com.codez.collar.ui.HomeTitleTextView;
 import com.codez.collar.ui.zxing.CaptureActivity;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
-import com.codez.collar.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -74,6 +75,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
     }
 
     private void initData(){
+        refreshUserInfo(UserManager.getInstance().getUserMe());
     }
     @Override
     public void onClick(View v) {
@@ -161,14 +163,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
         super.onDestroy();
         EventBusUtils.unregister(this);
     }
+    private void refreshUserInfo(final UserBean user) {
+        if (user == null) {
+            return;
+        }
+        mBinding.setUser(user);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGroupChangedEvent(GroupChangedEvent event) {
-        Log.i(TAG, "onGroupChangedEvent");
         mGroupChangedEvent = event;
         mBinding.tvLeft.setText(event.getName());
         mBinding.tvLeft.changeState(HomeTitleTextView.STATE_SELECTED_CLOSE);
         groupWindow.dismiss();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateUserInfoEvent(UpdateUserInfoEvent event) {
+        refreshUserInfo(UserManager.getInstance().getUserMe());
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

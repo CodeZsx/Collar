@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="user"
+            type="com.codez.collar.bean.UserBean" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +43,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:transitionName="shareAvatar"
-                        android:src="@drawable/pic_head_test" />
+                        android:imageUrl="@{user.avatar_large}"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
