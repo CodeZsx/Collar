@@ -157,6 +157,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response==null) return;
                                 try {
                                     int state = JsonUtil.getValueByUncertainKey(response.body().bytes());
                                     AttitudesManager.getInstance().putAttitude(bean.getIdstr(), state);
