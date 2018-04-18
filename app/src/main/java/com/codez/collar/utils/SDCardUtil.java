@@ -86,12 +86,30 @@ public class SDCardUtil {
         return Environment.getRootDirectory().getAbsolutePath();
     }
 
+    /**
+     * 获取app的存储根目录
+     * @return
+     */
     public static String getAppPackagePath() {
         return Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/" + BaseApp.getAppPackageName();
     }
+
+    /**
+     * 获取app的cache文件夹路径
+     * @return
+     */
     public static String getAppCachePath() {
         return getAppPackagePath()+"/cache";
     }
+
+    /**
+     * 获取app的image文件夹路径
+     * @return
+     */
+    public static String getAppImagePath() {
+        return getAppPackagePath()+"/image";
+    }
+
 
     public static void put(Context context, String fileDir, String fileName, String content) {
         File filedir = new File(fileDir);
