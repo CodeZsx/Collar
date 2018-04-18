@@ -15,6 +15,7 @@ import com.codez.collar.MainActivity;
 import com.codez.collar.manager.ApplicationContext;
 import com.codez.collar.service.CoreService;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -70,6 +71,8 @@ public class BaseApp extends Application {
                 .setSkinStatusBarColorEnable(false)
                 .setSkinWindowBackgroundEnable(false)
                 .loadSkin();
+        //初始化二维码组件
+        ZXingLibrary.initDisplayOpinion(this);
         //应用初始运行
         if (Config.getCachedFirstRun(sContext)){
             SkinCompatManager.getInstance().loadSkin("a", SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN);

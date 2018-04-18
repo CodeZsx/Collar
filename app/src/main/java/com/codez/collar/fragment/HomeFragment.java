@@ -1,7 +1,15 @@
 package com.codez.collar.fragment;
 
+import android.Manifest;
 import android.app.ActivityOptions;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -9,7 +17,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.codez.collar.R;
 import com.codez.collar.activity.SearchActivity;
@@ -19,19 +26,23 @@ import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.FragmentHomeBinding;
 import com.codez.collar.event.GroupChangedEvent;
+import com.codez.collar.event.ToastEvent;
 import com.codez.collar.event.TranslucentMaskDisplayEvent;
 import com.codez.collar.event.UpdateUserInfoEvent;
 import com.codez.collar.manager.UserManager;
+import com.codez.collar.ui.AppDialog;
 import com.codez.collar.ui.GroupPopupWindow;
 import com.codez.collar.ui.HomeTitleTextView;
-import com.codez.collar.ui.zxing.CaptureActivity;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.T;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements View.OnClickListener {
@@ -42,6 +53,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
     private GroupChangedEvent mGroupChangedEvent = null;
     private String mCurGroupName;
     public static final String STATUS_GROUP_ALL = "全部";
+    public static final int REQUEST_CODE_ZXING = 2;
 
     private Fragment[] fragments;
     @Override
@@ -146,14 +158,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
                 startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             case R.id.iv_scan:
-                new IntentIntegrator(getActivity())
-                        .setCaptureActivity(CaptureActivity.class)
-                        .setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES)// 扫码的类型,可选：一维码，二维码，一/二维码
-                        .setPrompt("请对准二维码")// 设置提示语
-                        .setCameraId(0)// 选择摄像头,可使用前置或者后置
-                        .setBeepEnabled(false)// 是否开启声音,扫完码之后会"哔"的一声
-                        .setBarcodeImageEnabled(true)// 扫完码之后生成二维码的图片
-                        .initiateScan();// 初始化扫码
+                startActivityForResult(new Intent(getActivity(), CaptureActivity.class), REQUEST_CODE_ZXING);
                 break;
         }
     }
@@ -183,15 +188,57 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> implements V
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+        if (requestCode == REQUEST_CODE_ZXING){
+            //处理扫描结果（在界面上显示）
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    final String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Log.i(TAG, "result:" + result);
+                    final AppDialog dialog = new AppDialog(getActivity());
+                    dialog.setTitle("扫描结果")
+                            .setMessage(result)
+                            .setNegativeButton("继续扫描", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivityForResult(new Intent(getActivity(), CaptureActivity.class), REQUEST_CODE_ZXING);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("复制", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                                    cm.setPrimaryClip(ClipData.newPlainText("Label", result));
+                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("该段文字已复制到剪贴板"));
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    final AppDialog dialog = new AppDialog(getActivity());
+                    dialog.setTitle("扫描结果")
+                            .setMessage("扫描失败")
+                            .setNegativeButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("继续扫描", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivityForResult(new Intent(getActivity(), CaptureActivity.class), REQUEST_CODE_ZXING);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".base.BaseApp"
@@ -73,7 +75,6 @@
         <activity android:name=".activity.MentionActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.ThemeActivity" />
-        <activity android:name=".ui.zxing.CaptureActivity"/>
         <activity android:name=".activity.AboutActivity"/>
         <activity android:name=".activity.UserListActivity"/>
 

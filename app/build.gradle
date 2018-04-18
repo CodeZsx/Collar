@@ -70,7 +70,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
     compile 'org.greenrobot:eventbus:3.1.1'
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.liulishuo.filedownloader:library:1.7.2'
