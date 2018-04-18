@@ -87,15 +87,12 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
         //仅当当前主题色为白色时，修改状态栏字体颜色
         if (Config.getCachedTheme(this).equals("a") && !Config.getCachedNight(this)) {
             //api23以上，调用系统方法
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
             } else if (RomUtils.isMIUI() && MIUISetStatusBarLightMode(getWindow(), true)) {
 
             } else if (RomUtils.isFlyme() && FlymeSetStatusBarLightMode(getWindow(), true)) {
 
-            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
-                //之所以和>23的情况分开写，是为了解决：api23时的miui，无法使用SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//设置状态栏黑色字体
             }
         }else{
             //api23以上，调用系统方法
@@ -107,8 +104,6 @@ public abstract class BaseActivity<VD extends ViewDataBinding> extends AppCompat
 
             }
         }
-
-
     }
 
     protected void setStatusBarTranslucent() {
