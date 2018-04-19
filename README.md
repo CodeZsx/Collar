@@ -3,7 +3,13 @@
 **一款基于MaterialDesign设计，使用新浪微博开放的api接口，采用Retrofit+Rxjava+MVVM-databinding架构开发的一款新浪微博第三方客户端，特点：内容精简、操作简单、体验流畅、无广告。**
 
 
-主页模块
+快速下载体验
+-----
+
+[APK](https://github.com/CodeZsx/Collar/raw/master/upgrade/app-release.apk)
+
+
+项目截图
 -----
 
 ![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home-w270.png)
