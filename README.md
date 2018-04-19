@@ -6,9 +6,9 @@
 主页模块
 -----
 
-![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home.png)
-![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/msg.png)
-![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/mine.png)
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home-w270.png)
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/msg-w270.png)
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/mine-w270.png)
 
 ## License
     Copyright 2018 codezzz
