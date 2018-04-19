@@ -1,14 +1,9 @@
 package com.codez.collar.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.codez.collar.R;
 import com.codez.collar.base.BaseActivity;
@@ -22,6 +17,7 @@ import com.codez.collar.event.ToastEvent;
 import com.codez.collar.manager.UpgradeManager;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.service.UpgradeDownloadService;
+import com.codez.collar.ui.AppDialog;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.TimeUtil;
 
@@ -39,8 +35,8 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
     private static final String TAG = "SetupActivity";
     public static final String INTENT_SCREENN_NAME = "screen_name";
 
-    private AlertDialog mVersionDialog;
-    private AlertDialog mLoadingDialog;
+    private AppDialog mVersionDialog;
+    private AppDialog mLoadingDialog;
 
     @Override
     public int setContent() {
@@ -65,38 +61,18 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
         if (mVersionDialog != null) {
             mVersionDialog.dismiss();
         }
-        mLoadingDialog = new AlertDialog.Builder(this).create();
-        mLoadingDialog.show();
         DialogLoadingBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_loading, null, false);
-        View contentView = dialogBinding.getRoot();
-        contentView.setFocusable(true);
-        contentView.setFocusableInTouchMode(true);
-
-        Window window = mLoadingDialog.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.setContentView(contentView);
+        mLoadingDialog = new AppDialog(this);
+        mLoadingDialog.setView(dialogBinding.getRoot())
+                .show();
     }
 
     private void showVersionDialog(final UpgradeInfoBean info) {
         if (mLoadingDialog != null) {
             mLoadingDialog.dismiss();
         }
-        mVersionDialog = new AlertDialog.Builder(this).create();
-        mVersionDialog.show();
+        mVersionDialog = new AppDialog(this);
         DialogNewVersionBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_new_version, null, false);
-        View contentView = dialogBinding.getRoot();
-        contentView.setFocusable(true);
-        contentView.setFocusableInTouchMode(true);
-
-        Window window = mVersionDialog.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.setContentView(contentView);
-
         dialogBinding.tvTitle.setText("发现新版本：v" + info.getVersion_name());
         dialogBinding.tvInfo.setText("文件信息：" + info.getFile_size()+" [ "+ TimeUtil.getYMDXie(info.getRelease_time())+" ]");
         dialogBinding.tvContent.setText(info.getDescription());
@@ -123,6 +99,8 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
                 }
             }
         });
+        mVersionDialog.setView(dialogBinding.getRoot())
+                .show();
     }
 
 
