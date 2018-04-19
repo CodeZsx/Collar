@@ -13,9 +13,7 @@ import com.codez.collar.databinding.ActivitySetupBinding;
 import com.codez.collar.databinding.DialogLoadingBinding;
 import com.codez.collar.databinding.DialogNewVersionBinding;
 import com.codez.collar.event.NewAppVersionEvent;
-import com.codez.collar.event.ToastEvent;
 import com.codez.collar.manager.UpgradeManager;
-import com.codez.collar.net.HttpUtils;
 import com.codez.collar.service.UpgradeDownloadService;
 import com.codez.collar.ui.AppDialog;
 import com.codez.collar.utils.EventBusUtils;
@@ -25,10 +23,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements View.OnClickListener{
 
@@ -58,8 +52,8 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
     }
 
     private void showLoadingDialog() {
-        if (mVersionDialog != null) {
-            mVersionDialog.dismiss();
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
         }
         DialogLoadingBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_loading, null, false);
         mLoadingDialog = new AppDialog(this);
@@ -68,8 +62,8 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
     }
 
     private void showVersionDialog(final UpgradeInfoBean info) {
-        if (mLoadingDialog != null) {
-            mLoadingDialog.dismiss();
+        if (mVersionDialog != null) {
+            mVersionDialog.dismiss();
         }
         mVersionDialog = new AppDialog(this);
         DialogNewVersionBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_new_version, null, false);
@@ -113,49 +107,13 @@ public class SetupActivity extends BaseActivity<ActivitySetupBinding> implements
 
             case R.id.rl_upgrade:
                 showLoadingDialog();
-                HttpUtils.getInstance().getUpgradeService()
-                        .getUpgradeInfo()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<UpgradeInfoBean>() {
-                            @Override
-                            public void onCompleted() {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                if (mLoadingDialog != null) {
-                                    mLoadingDialog.dismiss();
-                                }
-                                Log.i(TAG, "onError:" + e.toString());
-                                EventBusUtils.sendEvent(ToastEvent.newToastEvent("未知错误，操作失败"));
-                            }
-
-                            @Override
-                            public void onNext(UpgradeInfoBean bean) {
-
-                                if (bean == null) {
-                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("未知错误，操作失败"));
-                                    return;
-                                }
-                                Log.i(TAG, "info:" + bean.toString());
-                                if (bean.getVersion_name().compareTo(UpgradeManager.getInstance().getAppVersionName())<=0) {
-                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("已是最新版本"));
-                                    return;
-                                } else {
-                                    EventBusUtils.sendEvent(new NewAppVersionEvent(bean, NewAppVersionEvent.MANUAL));
-                                    return;
-                                }
-                            }
-                        });
+                UpgradeManager.getInstance().startCheckUpgradeTask(true, mLoadingDialog);
                 break;
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewAppVersionEvent(NewAppVersionEvent event) {
         showVersionDialog(event.getInfo());
-        //TODO:load local file or download from server
     }
 
     @Override
