@@ -43,7 +43,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textColor="@color/colorTextLevel1"
-                    android:textSize="18sp"
+                    android:textSize="19sp"
                     android:text="dialog title"/>
                 <TextView
                     android:id="@+id/tv_message"
@@ -100,11 +100,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/btn_dialog_positive"
+                style="?android:attr/borderlessButtonStyle"
                 android:visibility="gone"
                 android:gravity="center"
                 android:textColor="@color/colorHighlight"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="OK" />
 
             <Button
@@ -112,10 +112,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/btn_p"
+                style="?android:attr/borderlessButtonStyle"
                 android:visibility="gone"
                 android:gravity="center"
                 android:textColor="@color/colorHighlight"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="CANCEL" />
 
         </RelativeLayout>
