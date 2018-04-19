@@ -7,6 +7,8 @@
 -----
 
 ![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/home.png)
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/msg.png)
+![enter image description here](https://github.com/CodeZsx/Collar/blob/master/ScreenShot/mine.png)
 
 ## License
     Copyright 2018 codezzz
