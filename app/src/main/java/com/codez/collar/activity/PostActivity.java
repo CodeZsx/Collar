@@ -30,11 +30,12 @@ import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class PostActivity extends BaseActivity<ActivityPostBinding> implements View.OnClickListener{
@@ -233,17 +234,15 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                     mBinding.tvAddress.setSelected(false);
                 }else {
                     //异步执行获取定位
-                    Observable.just("")
-                            .map(new Func1<String, String>() {
-                                @Override
-                                public String call(String s) {
-                                    startLocation();
-                                    return null;
-                                }
-                            })
+                    Observable.timer(0, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe();
+                            .subscribe(new Action1<Long>() {
+                                @Override
+                                public void call(Long aLong) {
+                                    startLocation();
+                                }
+                            });
                 }
                 break;
             case R.id.iv_emoj:
@@ -312,6 +311,7 @@ public class PostActivity extends BaseActivity<ActivityPostBinding> implements V
                         Log.e("AmapError","location Error, ErrCode:"
                                 + aMapLocation.getErrorCode() + ", errInfo:"
                                 + aMapLocation.getErrorInfo());
+                        mBinding.tvAddress.setText("定位失败，请重试");
                     }
                 }
             }
