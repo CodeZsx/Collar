@@ -1,0 +1,185 @@
+package com.codez.collar.db;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteFullException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.codez.collar.auth.AccessTokenKeeper;
+import com.codez.collar.base.BaseApp;
+
+/**
+ * Created by codez on 2018/4/19.
+ * Description:
+ */
+
+public class DataBaseHelper extends SQLiteOpenHelper{
+    private static final String TAG = "DataBaseHelper";
+    private static String mDBName = "";
+    private static int mDBVersion = -1;
+    private static DataBaseHelper instance = null;
+
+    public synchronized static DataBaseHelper getInstance(String name, int ver) {
+        if (name == null || TextUtils.isEmpty(name) || ver <= 0) {
+            Log.w(TAG, "db name " + name + ", ver " + ver + ", invalid!");
+            return null;
+        }
+        Log.i(TAG, "database name is : " + name);
+        if (instance == null) {
+            mDBName = name;
+            mDBVersion = ver;
+            instance = new DataBaseHelper();
+            return instance;
+        } else {
+            if (name.equals(mDBName)) {
+                //没有切换用户，返回原有的实例
+                Log.i(TAG, "DataBaseHelper mDBName is not change:" + mDBName);
+                mDBName = name;
+                mDBVersion = ver;
+                return instance;
+            } else {
+                //用户切换，返回新的实例
+                Log.i(TAG, "DataBaseHelper mDBName is changed, oldDBName:" + mDBName + ",new newDBName:" + name);
+                mDBName = name;
+                mDBVersion = ver;
+                instance = new DataBaseHelper();
+                return instance;
+            }
+        }
+    }
+
+    public static DataBaseHelper getDataBaseHelper() {
+        Log.w(TAG, "DataBaseHelper is null!!!");
+        if (AccessTokenKeeper.getInstance() == null) {
+            //未初始化完成
+            new Exception("AccessTokenKeeper.getInstance() 未初始化完成").printStackTrace();
+            return null;
+        }
+        String uid = AccessTokenKeeper.getInstance().getUid();
+        DataBaseHelper helper = DataBaseHelper.getInstance(uid, DBConstants.DB_VERSION);
+        if (helper == null) {
+            new Exception("we get database hepler is null").printStackTrace();
+        }
+        return helper;
+    }
+    public static void destroy(){
+        if (instance != null){
+            instance.close();
+        }
+        instance = null;
+    }
+    /**
+     * 创建一个保存简单信息的表，该表只有两个列，1：key;2:value
+     */
+    private static final String CREATE_CONFIG_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_CONFIG
+            + " ("
+            + DBConstants.CONFIG_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + DBConstants.CONFIG_COLUMN_KEY + " TEXT UNIQUE DEFAULT '' ,"
+            + DBConstants.CONFIG_COLUMN_VALUE + " TEXT DEFAULT '' "
+            + ");";
+
+    public DataBaseHelper() {
+        super(BaseApp.sContext, mDBName, null, mDBVersion);
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_CONFIG_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion > newVersion) {
+            Log.w(TAG, "error database upgrade, new ver:" + newVersion + ", old ver:" + oldVersion);
+            return;
+        }
+        onCreate(db);
+    }
+    public boolean isExistsBySQL(String sql, String[] selectionArgs) {
+        SQLiteDatabase dataBase = null;
+        Cursor cursor = null;
+        try {
+            dataBase = getReadableDatabase();
+            cursor = dataBase.rawQuery(sql, selectionArgs);
+            if (cursor.moveToFirst()) {
+                boolean isExist = cursor.getInt(0) > 0;
+                cursor.close();
+                return isExist;
+            } else {
+                cursor.close();
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return false;
+    }
+    public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
+        SQLiteDatabase dataBase;
+        try {
+            dataBase = getWritableDatabase();
+            return dataBase.update(table, values, whereClause, whereArgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    public long insert(String table, ContentValues content){
+        SQLiteDatabase dataBase = null;
+        try {
+            dataBase = getWritableDatabase();
+            return dataBase.insertWithOnConflict(table, null, content,SQLiteDatabase.CONFLICT_IGNORE);
+        }catch(SQLiteFullException e)
+        {
+            Log.w(TAG, "insert message encounter exception,in SQLiteFullException branch:"+e.getMessage());
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            Log.w(TAG, "insert message encounter exception,in Exception branch:"+e.getMessage());
+
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    public  boolean isExistsByField(String table, String field, String value) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT COUNT(*) FROM ").append(table).append(" WHERE ")
+                .append(field).append(" =?");
+        try {
+            return isExistsBySQL(sql.toString(), new String[] { value });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public <T> T queryForObject(RowMapper<T> rowMapper, String sql, String[] args) {
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+        T object = null;
+        try {
+            database = getReadableDatabase();
+            cursor = database.rawQuery(sql, args);
+            if (cursor.moveToFirst()) {
+                object = rowMapper.mapRow(cursor, cursor.getCount());
+            }
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return object;
+    }
+    public interface RowMapper<T> {
+        T mapRow(Cursor cursor, int index);
+    }
+}
