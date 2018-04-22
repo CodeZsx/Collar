@@ -1,7 +1,6 @@
 package com.codez.collar;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -15,7 +14,6 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.UpgradeInfoBean;
 import com.codez.collar.databinding.ActivityMainBinding;
-import com.codez.collar.databinding.DialogNewVersionBinding;
 import com.codez.collar.event.NewAppVersionEvent;
 import com.codez.collar.event.TranslucentMaskDisplayEvent;
 import com.codez.collar.event.UnreadNoticeEvent;
@@ -23,15 +21,11 @@ import com.codez.collar.fragment.HomeFragment;
 import com.codez.collar.fragment.MineFragment;
 import com.codez.collar.fragment.MsgFragment;
 import com.codez.collar.manager.UpgradeManager;
-import com.codez.collar.service.UpgradeDownloadService;
 import com.codez.collar.ui.AppDialog;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.TimeUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.File;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements View.OnClickListener{
 
@@ -107,36 +101,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         curIndex = index;
     }
     private void showVersionDialog(final UpgradeInfoBean info) {
-        final AppDialog verDialog = new AppDialog(this);
-        DialogNewVersionBinding dialogBinding = DataBindingUtil.inflate(this.getLayoutInflater(), R.layout.dialog_new_version, null, false);
-        dialogBinding.tvTitle.setText("发现新版本：v" + info.getVersion_name());
-        dialogBinding.tvInfo.setText("文件信息：" + info.getFile_size()+" [ "+ TimeUtil.getYMDXie(info.getRelease_time())+" ]");
-        dialogBinding.tvContent.setText(info.getDescription());
-        dialogBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verDialog.dismiss();
-            }
-        });
-        dialogBinding.btnUpgrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verDialog.dismiss();
-                String path = UpgradeManager.getInstance().getApkPath(info.getVersion_name());
-                File file = new File(path);
-                //安装包存在，直接安装
-                if (file.exists()) {
-                    Log.i(TAG, "the apk is exists");
-                    UpgradeManager.getInstance().installApk(MainActivity.this, path);
-                }else{
-                    //启动apk下载服务
-                    startService(new Intent(MainActivity.this, UpgradeDownloadService.class)
-                            .putExtra(UpgradeDownloadService.INTENT_UPGRADE_INFO, info));
-                }
-            }
-        });
-        verDialog.setView(dialogBinding.getRoot())
-                .show();
+        final AppDialog verDialog = UpgradeManager.getInstance().getNewVersionDialog(this, info);
+        verDialog.show();
     }
 
     @Override
