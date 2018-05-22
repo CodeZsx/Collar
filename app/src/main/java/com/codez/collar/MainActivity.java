@@ -128,6 +128,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 break;
             case R.id.btn_post_text:
                 startActivity(new Intent(this, PostActivity.class));
+                mBinding.menuFloating.close(false);
                 break;
             case R.id.btn_post_image:
                 break;
