@@ -25,7 +25,9 @@ import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.bean.AttitudeResultBean;
 import com.codez.collar.bean.FavoriteBean;
+import com.codez.collar.bean.FriendshipsShowResultBean;
 import com.codez.collar.bean.StatusBean;
+import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ItemStatusBinding;
 import com.codez.collar.event.ToastEvent;
 import com.codez.collar.manager.AttitudesManager;
@@ -86,7 +88,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
 
     @Override
     public void onBindViewHolder(BindingViewHolder holder, int position) {
-        holder.bindItem(list.get(position));
+        holder.bindItem(list.get(position), position);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             super(binding.llRoot);
             this.mBinding = binding;
         }
-        private void bindItem(final StatusBean bean){
+        private void bindItem(final StatusBean bean, final int position){
             mBinding.setStatus(bean);
 
             //微博正文
@@ -282,8 +284,14 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             dialog_more.dismiss();
                         }
                     });
-                    if (mType == TYPE_OWN) {
-                        dialog_more.findViewById(R.id.tv_follow).setVisibility(View.GONE);
+                    UserBean user = bean.getUser();
+                    String uid = null;
+                    if (user != null) {
+                        uid = user.getId();
+                    }
+                    final TextView tvFollow = (TextView) dialog_more.findViewById(R.id.tv_follow);
+                    if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
+                        tvFollow.setVisibility(View.GONE);
                         dialog_more.findViewById(R.id.tv_destroy).setVisibility(View.VISIBLE);
                         dialog_more.findViewById(R.id.tv_destroy).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -306,6 +314,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                             @Override
                                             public void onNext(StatusBean bean) {
                                                 T.s(mContext, "删除微博成功");
+                                                list.remove(position);
                                                 notifyDataSetChanged();
                                             }
                                         });
@@ -313,10 +322,80 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             }
                         });
                     }else{
-                        dialog_more.findViewById(R.id.tv_follow).setOnClickListener(new View.OnClickListener() {
+                        //获取登录用户和此用户的关系
+                        HttpUtils.getInstance().getFriendshipService()
+                                .showFriendships(AccessTokenKeeper.getInstance().getUid(), uid)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<FriendshipsShowResultBean>() {
+                                    @Override
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+
+                                    }
+
+                                    @Override
+                                    public void onNext(FriendshipsShowResultBean friendshipsShowResultBean) {
+                                        if (friendshipsShowResultBean.getSource().isFollowing()) {
+                                            tvFollow.setText("已关注");
+                                            tvFollow.setSelected(true);
+                                        }else{
+                                            tvFollow.setText("关注");
+                                            tvFollow.setSelected(false);
+                                        }
+                                    }
+                                });
+                        final String finalUid = uid;
+                        tvFollow.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                T.s(mContext,"TODO 关注");
+                                if (tvFollow.isSelected()) {
+                                    HttpUtils.getInstance().getFriendshipService()
+                                            .destroyFriendships(AccessTokenKeeper.getInstance().getAccessToken(), finalUid)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Observer<FavoriteBean>() {
+                                                @Override
+                                                public void onCompleted() {
+
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("操作失败"));
+                                                }
+
+                                                @Override
+                                                public void onNext(FavoriteBean favoriteBean) {
+                                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("取消关注"));
+                                                }
+                                            });
+                                }else{//未关注
+                                    HttpUtils.getInstance().getFriendshipService()
+                                            .createFriendships(AccessTokenKeeper.getInstance().getAccessToken(), finalUid)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Observer<FavoriteBean>() {
+                                                @Override
+                                                public void onCompleted() {
+
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable e) {
+                                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("操作失败"));
+                                                }
+
+                                                @Override
+                                                public void onNext(FavoriteBean favoriteBean) {
+                                                    EventBusUtils.sendEvent(ToastEvent.newToastEvent("关注成功"));
+                                                }
+                                            });
+                                }
                                 dialog_more.dismiss();
                             }
                         });

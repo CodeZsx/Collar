@@ -1,5 +1,7 @@
 package com.codez.collar.activity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -11,9 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.codez.collar.R;
 import com.codez.collar.adapter.UserAlbumAdapter;
@@ -21,7 +25,10 @@ import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseActivity;
 import com.codez.collar.bean.AttitudeResultBean;
 import com.codez.collar.bean.CommentBean;
+import com.codez.collar.bean.FavoriteBean;
+import com.codez.collar.bean.FriendshipsShowResultBean;
 import com.codez.collar.bean.StatusBean;
+import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityStatusDetailBinding;
 import com.codez.collar.event.ToastEvent;
 import com.codez.collar.fragment.CommentListFragment;
@@ -32,6 +39,7 @@ import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.EventBusUtils;
 import com.codez.collar.utils.JsonUtil;
+import com.codez.collar.utils.ScreenUtil;
 import com.codez.collar.utils.T;
 import com.codez.collar.utils.Tools;
 
@@ -54,6 +62,8 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
     private boolean isFromComment;
 
     private StatusBean mBean = null;
+    public static final String BTN_FOLLOW = "关注";
+    public static final String BTN_FOLLOWING = "已关注";
 
 
     @Override
@@ -91,17 +101,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                             this, mBinding.retweetedContent));
             //转发微博体的图片
             setStatusImage(mBinding.retweetedRecyclerView, mBean.getRetweeted_status().getPic_urls());
-
-            mBinding.llRetweeted.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, mBean);
-                    StatusDetailActivity.this.startActivity(
-                            new Intent(StatusDetailActivity.this, StatusDetailActivity.class)
-                            .putExtras(mBundle));
-                }
-            });
+            mBinding.llRetweeted.setOnClickListener(this);
         }
 
         //点赞按钮状态
@@ -157,7 +157,6 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
         mBinding.etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -189,6 +188,8 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
         mBinding.blockComment.setOnClickListener(this);
         mBinding.blockRepost.setOnClickListener(this);
         mBinding.ivCommit.setOnClickListener(this);
+        mBinding.ivHead.setOnClickListener(this);
+        mBinding.ivMoreOption.setOnClickListener(this);
 
         reloadData();
     }
@@ -358,6 +359,209 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                     createComment();
                 }
                 break;
+            case R.id.iv_head:
+                startActivity(new Intent(StatusDetailActivity.this, UserActivity.class)
+                        .putExtra(UserActivity.INTENT_KEY_UID, mBean.getId()));
+                break;
+            case R.id.iv_more_option:
+                //背景虚化
+                setBgAlpha(0.5f);
+                final Dialog dialog_more = new Dialog(StatusDetailActivity.this,R.style.DialogStatement);
+                dialog_more.setContentView(LayoutInflater.from(StatusDetailActivity.this)
+                        .inflate(R.layout.dialog_status_more, null));
+                dialog_more.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        //背景虚化恢复
+                        setBgAlpha(1.0f);
+                    }
+                });
+                WindowManager.LayoutParams param = dialog_more.getWindow().getAttributes(); // 获取对话框当前的参数值
+                param.width = (int) (ScreenUtil.getScreenWidth(StatusDetailActivity.this) * 0.8); // 宽度设置为屏幕的
+                dialog_more.getWindow().setAttributes(param);
+                dialog_more.getWindow().setWindowAnimations(R.style.SelectPicStyle);//设置进出动画
+                final TextView tv_favorite = (TextView) dialog_more.findViewById(R.id.tv_favorite);
+                tv_favorite.setText((mBean.isFavorited() ? "取消" : "")+ "收藏");
+                dialog_more.findViewById(R.id.tv_favorite).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mBean.isFavorited()) {
+                            HttpUtils.getInstance().getFavoriteService()
+                                    .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<FavoriteBean>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            T.s(StatusDetailActivity.this,"操作失败");
+                                            Log.e(TAG, "onError:"+e.toString());
+                                        }
+
+                                        @Override
+                                        public void onNext(FavoriteBean resultBean) {
+                                            T.s(StatusDetailActivity.this, "已取消收藏");
+                                            mBean.setFavorited(false);
+                                        }
+                                    });
+                        }else{
+                            HttpUtils.getInstance().getFavoriteService()
+                                    .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<FavoriteBean>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            T.s(StatusDetailActivity.this,"操作失败");
+                                            Log.e(TAG, "onError:"+e.toString());
+                                        }
+
+                                        @Override
+                                        public void onNext(FavoriteBean resultBean) {
+                                            T.s(StatusDetailActivity.this, "已收藏");
+                                            mBean.setFavorited(true);
+                                        }
+                                    });
+                        }
+
+                        dialog_more.dismiss();
+                    }
+                });
+                UserBean user = mBean.getUser();
+                String uid = null;
+                if (user != null) {
+                    uid = user.getId();
+                }
+                final TextView tvFollow = (TextView) dialog_more.findViewById(R.id.tv_follow);
+                if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
+                    tvFollow.setVisibility(View.GONE);
+                    dialog_more.findViewById(R.id.tv_destroy).setVisibility(View.VISIBLE);
+                    dialog_more.findViewById(R.id.tv_destroy).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            HttpUtils.getInstance().getWeiboService()
+                                    .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<StatusBean>() {
+                                        @Override
+                                        public void onCompleted() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            T.s(StatusDetailActivity.this, "操作失败");
+                                        }
+
+                                        @Override
+                                        public void onNext(StatusBean bean) {
+                                            T.s(StatusDetailActivity.this, "删除微博成功");
+                                            StatusDetailActivity.this.finish();
+                                        }
+                                    });
+                            dialog_more.dismiss();
+                        }
+                    });
+                }else{
+                    //获取登录用户和此用户的关系
+                    HttpUtils.getInstance().getFriendshipService()
+                            .showFriendships(AccessTokenKeeper.getInstance().getUid(), uid)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<FriendshipsShowResultBean>() {
+                                @Override
+                                public void onCompleted() {
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onNext(FriendshipsShowResultBean friendshipsShowResultBean) {
+                                    if (friendshipsShowResultBean.getSource().isFollowing()) {
+                                        tvFollow.setText("已关注");
+                                        tvFollow.setSelected(true);
+                                    }else{
+                                        tvFollow.setText("关注");
+                                        tvFollow.setSelected(false);
+                                    }
+                                }
+                            });
+                    final String finalUid = uid;
+                    tvFollow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (tvFollow.isSelected()) {
+                                HttpUtils.getInstance().getFriendshipService()
+                                        .destroyFriendships(AccessTokenKeeper.getInstance().getAccessToken(), finalUid)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Observer<FavoriteBean>() {
+                                            @Override
+                                            public void onCompleted() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable e) {
+                                                EventBusUtils.sendEvent(ToastEvent.newToastEvent("操作失败"));
+                                            }
+
+                                            @Override
+                                            public void onNext(FavoriteBean favoriteBean) {
+                                                EventBusUtils.sendEvent(ToastEvent.newToastEvent("取消关注"));
+                                            }
+                                        });
+                            }else{//未关注
+                                HttpUtils.getInstance().getFriendshipService()
+                                        .createFriendships(AccessTokenKeeper.getInstance().getAccessToken(), finalUid)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Observer<FavoriteBean>() {
+                                            @Override
+                                            public void onCompleted() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable e) {
+                                                EventBusUtils.sendEvent(ToastEvent.newToastEvent("操作失败"));
+                                            }
+
+                                            @Override
+                                            public void onNext(FavoriteBean favoriteBean) {
+                                                EventBusUtils.sendEvent(ToastEvent.newToastEvent("关注成功"));
+                                            }
+                                        });
+                            }
+                            dialog_more.dismiss();
+                        }
+                    });
+                }
+                dialog_more.show();
+                break;
+            case R.id.ll_retweeted:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(StatusBean.INTENT_SERIALIZABLE, mBean.getRetweeted_status());
+                StatusDetailActivity.this.startActivity(
+                        new Intent(StatusDetailActivity.this, StatusDetailActivity.class)
+                                .putExtras(bundle));
+                break;
+            default:
+                    break;
         }
     }
 
