@@ -231,6 +231,7 @@
                             android:id="@+id/item_like"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_frag_mine_item"
+                            android:visibility="gone"
                             android:background="@drawable/layout_item_radius"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:paddingLeft="@dimen/fab_margin"
@@ -254,6 +255,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1px"
+                            android:visibility="gone"
                             android:layout_marginLeft="@dimen/fab_margin"
                             android:layout_marginRight="@dimen/fab_margin"
                             android:background="@color/colorPatingLine"/>
