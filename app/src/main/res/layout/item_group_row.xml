@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="group"
+            type="com.codez.collar.bean.Group" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_item"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/colorItemNormal"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/fab_margin"
+            android:text="@{group.name}"
+            android:textColor="@color/colorTextLevel1"
+            android:textSize="14sp" />
+    </LinearLayout>
+</layout>
