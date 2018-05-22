@@ -4,8 +4,10 @@ import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.FriendsIdsResultBean;
 import com.codez.collar.bean.FriendshipsResultBean;
 import com.codez.collar.bean.FriendshipsShowResultBean;
+import com.codez.collar.bean.Group;
 import com.codez.collar.bean.GroupsResult;
 import com.codez.collar.bean.StatusResultBean;
+import com.codez.collar.bean.UsersResultBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -35,6 +37,12 @@ public interface FriendshipService {
 
     @GET("friendships/groups/timeline.json")
     Observable<StatusResultBean> getGroupsStatus(@Query("list_id") String list_id, @Query("page") int page);
+
+    @GET("friendships/groups/members.json")
+    Observable<UsersResultBean> getGroupsMember(@Query("list_id") String list_id);
+
+    @GET("friendships/groups/members/destory.json")
+    Observable<Group> destoryGroupsMember(@Query("list_id") String list_id, @Query("uid") String uid);
 
     @GET("friendships/show.json")
     Observable<FriendshipsShowResultBean> showFriendships(@Query("source_id") String source_id, @Query("target_id") String target_id);

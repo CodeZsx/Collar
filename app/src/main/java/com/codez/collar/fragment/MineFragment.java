@@ -14,6 +14,7 @@ import com.codez.collar.R;
 import com.codez.collar.activity.AboutActivity;
 import com.codez.collar.activity.FavoriteActivity;
 import com.codez.collar.activity.FriendshipActivity;
+import com.codez.collar.activity.GroupsActivity;
 import com.codez.collar.activity.SetupActivity;
 import com.codez.collar.activity.ThemeActivity;
 import com.codez.collar.activity.UserActivity;
@@ -164,6 +165,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
             case R.id.item_like:
                 break;
             case R.id.item_group:
+                startActivity(new Intent(getActivity(), GroupsActivity.class));
                 break;
             case R.id.item_theme:
                 startActivity(new Intent(getActivity(), ThemeActivity.class));
