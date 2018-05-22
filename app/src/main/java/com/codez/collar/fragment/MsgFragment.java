@@ -13,7 +13,6 @@ import com.codez.collar.databinding.FragmentMsgBinding;
 import com.codez.collar.event.UnreadNoticeEvent;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.T;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,7 +60,7 @@ public class MsgFragment extends BaseFragment<FragmentMsgBinding> implements Vie
                     public void onError(Throwable e) {
                         mBinding.swipeRefreshLayout.setRefreshing(false);
                         mBinding.swipeRefreshLayout.setEnabled(false);
-                        T.s(getContext(),"数据加载失败");
+//                        T.s(getContext(),"数据加载失败");
                         Log.e(TAG,"onError:"+e.toString());
                     }
 
