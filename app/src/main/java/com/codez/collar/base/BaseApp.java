@@ -57,6 +57,12 @@ public class BaseApp extends Application {
         appDebug = BuildConfig.DEBUG;
     }
 
+    public static void closeAllActivity(){
+        for (Activity activity : sActivityList) {
+            activity.finish();
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
