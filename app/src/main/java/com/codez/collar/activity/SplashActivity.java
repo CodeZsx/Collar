@@ -25,11 +25,11 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding> {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (!isTaskRoot()) {
             finish();
             return;
         }
-        super.onCreate(savedInstanceState);
     }
 
     @Override
