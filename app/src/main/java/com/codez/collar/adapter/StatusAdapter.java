@@ -23,6 +23,7 @@ import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
+import com.codez.collar.base.BaseApp;
 import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.FriendshipsShowResultBean;
 import com.codez.collar.bean.StatusBean;
@@ -536,26 +537,28 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             recyclerView.setNestedScrollingEnabled(false);
             UserAlbumAdapter mAdapter = new UserAlbumAdapter(mContext);
             recyclerView.setAdapter(mAdapter);
-            recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-                int itemPadding = DensityUtil.dp2px(mContext, 4);
-
-                @Override
-                public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-                    super.onDraw(c, parent, state);
-                }
-
-                @Override
-                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                    outRect.bottom = itemPadding;
-                    outRect.left = itemPadding;
-                    outRect.right = itemPadding;
-                    outRect.top = itemPadding;
-                }
-            });
+            recyclerView.removeItemDecoration(itemDecoration);
+            recyclerView.addItemDecoration(itemDecoration);
             mAdapter.addAll(pic_urls);
             mAdapter.notifyDataSetChanged();
         }
     }
+    RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration() {
+        int itemPadding = DensityUtil.dp2px(BaseApp.sContext, 4);
+
+        @Override
+        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            super.onDraw(c, parent, state);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.bottom = itemPadding;
+            outRect.left = itemPadding;
+            outRect.right = itemPadding;
+            outRect.top = itemPadding;
+        }
+    };
 
     public int getType() {
         return mType;
