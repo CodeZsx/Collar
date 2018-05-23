@@ -54,8 +54,15 @@ public class CoreService extends Service{
         filter.addAction(NET_CHANGED);
         registerReceiver(mCoreServiceReceiver, filter);
         EventBusUtils.register(this);
-        checkIsLogged();
 
+    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "onStartCommand");
+        checkIsLogged();
+        return super.onStartCommand(intent, flags, startId);
     }
 
     private void checkIsLogged() {

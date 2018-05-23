@@ -199,6 +199,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                         @Override
                         public void onNext(TokenResultBean bean) {
                             Log.i(TAG, "onNext:get token success");
+                            if ("5538639136".equals(bean.getUid())) {
+                                saveDefaultAccount();
+                                return;
+                            }
                             AccessTokenManager accessTokenManager = new AccessTokenManager();
                             accessTokenManager.addToken(LoginActivity.this, bean.getAccess_token(), bean.getExpires_in(), null, bean.getUid());
                             hideLoadingDialog();
@@ -212,23 +216,26 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                         }
                     });
         }else{
-            //置入固定session
-            String accessToken = "2.00SDZpCG06XASO93f07e6842I6NGmC";
-            String expiresIn = "4668503041464";
-            String refreshToken = "2.00SDZpCG06XASObf188f5bfakyiyZC";
-            String uid = "5538639136";
-
-            AccessTokenManager accessTokenManager = new AccessTokenManager();
-            accessTokenManager.addToken(this, accessToken, expiresIn, refreshToken, uid);
-
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            if (isComeFromAccountAty) {
-                intent.putExtra("comeFromAccoutActivity", true);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            }
-            startActivity(intent);
-            finish();
+            saveDefaultAccount();
         }
+    }
+    private void saveDefaultAccount() {
+        //置入固定session
+        String accessToken = "2.00SDZpCG06XASO93f07e6842I6NGmC";
+        String expiresIn = "4668503041464";
+        String refreshToken = "2.00SDZpCG06XASObf188f5bfakyiyZC";
+        String uid = "5538639136";
+
+        AccessTokenManager accessTokenManager = new AccessTokenManager();
+        accessTokenManager.addToken(this, accessToken, expiresIn, refreshToken, uid);
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        if (isComeFromAccountAty) {
+            intent.putExtra("comeFromAccoutActivity", true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        startActivity(intent);
+        finish();
     }
 
     private void showLoadingDialog() {

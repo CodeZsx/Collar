@@ -2,8 +2,6 @@ package com.codez.collar.adapter;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -14,12 +12,12 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 
 import com.codez.collar.R;
-import com.codez.collar.activity.SplashActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseApp;
 import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ItemAccountBinding;
+import com.codez.collar.service.CoreService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,13 +83,13 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.BindingV
                         //切换token
                         AccessTokenManager accessTokenManager = new AccessTokenManager();
                         accessTokenManager.switchToken(mContext, bean.getIdstr());
+                        //重启service
+                        mContext.startService(new Intent(mContext, CoreService.class));
                         //重启应用
-                        Intent mStartActivity = new Intent(mContext, SplashActivity.class);
-                        int mPendingIntentId = 123456;
-                        PendingIntent mPendingIntent = PendingIntent.getActivity(mContext, mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                        AlarmManager mgr = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
-                        mgr.setExact(AlarmManager.RTC, System.currentTimeMillis() + 10, mPendingIntent);
-                        BaseApp.closeAllActivity();
+                        final Intent intent = BaseApp.sContext.getPackageManager()
+                                .getLaunchIntentForPackage(BaseApp.getAppPackageName());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        BaseApp.sContext.startActivity(intent);
                     }
                 }
             });
