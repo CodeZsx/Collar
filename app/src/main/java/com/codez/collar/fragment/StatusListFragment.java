@@ -12,6 +12,7 @@ import android.view.View;
 import com.codez.collar.Config;
 import com.codez.collar.R;
 import com.codez.collar.adapter.StatusAdapter;
+import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.Group;
 import com.codez.collar.bean.StatusResultBean;
@@ -244,7 +245,9 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
             case VALUE_USER:
             default:
-                mStatusAdapter.setType(StatusAdapter.TYPE_OWN);
+                if (mUid != null && mUid.equals(AccessTokenKeeper.getInstance().getUid())){
+                    mStatusAdapter.setType(StatusAdapter.TYPE_OWN);
+                }
                 HttpUtils.getInstance().getWeiboService()
                         .getUserStatus(mUid, mScreenName,curPage++)
                         .subscribeOn(Schedulers.io())
@@ -301,6 +304,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
     private void handleError(Throwable e) {
         Log.e(TAG, "onError:" + e.toString());
+        mBinding.swipeRefreshLayout.setRefreshing(false);
         EventBusUtils.sendEvent(ToastEvent.newToastEvent("请求数据失败"));
     }
 
