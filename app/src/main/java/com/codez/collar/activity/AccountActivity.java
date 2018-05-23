@@ -17,6 +17,7 @@ import com.codez.collar.bean.UserBean;
 import com.codez.collar.databinding.ActivityAccountBinding;
 import com.codez.collar.net.HttpUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observer;
@@ -52,6 +53,7 @@ public class AccountActivity extends BaseActivity<ActivityAccountBinding> implem
     }
 
     private void loadData() {
+        mAdapter.setList(new ArrayList<UserBean>());
         if (!AccessTokenKeeper.getInstance().readAccessToken().isSessionsValid()) {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
