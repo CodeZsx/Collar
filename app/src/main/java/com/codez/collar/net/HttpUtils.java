@@ -76,6 +76,14 @@ public class HttpUtils {
         return getBaseRetrofit(Constants.UPGRADE_URL).create(UpgradeService.class);
     }
 
+    public AccountService getAccountService() {
+        return getBaseRetrofit(Constants.ACCOUNT_URL).create(AccountService.class);
+    }
+
+    public TokenService getTokenService() {
+        return getBaseRetrofit(Constants.BASE_URL).create(TokenService.class);
+    }
+
     private Retrofit getRetrofit(String baseUrl) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
