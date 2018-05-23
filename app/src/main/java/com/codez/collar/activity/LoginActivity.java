@@ -16,10 +16,12 @@ import com.codez.collar.MainActivity;
 import com.codez.collar.R;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseActivity;
+import com.codez.collar.base.BaseApp;
 import com.codez.collar.bean.TokenResultBean;
 import com.codez.collar.databinding.ActivityLoginBinding;
 import com.codez.collar.databinding.DialogLoadingBinding;
 import com.codez.collar.net.HttpUtils;
+import com.codez.collar.service.CoreService;
 import com.codez.collar.ui.AppDialog;
 
 import rx.Observer;
@@ -28,6 +30,7 @@ import rx.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private static final String TAG = "LoginActivity";
+    public static final String INTENT_COME_FROM = "comeFromAccoutActivity";
     //response_type=token
     private String authUrlByToken = "https://open.weibo.cn/oauth2/authorize?"
             + "client_id=" + Config.APP_KEY
@@ -144,7 +147,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //            intent.putExtra("fisrtstart", true);
             if (isComeFromAccountAty) {
-                intent.putExtra("comeFromAccoutActivity", true);
+                intent.putExtra(INTENT_COME_FROM, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             startActivity(intent);
@@ -161,7 +164,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             if (isComeFromAccountAty) {
-                intent.putExtra("comeFromAccoutActivity", true);
+                intent.putExtra(INTENT_COME_FROM, true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             }
             startActivity(intent);
@@ -208,7 +211,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                             hideLoadingDialog();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             if (isComeFromAccountAty) {
-                                intent.putExtra("comeFromAccoutActivity", true);
+                                intent.putExtra(INTENT_COME_FROM, true);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             }
                             startActivity(intent);
@@ -230,12 +233,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         accessTokenManager.addToken(this, accessToken, expiresIn, refreshToken, uid);
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        if (isComeFromAccountAty) {
-            intent.putExtra("comeFromAccoutActivity", true);
+        if (!isComeFromAccountAty) {
+            startActivity(intent);
+            finish();
+        }else{
+            intent.putExtra(INTENT_COME_FROM, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //重启service
+            startService(new Intent(this, CoreService.class));
+            //重启应用
+            intent = BaseApp.sContext.getPackageManager()
+                    .getLaunchIntentForPackage(BaseApp.getAppPackageName());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            BaseApp.sContext.startActivity(intent);
         }
-        startActivity(intent);
-        finish();
     }
 
     private void showLoadingDialog() {

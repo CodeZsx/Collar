@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 
 import com.codez.collar.R;
+import com.codez.collar.activity.LoginActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.auth.AccessTokenManager;
 import com.codez.collar.base.BaseApp;
@@ -71,6 +72,12 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.BindingV
             //若当前是最后一个账号item，则显示添加账号item
             if (position == list.size() - 1) {
                 mBinding.rlAdd.setVisibility(View.VISIBLE);
+                mBinding.rlAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                    }
+                });
             }
             //若当前加载的账号即为登录账号，则设置选中状态
             if (AccessTokenKeeper.getInstance().getUid().equals(bean.getId())){

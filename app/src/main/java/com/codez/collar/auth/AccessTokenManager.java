@@ -13,13 +13,13 @@ import com.google.gson.Gson;
  */
 
 public class AccessTokenManager {
-    private static final String TOKENLIST_CACHE_DIR = "/collar/";
+    private static final String TOKENLIST_CACHE_DIR = SDCardUtil.getAppCachePath()+"/";
     private static final String TOKENLIST_CACHE_NAME = "tokenlistcache.txt";
     public void addToken(Context context, String accessToken, String expiresIn, String refreshToken, String uid) {
         Gson gson = new Gson();
         Token token = new Token(accessToken, expiresIn, refreshToken, uid);
         TokenList tokenList = TokenList.parse(SDCardUtil.get(context,
-                SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
+                TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
         if (tokenList == null || tokenList.getTokenList().size() == 0) {
             tokenList = new TokenList();
         }
@@ -32,20 +32,20 @@ public class AccessTokenManager {
         }
         tokenList.addTokenList(token);
         tokenList.setCurrUid(uid);
-        SDCardUtil.put(context,SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR,
+        SDCardUtil.put(context,TOKENLIST_CACHE_DIR,
                 TOKENLIST_CACHE_NAME,gson.toJson(tokenList));
         updateAccessToken(context, accessToken, expiresIn, refreshToken, uid);
     }
 
     public TokenList getTokenList(Context context) {
         return TokenList.parse(SDCardUtil.get(context,
-                SDCardUtil.getSDCardPath() + TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
+                TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
     }
 
     public void deleteToken(Context context, String uid) {
         Gson gson = new Gson();
         TokenList tokenList = TokenList.parse(SDCardUtil.get(context,
-                SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR,TOKENLIST_CACHE_NAME));
+                TOKENLIST_CACHE_DIR,TOKENLIST_CACHE_NAME));
         for (int i = 0; i< tokenList.getTokenList().size();i++) {
             if (tokenList.getTokenList().get(i).getUid().equals(uid)) {
                 tokenList.removeTokenList(i);
@@ -53,7 +53,7 @@ public class AccessTokenManager {
         }
         //当前账户list为空
         if (tokenList.getTokenList().size() == 0) {
-            SDCardUtil.put(context,SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR,
+            SDCardUtil.put(context,TOKENLIST_CACHE_DIR,
                     TOKENLIST_CACHE_NAME,gson.toJson(tokenList));
             AccessTokenKeeper.getInstance().clear();//移除当前使用账户
             return;
@@ -70,13 +70,13 @@ public class AccessTokenManager {
                     token.getUid());
         }
         //其他情况，即删除账户不为当前账户:无操作
-        SDCardUtil.put(context,SDCardUtil.getSDCardPath()+TOKENLIST_CACHE_DIR,
+        SDCardUtil.put(context,TOKENLIST_CACHE_DIR,
                 TOKENLIST_CACHE_NAME,gson.toJson(tokenList));
     }
 
     public void switchToken(Context context, String uid) {
         TokenList tokenList = TokenList.parse(SDCardUtil.get(context,
-                SDCardUtil.getSDCardPath() + TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
+                TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
         for (int i = 0; i < tokenList.getTokenList().size(); i++) {
             if (tokenList.getTokenList().get(i).getUid().equals(uid)) {
                 Token token = tokenList.getTokenList().get(i);
@@ -90,7 +90,7 @@ public class AccessTokenManager {
 
     public void switchToken(Context context, int positionInCache, OnTokenSwitchListener onTokenSwitchListener) {
         TokenList tokenList = TokenList.parse(SDCardUtil.get(context,
-                SDCardUtil.getSDCardPath() + TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
+                TOKENLIST_CACHE_DIR, TOKENLIST_CACHE_NAME));
         if (tokenList.getTokenList().size() > 0) {
             Token token = tokenList.getTokenList().get(positionInCache);
             updateAccessToken(context, token.getToken(),
