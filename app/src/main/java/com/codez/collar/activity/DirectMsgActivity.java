@@ -15,6 +15,7 @@ import com.codez.collar.bean.DirectMsgBean;
 import com.codez.collar.bean.DirectMsgConversationResultBean;
 import com.codez.collar.databinding.ActivityDirectMsgBinding;
 import com.codez.collar.fragment.EmojiFragment;
+import com.codez.collar.manager.UserManager;
 import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emoji.Emoji;
 import com.codez.collar.utils.EventBusUtils;
@@ -161,6 +162,21 @@ public class DirectMsgActivity extends BaseActivity<ActivityDirectMsgBinding> im
 
                     @Override
                     public void onNext(DirectMsgConversationResultBean directMsgConversationResultBean) {
+                        //针对进入此页，screen_name为空的情况
+                        String title = mBinding.toolbar.getTitle().toString();
+                        if (title == null || "".equals(title)) {
+                            DirectMsgBean bean = directMsgConversationResultBean.getDirect_messages().get(0);
+                            if (bean != null) {
+                                String recipientName = bean.getRecipient_screen_name();
+                                if (recipientName != null && UserManager.getInstance().getUserMe() != null) {
+                                    if (recipientName.equals(UserManager.getInstance().getUserMe().getScreen_name())) {
+                                        setToolbarTitle(mBinding.toolbar, recipientName);
+                                    }else{
+                                        setToolbarTitle(mBinding.toolbar, bean.getSender_screen_name());
+                                    }
+                                }
+                            }
+                        }
                         mAdapter.addAll(directMsgConversationResultBean.getDirect_messages());
                         mAdapter.notifyDataSetChanged();
                     }

@@ -69,7 +69,6 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                     onBackPressed();
                 }
             });
-
         }
 
 
@@ -80,6 +79,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
 
         if (uid != null && uid.equals(AccessTokenKeeper.getInstance().getUid())) {
             mBinding.btnFollow.setVisibility(View.GONE);
+            mBinding.btnDirectMsg.setVisibility(View.GONE);
         }else{
             //获取登录用户和此用户的关系
             HttpUtils.getInstance().getFriendshipService()
@@ -112,8 +112,6 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                             }
                         }
                     });
-
-
         }
         //头部背景图半透明遮罩
         mBinding.viewMask.setAlpha(0.2f);
@@ -138,6 +136,11 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                     public void onNext(UserBean userBean) {
                         mUserBean = userBean;
                         mBinding.setUser(userBean);
+                        screen_name = userBean.getScreen_name();
+                        uid = userBean.getIdstr();
+                        if (userBean.isVerified()) {
+                            mBinding.ivVip.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
 
@@ -157,11 +160,12 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         });
 
         mBinding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            String[] titles = {"微博","相册"};
+            String[] titles = {"微博"
+                    ,"相册"
+            };
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
-
                     return new StatusListFragment().newInstance(uid, screen_name, StatusListFragment.VALUE_USER);
                 }else{
                     return new UserAlbumFragment().newInstance(uid, screen_name);
@@ -185,6 +189,7 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
         mBinding.tvFollowers.setOnClickListener(this);
         mBinding.tvFollowersCount.setOnClickListener(this);
         mBinding.btnFollow.setOnClickListener(this);
+        mBinding.btnDirectMsg.setOnClickListener(this);
 
     }
     @Override
@@ -282,6 +287,13 @@ public class UserActivity extends BaseActivity<ActivityUserBinding> implements V
                                 }
                             });
                 }
+                break;
+            case R.id.btn_direct_msg:
+                startActivity(new Intent(this, DirectMsgActivity.class)
+                        .putExtra(DirectMsgActivity.INTENT_UID, uid)
+                        .putExtra(DirectMsgActivity.INTENT_SCREEN_NAME, screen_name));
+                break;
+            default:
                 break;
         }
 
