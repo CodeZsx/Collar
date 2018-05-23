@@ -81,6 +81,26 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             + DBConstants.CONFIG_COLUMN_KEY + " TEXT UNIQUE DEFAULT '' ,"
             + DBConstants.CONFIG_COLUMN_VALUE + " TEXT DEFAULT '' "
             + ");";
+    /**
+     * 创建一个存储点赞状态的表，该表只有两个列，1：status_id;2:remark
+     */
+    private static final String CREATE_LIKE_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_LIKE
+            + " ("
+            + DBConstants.LIKE_COLUMN_STATUS_ID + " TEXT PRIMARY KEY,"
+            + DBConstants.LIKE_COLUMN_REMARK + " TEXT DEFAULT '' "
+            + ");";
+    /**
+     * 创建一个存储微博动态的表，该表只有两个列，1：status_id;2:content
+     */
+    private static final String CREATE_STATUS_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_STATUS
+            + " ("
+            + DBConstants.STATUS_COLUMN_ID + " TEXT PRIMARY KEY,"
+            + DBConstants.STATUS_COLUMN_CONTENT + " TEXT DEFAULT '' ,"
+            + DBConstants.STATUS_COLUMN_TYPE + " TEXT DEFAULT '' ,"
+            + DBConstants.STATUS_COLUMN_REMARK + " TEXT DEFAULT '' "
+            + ");";
 
     public DataBaseHelper() {
         super(BaseApp.sContext, mDBName, null, mDBVersion);
@@ -88,6 +108,8 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CONFIG_TABLE);
+        db.execSQL(CREATE_LIKE_TABLE);
+        db.execSQL(CREATE_STATUS_TABLE);
     }
 
     @Override

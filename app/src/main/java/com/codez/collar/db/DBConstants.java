@@ -13,4 +13,19 @@ public class DBConstants {
     public static final String CONFIG_COLUMN_VALUE = "value";
     public static final String CONFIG_UPGRADE = "upgrade";
 
+    public static final String TABLE_LIKE = "like";
+    public static final String LIKE_COLUMN_STATUS_ID = "status_id";
+    public static final String LIKE_COLUMN_REMARK = "remark";
+
+    public static final String TABLE_STATUS = "status";
+    public static final String STATUS_COLUMN_ID = "status_id";
+    public static final String STATUS_COLUMN_CONTENT = "content";
+    public static final String STATUS_COLUMN_TYPE = "type";
+    public static final String STATUS_COLUMN_REMARK = "remark";
+
+    public static final String STATUS_TYPE_HOME = "home";
+    public static final String STATUS_TYPE_PUBLIC = "public";
+    public static final String STATUS_TYPE_MENTION = "mention";
+    public static final String STATUS_TYPE_USER = "user";
+
 }
