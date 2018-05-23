@@ -1,11 +1,14 @@
 package com.codez.collar.fragment;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -15,9 +18,12 @@ import com.codez.collar.adapter.StatusAdapter;
 import com.codez.collar.auth.AccessTokenKeeper;
 import com.codez.collar.base.BaseFragment;
 import com.codez.collar.bean.Group;
+import com.codez.collar.bean.StatusBean;
 import com.codez.collar.bean.StatusResultBean;
 import com.codez.collar.databinding.FragmentStatusListBinding;
 import com.codez.collar.databinding.ItemRvFooterBinding;
+import com.codez.collar.db.DBConstants;
+import com.codez.collar.db.DataBaseHelper;
 import com.codez.collar.event.GroupChangedEvent;
 import com.codez.collar.event.NightModeChangedEvent;
 import com.codez.collar.event.ToastEvent;
@@ -27,9 +33,13 @@ import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.recyclerview.HeaderAndFooterWrapper;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.EventBusUtils;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -145,6 +155,11 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
         switch (mSource) {
             case VALUE_HOME:
                 if (HomeFragment.STATUS_GROUP_ALL.equals(mScreenName)) {
+
+                    List<StatusBean> statuses = getStatusesFromDB(DBConstants.STATUS_TYPE_HOME);
+                    if (statuses != null) {
+                        handleData(statuses);
+                    }
                     HttpUtils.getInstance().getWeiboService()
                             .getHomeStatus(mUid, curPage++)
                             .subscribeOn(Schedulers.io())
@@ -162,7 +177,8 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                                 @Override
                                 public void onNext(StatusResultBean statusResultBean) {
-                                    handleData(statusResultBean);
+                                    handleData(statusResultBean.getStatuses());
+                                    saveStatusesToDB(statusResultBean.getStatuses(), DBConstants.STATUS_TYPE_HOME);
                                 }
                             });
                 }else{
@@ -193,7 +209,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                                 @Override
                                 public void onNext(StatusResultBean statusResultBean) {
-                                    handleData(statusResultBean);
+                                    handleData(statusResultBean.getStatuses());
                                 }
                             });
                 }
@@ -217,7 +233,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onNext(StatusResultBean statusResultBean) {
-                                handleData(statusResultBean);
+                                handleData(statusResultBean.getStatuses());
                             }
                         });
                 break;
@@ -239,7 +255,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onNext(StatusResultBean statusResultBean) {
-                                handleData(statusResultBean);
+                                handleData(statusResultBean.getStatuses());
                             }
                         });
 
@@ -265,12 +281,44 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 
                             @Override
                             public void onNext(StatusResultBean statusResultBean) {
-                                handleData(statusResultBean);
+                                handleData(statusResultBean.getStatuses());
                             }
                         });
                 break;
         }
 
+    }
+
+    private void saveStatusesToDB(List<StatusBean> statuses, String type) {
+        for (StatusBean bean : statuses) {
+            ContentValues values = new ContentValues();
+            values.put(DBConstants.STATUS_COLUMN_ID, bean.getIdstr());
+            values.put(DBConstants.STATUS_COLUMN_CONTENT, new Gson().toJson(bean));
+            values.put(DBConstants.STATUS_COLUMN_TYPE, type);
+            DataBaseHelper.getDataBaseHelper().insert(DBConstants.TABLE_STATUS, values);
+        }
+    }
+    private List<StatusBean> getStatusesFromDB(String type){
+        return DataBaseHelper.getDataBaseHelper().queryForObject(new DataBaseHelper.RowMapper<List<StatusBean>>() {
+            @Override
+            public List<StatusBean> mapRow(Cursor cursor, int index) {
+                List<StatusBean> list = new ArrayList<>();
+                if (cursor.moveToFirst()){
+                    while (cursor.moveToNext()) {
+                        String content = cursor.getString(cursor.getColumnIndex(DBConstants.STATUS_COLUMN_CONTENT));
+                        if (content != null && TextUtils.isEmpty(content)) {
+                            StatusBean bean = new Gson().fromJson(content, StatusBean.class);
+                            list.add(bean);
+                        }
+                        if (list.size() > 10) {
+                            break;
+                        }
+                    }
+                }
+                return list;
+            }
+        }, "SELECT * FROM " + DBConstants.TABLE_STATUS + " WHERE " + DBConstants.STATUS_COLUMN_TYPE + "=?",
+                new String[]{type});
     }
 
     private static final int STATE_NORMAL = 0;
@@ -294,10 +342,11 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
 //        }
     }
 
-    private void handleData(StatusResultBean statusResultBean) {
-//        mStatusAdapter.addAll(statusResultBean.getStatuses());
-//        mWrapper.notifyDataSetChanged();
-        mStatusAdapter.addAll(statusResultBean.getStatuses());
+    private void handleData(List<StatusBean> statuses) {
+        if (curPage == 2) {
+            mStatusAdapter.clearList();
+        }
+        mStatusAdapter.addAll(statuses);
         mStatusAdapter.notifyDataSetChanged();
         mBinding.swipeRefreshLayout.setRefreshing(false);
     }
