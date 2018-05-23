@@ -9,11 +9,22 @@ import android.content.SharedPreferences;
  */
 
 public class Config {
-    public static final String APP_KEY = "211160679";
-    public static final String REDIRECT_URL = "http://oauth.weico.cc";
-    public static final String SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write";
+    //weico
+//    public static final String APP_KEY = "211160679";
+//    public static final String APP_SECRET = "1e6e33db08f9192306c4afa0a61ad56c";
+//    public static final String REDIRECT_URL = "http://oauth.weico.cc";
+    //welike
+    public static final String APP_KEY = "1074487424";
+    public static final String APP_SECRET = "99039231ce8713c344b77076d1e2a827";
+    public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
+    //collar
+//    public static final String APP_KEY = "2873958404";
+//    public static final String APP_SECRET = "48054075274e02cc513b4c8cf4131e4a";
+//    public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
 
-    public static final String AppSecret = "1e6e33db08f9192306c4afa0a61ad56c";
+//    public static final String SCOPE = "email,direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,follow_app_official_microblog,invitation_write";
+    public static final String SCOPE = "direct_messages_read,direct_messages_write,friendships_groups_read,friendships_groups_write,statuses_to_me_read,invitation_write";
+
     public static final String PackageName = "com.codez.collar";
 
     public static final String PREF_NAME_NIGHT_MODE = "night_mode";
