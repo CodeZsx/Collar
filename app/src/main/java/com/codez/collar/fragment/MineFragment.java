@@ -2,6 +2,7 @@ package com.codez.collar.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -89,6 +90,11 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> implements V
     public void onResume() {
         super.onResume();
         mBinding.switchButton.setChecked(Config.getCachedNight(getContext()));
+        if (TextUtils.isEmpty(mBinding.tvSreenName.getText().toString())
+                && TextUtils.isEmpty(mBinding.tvDescription.getText().toString())) {
+            UserManager.getInstance().getUserMe();
+        }
+
     }
 
     private void initData() {
