@@ -23,7 +23,6 @@ import com.codez.collar.activity.PostActivity;
 import com.codez.collar.activity.StatusDetailActivity;
 import com.codez.collar.activity.UserActivity;
 import com.codez.collar.auth.AccessTokenKeeper;
-import com.codez.collar.bean.AttitudeResultBean;
 import com.codez.collar.bean.FavoriteBean;
 import com.codez.collar.bean.FriendshipsShowResultBean;
 import com.codez.collar.bean.StatusBean;
@@ -35,18 +34,12 @@ import com.codez.collar.net.HttpUtils;
 import com.codez.collar.ui.emojitextview.StatusContentTextUtil;
 import com.codez.collar.utils.DensityUtil;
 import com.codez.collar.utils.EventBusUtils;
-import com.codez.collar.utils.JsonUtil;
 import com.codez.collar.utils.ScreenUtil;
 import com.codez.collar.utils.T;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -153,30 +146,50 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             }
             //点赞按钮状态
             int likeState = AttitudesManager.getInstance().getAttitude(bean.getIdstr());
-            if (likeState == -1) {
-                HttpUtils.getInstance().getAttitudesService()
-                        .existsLike(bean.getIdstr())
-                        .enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response==null) return;
-                                try {
-                                    int state = JsonUtil.getValueByUncertainKey(response.body().bytes());
-                                    AttitudesManager.getInstance().putAttitude(bean.getIdstr(), state);
-                                    mBinding.ivLike.setSelected(state == AttitudesManager.STATE_LIKE);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+            //welike没有点赞权限
+            mBinding.ivLike.setSelected(likeState==AttitudesManager.STATE_LIKE);
+//            if (likeState == -1) {
+//                HttpUtils.getInstance().getAttitudesService()
+//                        .existsLike(bean.getIdstr())
+//                        .enqueue(new Callback<ResponseBody>() {
+//                            @Override
+//                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                if (response==null) return;
+//                                if (response.body() != null) {
+//                                    try {
+//                                        int state = JsonUtil.getValueByUncertainKey(response.body().bytes());
+//                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), state);
+//                                        mBinding.ivLike.setSelected(state == AttitudesManager.STATE_LIKE);
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                } else {
+//                                    mBinding.ivLike.setSelected(mBinding.ivLike.isSelected());
+//                                    return;
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                Log.i(TAG, "onFailure:" + t.toString());
+//                            }
+//                        });
+//            }else{
+//                mBinding.ivLike.setSelected(likeState == AttitudesManager.STATE_LIKE);
+//            }
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Log.i(TAG, "onFailure:" + t.toString());
-                            }
-                        });
-            }else{
-                mBinding.ivLike.setSelected(likeState == AttitudesManager.STATE_LIKE);
-            }
+//            if (likeState != AttitudesManager.STATE_LIKE) {
+//                String statusId = DataBaseHelper.getDataBaseHelper().queryForObject(new DataBaseHelper.RowMapper<String>() {
+//                    @Override
+//                    public String mapRow(Cursor cursor, int index) {
+//                        return cursor.getString(cursor.getColumnIndex(DBConstants.LIKE_COLUMN_STATUS_ID));
+//                    }
+//                }, "SELECT * FROM " + DBConstants.TABLE_LIKE + " WHERE " + DBConstants.LIKE_COLUMN_STATUS_ID + "=?",
+//                        new String[]{bean.getId()});
+//                mBinding.ivLike.setSelected(statusId != null);
+//            }else{
+//                mBinding.ivLike.setSelected(true);
+//            }
 
             //点击事件
             //微博内容 点击事件
@@ -423,59 +436,60 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             mBinding.blockLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mBinding.ivLike.isSelected()) {
-                        HttpUtils.getInstance().getAttitudesService()
-                                .destroyLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<AttitudeResultBean>() {
-                                    @Override
-                                    public void onCompleted() {
-                                        Log.i(TAG, "onCompleted");
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.e(TAG, "onError:" + e.toString());
-                                    }
-
-                                    @Override
-                                    public void onNext(AttitudeResultBean attitudeResultBean) {
-                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("取消点赞"));
-                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 0);
-                                        mBinding.ivLike.setSelected(false);
-                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
-                                        bean.setAttitudes_count(bean.getAttitudes_count() - 1);
-                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
-                                    }
-                                });
-                    } else {
-                        HttpUtils.getInstance().getAttitudesService()
-                                .createLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<AttitudeResultBean>() {
-                                    @Override
-                                    public void onCompleted() {
-                                        Log.i(TAG, "onCompleted");
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.e(TAG, "onError:" + e.toString());
-                                    }
-
-                                    @Override
-                                    public void onNext(AttitudeResultBean attitudeResultBean) {
-                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("点赞"));
-                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 1);
-                                        mBinding.ivLike.setSelected(true);
-                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
-                                        bean.setAttitudes_count(bean.getAttitudes_count() + 1);
-                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
-                                    }
-                                });
-                    }
+                    mBinding.ivLike.setSelected(!mBinding.ivLike.isSelected());
+//                    if (mBinding.ivLike.isSelected()) {
+//                        HttpUtils.getInstance().getAttitudesService()
+//                                .destroyLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Observer<AttitudeResultBean>() {
+//                                    @Override
+//                                    public void onCompleted() {
+//                                        Log.i(TAG, "onCompleted");
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(Throwable e) {
+//                                        Log.e(TAG, "onError:" + e.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onNext(AttitudeResultBean attitudeResultBean) {
+//                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("取消点赞"));
+//                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 0);
+//                                        mBinding.ivLike.setSelected(false);
+//                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
+//                                        bean.setAttitudes_count(bean.getAttitudes_count() - 1);
+//                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
+//                                    }
+//                                });
+//                    } else {
+//                        HttpUtils.getInstance().getAttitudesService()
+//                                .createLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Observer<AttitudeResultBean>() {
+//                                    @Override
+//                                    public void onCompleted() {
+//                                        Log.i(TAG, "onCompleted");
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(Throwable e) {
+//                                        Log.e(TAG, "onError:" + e.toString());
+//                                    }
+//
+//                                    @Override
+//                                    public void onNext(AttitudeResultBean attitudeResultBean) {
+//                                        EventBusUtils.sendEvent(ToastEvent.newToastEvent("点赞"));
+//                                        AttitudesManager.getInstance().putAttitude(bean.getIdstr(), 1);
+//                                        mBinding.ivLike.setSelected(true);
+//                                        mBinding.ivLike.startAnimation(android.view.animation.AnimationUtils.loadAnimation(mContext, R.anim.anim_like_scale));
+//                                        bean.setAttitudes_count(bean.getAttitudes_count() + 1);
+//                                        mBinding.tvLikeCount.setText(String.valueOf(bean.getAttitudes_count()));
+//                                    }
+//                                });
+//                    }
                 }
             });
             //评论点击事件
