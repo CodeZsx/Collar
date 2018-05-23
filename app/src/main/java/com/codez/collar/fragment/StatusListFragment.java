@@ -67,6 +67,7 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
     private StatusAdapter mStatusAdapter;
     private HeaderAndFooterWrapper mWrapper;
     private ItemRvFooterBinding mFooterBinding;
+    private boolean isFirstIn = true;
     @Override
     public int setContent() {
         return R.layout.fragment_status_list;
@@ -155,10 +156,13 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
         switch (mSource) {
             case VALUE_HOME:
                 if (HomeFragment.STATUS_GROUP_ALL.equals(mScreenName)) {
-
-                    List<StatusBean> statuses = getStatusesFromDB(DBConstants.STATUS_TYPE_HOME);
-                    if (statuses != null) {
-                        handleData(statuses);
+                    //当第一次进入时，预加载数据库数据
+                    if (isFirstIn) {
+                        isFirstIn = false;
+                        List<StatusBean> statuses = getStatusesFromDB(DBConstants.STATUS_TYPE_HOME);
+                        if (statuses != null) {
+                            handleData(statuses);
+                        }
                     }
                     HttpUtils.getInstance().getWeiboService()
                             .getHomeStatus(mUid, curPage++)
@@ -306,11 +310,11 @@ public class StatusListFragment extends BaseFragment<FragmentStatusListBinding> 
                 if (cursor.moveToFirst()){
                     while (cursor.moveToNext()) {
                         String content = cursor.getString(cursor.getColumnIndex(DBConstants.STATUS_COLUMN_CONTENT));
-                        if (content != null && TextUtils.isEmpty(content)) {
+                        if (content != null && !TextUtils.isEmpty(content)) {
                             StatusBean bean = new Gson().fromJson(content, StatusBean.class);
                             list.add(bean);
                         }
-                        if (list.size() > 10) {
+                        if (list.size() == 10) {
                             break;
                         }
                     }
