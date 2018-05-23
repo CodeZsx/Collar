@@ -239,7 +239,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                         public void onClick(View v) {
                             if (bean.isFavorited()) {
                                 HttpUtils.getInstance().getFavoriteService()
-                                        .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
+                                        .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Observer<FavoriteBean>() {
@@ -269,7 +269,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                                         });
                             }else{
                                 HttpUtils.getInstance().getFavoriteService()
-                                        .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
+                                        .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Observer<FavoriteBean>() {
@@ -310,7 +310,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
                             @Override
                             public void onClick(View v) {
                                 HttpUtils.getInstance().getWeiboService()
-                                        .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), bean.getId())
+                                        .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(new Observer<StatusBean>() {

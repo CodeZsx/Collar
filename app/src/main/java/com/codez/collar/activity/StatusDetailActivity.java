@@ -129,9 +129,9 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
             @Override
             public Fragment getItem(int position) {
                 if (position == 0) {
-                    return new CommentListFragment().newInstance(mBean.getId(), CommentListFragment.TYPE_COMMENT_STATUS_DETAIL);
+                    return new CommentListFragment().newInstance(mBean.getIdstr(), CommentListFragment.TYPE_COMMENT_STATUS_DETAIL);
                 }else{
-                    return new RepostListFragment().newInstance(mBean.getId());
+                    return new RepostListFragment().newInstance(mBean.getIdstr());
                 }
             }
 
@@ -357,7 +357,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                 break;
             case R.id.iv_head:
                 startActivity(new Intent(StatusDetailActivity.this, UserActivity.class)
-                        .putExtra(UserActivity.INTENT_KEY_UID, mBean.getId()));
+                        .putExtra(UserActivity.INTENT_KEY_UID, mBean.getIdstr()));
                 break;
             case R.id.iv_more_option:
                 //背景虚化
@@ -383,7 +383,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                     public void onClick(View v) {
                         if (mBean.isFavorited()) {
                             HttpUtils.getInstance().getFavoriteService()
-                                    .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .destroyFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getIdstr())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Observer<FavoriteBean>() {
@@ -406,7 +406,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                                     });
                         }else{
                             HttpUtils.getInstance().getFavoriteService()
-                                    .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .createFavorite(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getIdstr())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Observer<FavoriteBean>() {
@@ -445,7 +445,7 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
                         @Override
                         public void onClick(View v) {
                             HttpUtils.getInstance().getWeiboService()
-                                    .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getId())
+                                    .destroyStatus(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getIdstr())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new Observer<StatusBean>() {
