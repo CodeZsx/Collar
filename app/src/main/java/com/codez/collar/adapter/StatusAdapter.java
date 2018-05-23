@@ -436,7 +436,14 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.BindingVie
             mBinding.blockLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mBinding.ivLike.setSelected(!mBinding.ivLike.isSelected());
+                    int count = Integer.valueOf(mBinding.tvLikeCount.getText().toString());
+                    if (mBinding.ivLike.isSelected()) {
+                        mBinding.ivLike.setSelected(false);
+                        mBinding.tvLikeCount.setText(String.valueOf((--count) < 0 ? 0 : count));
+                    }else{
+                        mBinding.ivLike.setSelected(true);
+                        mBinding.tvLikeCount.setText(String.valueOf((++count) < 0 ? 0 : count));
+                    }
 //                    if (mBinding.ivLike.isSelected()) {
 //                        HttpUtils.getInstance().getAttitudesService()
 //                                .destroyLike(AccessTokenKeeper.getInstance().getAccessToken(), bean.getIdstr())

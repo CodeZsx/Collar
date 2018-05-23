@@ -281,8 +281,15 @@ public class StatusDetailActivity extends BaseActivity<ActivityStatusDetailBindi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.block_like:
-                //welike没有点赞权限
-                mBinding.ivLike.setSelected(!mBinding.ivLike.isSelected());
+                //welike没有点赞权限,假实现
+                int count = Integer.valueOf(mBinding.tvLikeCount.getText().toString());
+                if (mBinding.ivLike.isSelected()) {
+                    mBinding.ivLike.setSelected(false);
+                    mBinding.tvLikeCount.setText(String.valueOf((--count) < 0 ? 0 : count));
+                }else{
+                    mBinding.ivLike.setSelected(true);
+                    mBinding.tvLikeCount.setText(String.valueOf((++count) < 0 ? 0 : count));
+                }
 //                if (mBinding.ivLike.isSelected()) {
 //                    HttpUtils.getInstance().getAttitudesService()
 //                            .destroyLike(AccessTokenKeeper.getInstance().getAccessToken(), mBean.getIdstr())
