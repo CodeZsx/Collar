@@ -62,18 +62,30 @@
                             android:background="@color/colorItemNormal"/>
                     </FrameLayout>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_head"
+                    <FrameLayout
+                        android:id="@+id/block_head"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_below="@id/fl_cover"
                         android:layout_marginTop="-30dp"
-                        android:imageUrl="@{user.avatar_large}"
-                        android:transitionName="shareAvatar"
-                        android:src="@drawable/pic_head_test"
                         android:layout_marginLeft="@dimen/fab_margin"
                         android:layout_gravity="bottom"
-                        app:layout_collapseMode="parallax"/>
+                        app:layout_collapseMode="parallax">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_head"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:imageUrl="@{user.avatar_large}"
+                            android:transitionName="shareAvatar"
+                            android:src="@drawable/pic_head_test" />
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_vip"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_gravity="bottom|right"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_vip"/>
+                    </FrameLayout>
                     <Button
                         android:id="@+id/btn_follow"
                         android:layout_width="@dimen/btn_follow_width"
@@ -89,7 +101,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/iv_head"
+                        android:layout_below="@id/block_head"
                         android:layout_marginTop="12dp"
                         android:paddingLeft="@dimen/fab_margin"
                         android:paddingRight="@dimen/fab_margin"
