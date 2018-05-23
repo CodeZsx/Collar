@@ -30,7 +30,7 @@ public class AboutActivity extends BaseActivity<ActivityAboutBinding> implements
         String versionName = BaseApp.getAppVersionName();
         int versionCode = BaseApp.getAppVersionCode();
         mBinding.tvVersion.setText("v" + versionName + "-" + versionCode + postFix);
-        Spanned text = Html.fromHtml("<a href=\"http://blog.csdn.net/qq_28484355\" style=\"color:#E22930\">萌鼠喝酸奶的博客</a>");
+        Spanned text = Html.fromHtml("<a href=\"http://blog.csdn.net/qq_28484355\" style=\"color:#E22930\">博客</a>");
         mBinding.tvBlog.setText(text);
         mBinding.tvBlog.setOnClickListener(this);
         Spanned textGithub = Html.fromHtml("<a href=\"https://github.com/CodeZsx\" style=\"color:#E22930\">GitHub</a>");
