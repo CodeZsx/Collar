@@ -28,4 +28,22 @@ public class DBConstants {
     public static final String STATUS_TYPE_MENTION = "mention";
     public static final String STATUS_TYPE_USER = "user";
 
+    public static final String TABLE_USER = "user";
+    public static final String USER_COLUMN_ID = "user_id";
+    public static final String USER_COLUMN_CONTENT = "content";
+    public static final String USER_COLUMN_TYPE = "type";
+    public static final String USER_COLUMN_REMARK = "remark";
+
+    public static final String TABLE_COMMENT = "comment";
+    public static final String COMMENT_COLUMN_ID = "comment_id";
+    public static final String COMMENT_COLUMN_CONTENT = "content";
+    public static final String COMMENT_COLUMN_TYPE = "type";
+    public static final String COMMENT_COLUMN_REMARK = "remark";
+
+    public static final String TABLE_MESSAGE = "message";
+    public static final String MESSAGE_COLUMN_ID = "message_id";
+    public static final String MESSAGE_COLUMN_CONTENT = "content";
+    public static final String MESSAGE_COLUMN_TYPE = "type";
+    public static final String MESSAGE_COLUMN_REMARK = "remark";
+
 }

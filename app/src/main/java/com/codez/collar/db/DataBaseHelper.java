@@ -91,7 +91,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             + DBConstants.LIKE_COLUMN_REMARK + " TEXT DEFAULT '' "
             + ");";
     /**
-     * 创建一个存储微博动态的表，该表只有两个列，1：status_id;2:content
+     * 创建一个存储微博动态的表
      */
     private static final String CREATE_STATUS_TABLE = "CREATE TABLE IF NOT EXISTS "
             + DBConstants.TABLE_STATUS
@@ -100,6 +100,39 @@ public class DataBaseHelper extends SQLiteOpenHelper{
             + DBConstants.STATUS_COLUMN_CONTENT + " TEXT DEFAULT '' ,"
             + DBConstants.STATUS_COLUMN_TYPE + " TEXT DEFAULT '' ,"
             + DBConstants.STATUS_COLUMN_REMARK + " TEXT DEFAULT '' "
+            + ");";
+    /**
+     * 创建一个存储用户信息的表
+     */
+    private static final String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_USER
+            + " ("
+            + DBConstants.USER_COLUMN_ID + " TEXT PRIMARY KEY,"
+            + DBConstants.USER_COLUMN_CONTENT + " TEXT DEFAULT '' ,"
+            + DBConstants.USER_COLUMN_TYPE + " TEXT DEFAULT '' ,"
+            + DBConstants.USER_COLUMN_REMARK + " TEXT DEFAULT '' "
+            + ");";
+    /**
+     * 创建一个存储评论信息的表
+     */
+    private static final String CREATE_COMMENT_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_COMMENT
+            + " ("
+            + DBConstants.COMMENT_COLUMN_ID + " TEXT PRIMARY KEY,"
+            + DBConstants.COMMENT_COLUMN_CONTENT + " TEXT DEFAULT '' ,"
+            + DBConstants.COMMENT_COLUMN_TYPE + " TEXT DEFAULT '' ,"
+            + DBConstants.COMMENT_COLUMN_REMARK + " TEXT DEFAULT '' "
+            + ");";
+    /**
+     * 创建一个存储私信信息的表
+     */
+    private static final String CREATE_MESSAGE_TABLE = "CREATE TABLE IF NOT EXISTS "
+            + DBConstants.TABLE_MESSAGE
+            + " ("
+            + DBConstants.MESSAGE_COLUMN_ID + " TEXT PRIMARY KEY,"
+            + DBConstants.MESSAGE_COLUMN_CONTENT + " TEXT DEFAULT '' ,"
+            + DBConstants.MESSAGE_COLUMN_TYPE + " TEXT DEFAULT '' ,"
+            + DBConstants.MESSAGE_COLUMN_REMARK + " TEXT DEFAULT '' "
             + ");";
 
     public DataBaseHelper() {
@@ -110,6 +143,9 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_CONFIG_TABLE);
         db.execSQL(CREATE_LIKE_TABLE);
         db.execSQL(CREATE_STATUS_TABLE);
+        db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_COMMENT_TABLE);
+        db.execSQL(CREATE_MESSAGE_TABLE);
     }
 
     @Override
